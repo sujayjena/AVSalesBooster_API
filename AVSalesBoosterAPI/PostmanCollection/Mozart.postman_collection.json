@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "00022533-73f5-40dd-94fa-c4e9811ede62",
+		"name": "Mozart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29727234"
+	},
+	"item": [
+		{
+			"name": "SaveCustomerDetails",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "parameter[CustomerId]",
+							"value": "14",
+							"type": "text"
+						},
+						{
+							"key": "parameter[CompanyName]",
+							"value": "Jignesh",
+							"type": "text"
+						},
+						{
+							"key": "parameter[MobileNumber]",
+							"value": "9601660102",
+							"type": "text"
+						},
+						{
+							"key": "parameter[EmailId]",
+							"value": "dharm1992m@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "parameter[CustomerTypeId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[SpecialRemarks]",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "parameter[EmployeeRoleId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[IsActive]",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "GstFile",
+							"type": "file",
+							"src": "/C:/Users/Piyush/Downloads/GST_Number_Format.png"
+						},
+						{
+							"key": "Pancard",
+							"type": "file",
+							"src": "/C:/Users/Piyush/Downloads/dummy pan card.png"
+						},
+						{
+							"key": "parameter[GstSavedFileName]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[PanCardSavedFileName]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[ContactDetails][0][ContactId]",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "parameter[ContactDetails][0][ContactName]",
+							"value": "AlexMak",
+							"type": "text"
+						},
+						{
+							"key": "parameter[ContactDetails][0][MobileNo]",
+							"value": "6666666666",
+							"type": "text"
+						},
+						{
+							"key": "parameter[ContactDetails][0][EmailId]",
+							"value": "alexmak@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "parameter[ContactDetails][0][RefPartyName]",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "ContactPancard[0]",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "ContactAdharCard[0]",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "parameter[ContactDetails][0][PanCardSavedFileName]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[ContactDetails][0][AdharCardSavedFileName]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[ContactDetails][0][IsActive]",
+							"value": "true",
+							"type": "default"
+						},
+						{
+							"key": "parameter[ContactDetails][0][IsDefault]",
+							"value": "true",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][AddressId]",
+							"value": "0",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][Address]",
+							"value": "Test Address",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][StateId]",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][RegionId]",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][DistrictId]",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][AreaId]",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][Pincode]",
+							"value": "123123",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][IsActive]",
+							"value": "true",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][IsDefault]",
+							"value": "true",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][NameForAddress]",
+							"value": "Test Name",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][MobileNo]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][EmailId]",
+							"value": "",
+							"type": "default"
+						},
+						{
+							"key": "parameter[AddressDetails][0][AddressTypeId]",
+							"value": "",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}Customer/SaveCustomerDetails",
+					"host": [
+						"{{BaseUrl}}Customer"
+					],
+					"path": [
+						"SaveCustomerDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveVisitDetails",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "parameter[VisitId]",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "parameter[EmployeeId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitDate]",
+							"value": "2023-09-20 18:30:00.000",
+							"type": "text"
+						},
+						{
+							"key": "parameter[HasVisited]",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "parameter[CustomerTypeId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[CustomerId]",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "parameter[ContactId]",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "parameter[StateId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[RegionId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[DistrictId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[AreaId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[Address]",
+							"value": "Temp Address Demo",
+							"type": "text"
+						},
+						{
+							"key": "parameter[NextActionDate]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "parameter[IsActive]",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitStatusId]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[IsToCreateNewVisit]",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "parameter[Remarks][0][VisitRemarkId]",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "parameter[Remarks][0][Remarks]",
+							"value": "Demo Remark",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][VisitPhotoId]",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][Latitude]",
+							"value": "10.0.0.1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][Longitude]",
+							"value": "10.0.0.1",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][VisitAddress]",
+							"value": "Test Visit Address",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][VisitDateTime]",
+							"value": "2023-09-11 09:45:00.000",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][UploadedFileName]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "parameter[VisitPhotosList][0][SavedFileName]",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "VisitPhoto[0]",
+							"type": "file",
+							"src": "/C:/Users/Piyush/Downloads/download (1).jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}Visit/SaveVisitDetails",
+					"host": [
+						"{{BaseUrl}}Visit"
+					],
+					"path": [
+						"SaveVisitDetails"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IlFyaTMzNzZFRnBqeEpkQkJhdUdaTGc9PSIsIkVtYWlsSWQiOiJhZG1pbkB0ZXN0LmNvbSIsIk1vYmlsZU5vIjoiMTExMTExMTExMSIsIkVtcGxveWVlQ29kZSI6IkVNUDAwMSIsIk5hbWUiOiJBZG1pbiBFbXBsb3llZSIsIlJvbGVOYW1lIjoiU3VwZXJhZG1pbiIsIm5iZiI6MTY5NTIxMDEwMCwiZXhwIjoxNjk1MjEzNzAwLCJpYXQiOjE2OTUyMTAxMDB9.Aim9QQwygpPwfhndJPWukJdZBVXhhSoKVDQgUTTbYz8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "http://localhost:5027/api/",
+			"type": "default"
+		}
+	]
+}
