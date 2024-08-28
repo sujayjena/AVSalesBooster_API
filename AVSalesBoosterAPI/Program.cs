@@ -89,6 +89,8 @@ var services = builder.Services;
     services.AddScoped<IServiceDetailsRepository, ServiceDetailsRepository>();
     services.AddScoped<IManageExpenseService, ManageExpenseService>();
     services.AddScoped<IManageExpenseRepository, ManageExpenseRepository>();
+    services.AddScoped<IManageActivitiesService, ManageActivitiesService>();
+    services.AddScoped<IManageActivitiesRepository, ManageActivitiesRepository>();
 
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
