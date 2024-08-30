@@ -100,12 +100,12 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "EmployeeName";
-                    WorkSheet1.Cells[1, 2].Value = "PunchInOut";
-                    WorkSheet1.Cells[1, 3].Value = "PunchType";
+                    WorkSheet1.Cells[1, 1].Value = "Employee Name";
+                    WorkSheet1.Cells[1, 2].Value = "Date Time";
+                    WorkSheet1.Cells[1, 3].Value = "Visit Status";
                     WorkSheet1.Cells[1, 4].Value = "Latitude";
                     WorkSheet1.Cells[1, 5].Value = "Longitude";
-                    WorkSheet1.Cells[1, 6].Value = "BatteryStatus";
+                    WorkSheet1.Cells[1, 6].Value = "Battery Status";
                     WorkSheet1.Cells[1, 7].Value = "Address";
 
                     recordIndex = 2;

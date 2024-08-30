@@ -68,7 +68,8 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
-            queryParameters.Add("@ReportingTo", parameters.ReportingTo);
+            //queryParameters.Add("@ReportingTo", parameters.ReportingTo);
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<ReportingToResponse>("GetReportingTos", queryParameters);
@@ -109,7 +110,7 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
-            queryParameters.Add("@EmployeeName", parameters.EmployeeName.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<EmployeeResponse>("GetEmployees", queryParameters);

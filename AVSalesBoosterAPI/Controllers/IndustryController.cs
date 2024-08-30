@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Constants;
 using Models.Enums;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 using Services;
+using System.Globalization;
 
 namespace AVSalesBoosterAPI.Controllers
 {
@@ -99,6 +102,75 @@ namespace AVSalesBoosterAPI.Controllers
                 var list = await _industryService.GetIndustryDetailsById(id);
 
                 _response.Data = list;
+            }
+
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> ExportIndustryData()
+        {
+            _response.IsSuccess = false;
+            byte[] result;
+            int recordIndex;
+            ExcelWorksheet WorkSheet1;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            var request = new SearchIndustryRequest();
+            request.pagination = new PaginationParameters();
+
+            IEnumerable<IndustryResponse> lstObj = await _industryService.GetIndustryList(request);
+
+            using (MemoryStream msExportDataFile = new MemoryStream())
+            {
+                using (ExcelPackage excelExportData = new ExcelPackage())
+                {
+                    WorkSheet1 = excelExportData.Workbook.Worksheets.Add("Industry");
+                    WorkSheet1.TabColor = System.Drawing.Color.Black;
+                    WorkSheet1.DefaultRowHeight = 12;
+
+                    //Header of table
+                    WorkSheet1.Row(1).Height = 20;
+                    WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    WorkSheet1.Row(1).Style.Font.Bold = true;
+
+                    WorkSheet1.Cells[1, 1].Value = "Industry Name";
+                    WorkSheet1.Cells[1, 2].Value = "Status";
+
+                    WorkSheet1.Cells[1, 3].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 4].Value = "CreatedDate";
+
+                    recordIndex = 2;
+
+                    foreach (var items in lstObj)
+                    {
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.IndustryName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.IsActive == true ? "Active" : "Inactive";
+
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 4].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.CreatedOn;
+
+                        recordIndex += 1;
+                    }
+
+                    WorkSheet1.Column(1).AutoFit();
+                    WorkSheet1.Column(2).AutoFit();
+                    WorkSheet1.Column(3).AutoFit();
+                    WorkSheet1.Column(4).AutoFit();
+
+                    excelExportData.SaveAs(msExportDataFile);
+                    msExportDataFile.Position = 0;
+                    result = msExportDataFile.ToArray();
+                }
+            }
+
+            if (result != null)
+            {
+                _response.Data = result;
+                _response.IsSuccess = true;
+                _response.Message = "Record Exported successfully";
             }
 
             return _response;

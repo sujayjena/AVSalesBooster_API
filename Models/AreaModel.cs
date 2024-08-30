@@ -1,4 +1,5 @@
 ﻿using Models.Constants;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Models
@@ -17,9 +18,13 @@ namespace Models
     }
     public class SearchAreaRequest
     {
+        [DefaultValue("")]
+        public string ValueForSearch { get; set; } = null;
+
+        [DefaultValue(null)]
+        public bool? IsActive { get; set; }
+
         public PaginationParameters pagination { get; set; }
-        public string AreaName { get; set; }
-        public Nullable<bool> IsActive { get; set; }
 
     }
 

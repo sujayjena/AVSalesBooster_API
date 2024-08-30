@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Models.Constants;
 using Newtonsoft.Json;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Models
@@ -66,9 +67,15 @@ namespace Models
 
     public class SearchReportingToRequest
     {
+        //public long ReportingTo { get; set; }
+
+        [DefaultValue("")]
+        public string ValueForSearch { get; set; } = null;
+
+        [DefaultValue(null)]
+        public bool? IsActive { get; set; }
+
         public PaginationParameters pagination { get; set; }
-        public long ReportingTo { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     }
     public class ImportedReportingToDetails
     {
@@ -86,9 +93,13 @@ namespace Models
     }
     public class SearchEmployeeRequest
     {
+        [DefaultValue("")]
+        public string ValueForSearch { get; set; } = null;
+
+        [DefaultValue(null)]
+        public bool? IsActive { get; set; }
+
         public PaginationParameters pagination { get; set; }
-        public string EmployeeName { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     }
 
     public class EmployeeRequest

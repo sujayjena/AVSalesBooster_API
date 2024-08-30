@@ -31,6 +31,8 @@ namespace Models
 
         [DefaultValue("")]
         public string ValueForSearch { get; set; } = null;
+
+        [DefaultValue(null)]
         public bool? IsActive { get; set; }
     }
 

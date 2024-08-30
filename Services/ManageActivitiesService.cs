@@ -40,5 +40,42 @@ namespace Services
             return await _manageActivitiesRepository.GetSingleActivitiesRemarksList(request);
         }
         #endregion
+
+        #region Multiple Activity
+        public async Task<int> SaveActivityTemplate(ActivityTemplate_Request request)
+        {
+            return await _manageActivitiesRepository.SaveActivityTemplate(request);
+        }
+        public async Task<IEnumerable<ActivityTemplate_Response>> GetActivityTemplateList(ActivityTemplate_Search request)
+        {
+            return await _manageActivitiesRepository.GetActivityTemplateList(request);
+        }
+        public async Task<ActivityTemplate_Response?> GetActivityTemplateDetailsById(long id)
+        {
+            return await _manageActivitiesRepository.GetActivityTemplateDetailsById(id);
+        }
+
+        public async Task<int> SaveMultipleActivities(MultipleActivities_Request request)
+        {
+            return await _manageActivitiesRepository.SaveMultipleActivities(request);
+        }
+        public async Task<IEnumerable<MultipleActivities_Response>> GetMultipleActivitiesList(MultipleActivities_Search request)
+        {
+            return await _manageActivitiesRepository.GetMultipleActivitiesList(request);
+        }
+        public async Task<MultipleActivities_Response?> GetMultipleActivitiesDetailsById(long id)
+        {
+            return await _manageActivitiesRepository.GetMultipleActivitiesDetailsById(id);
+        }
+        public async Task<int> SaveMultipleActivitiesRemarks(MultipleActivitiesRemarks_Request request)
+        {
+            return await _manageActivitiesRepository.SaveMultipleActivitiesRemarks(request);
+        }
+        public async Task<IEnumerable<MultipleActivitiesRemarks_Response>> GetMultipleActivitiesRemarksList(MultipleActivitiesRemarks_Search request)
+        {
+            return await _manageActivitiesRepository.GetMultipleActivitiesRemarksList(request);
+        }
+
+        #endregion
     }
 }

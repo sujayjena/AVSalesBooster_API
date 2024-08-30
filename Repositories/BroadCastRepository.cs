@@ -233,6 +233,7 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
 

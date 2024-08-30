@@ -1,6 +1,7 @@
 ﻿using Models.Constants;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,13 @@ namespace Models
     }
     public class SearchDistrictRequest
     {
+        [DefaultValue("")]
+        public string ValueForSearch { get; set; } = null;
+
+        [DefaultValue(null)]
+        public bool? IsActive { get; set; }
+
         public PaginationParameters pagination { get; set; }
-        public string DistrictName { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     }
 
     public class DistrictResponse : CreationDetails

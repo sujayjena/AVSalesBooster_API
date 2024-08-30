@@ -62,7 +62,7 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
-            queryParameters.Add("@RegionName", parameters.RegionName.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<RegionResponse>("GetRegions", queryParameters);
@@ -104,7 +104,7 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
-            queryParameters.Add("@DistrictName", parameters.DistrictName.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<DistrictResponse>("GetDistricts", queryParameters);
@@ -147,7 +147,7 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
-            queryParameters.Add("@AreaName", parameters.AreaName.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<AreaResponse>("GetAreas", queryParameters);

@@ -15,10 +15,12 @@ namespace AVSalesBoosterAPI.Controllers
     {
         private ResponseModel _response;
         private IServiceDetailsService _serviceDetailsService;
+        private readonly IFileManager _fileManager;
 
-        public ServiceDetailsController(IServiceDetailsService serviceDetailsService)
+        public ServiceDetailsController(IServiceDetailsService serviceDetailsService, IFileManager fileManager)
         {
             _serviceDetailsService = serviceDetailsService;
+            _fileManager = fileManager;
 
             _response = new ResponseModel();
             _response.IsSuccess = true;
@@ -77,6 +79,20 @@ namespace AVSalesBoosterAPI.Controllers
                 var list = await _serviceDetailsService.GetServiceDetailsById(id);
 
                 _response.Data = list;
+            }
+
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DownloadServiceDetailsTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_ServiceDetails.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
             }
 
             return _response;

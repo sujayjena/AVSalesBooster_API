@@ -157,5 +157,191 @@ namespace AVSalesBoosterAPI.Controllers
             return _response;
         }
         #endregion
+
+        #region Multiple Activity Status API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveActivityTemplate(ActivityTemplate_Request request)
+        {
+            int result = await _manageActivitiesService.SaveActivityTemplate(request);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record details saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetActivityTemplateList(ActivityTemplate_Search request)
+        {
+            IEnumerable<ActivityTemplate_Response> lstActivityTemplates = await _manageActivitiesService.GetActivityTemplateList(request);
+            _response.Data = lstActivityTemplates.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetActivityTemplateDetailsById(long id)
+        {
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                var vResultObj = await _manageActivitiesService.GetActivityTemplateDetailsById(id);
+                _response.Data = vResultObj;
+            }
+
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveMultipleActivities(MultipleActivities_Request request)
+        {
+            //Image Upload
+            if (!string.IsNullOrWhiteSpace(request.DocumentFile_Base64))
+            {
+                var vUploadFile = _fileManager.UploadDocumentsBase64ToFile(request.DocumentFile_Base64, "\\Uploads\\Activity\\", request.DocumentFileName);
+
+                if (!string.IsNullOrWhiteSpace(vUploadFile))
+                {
+                    request.DocumentSavedFileName = vUploadFile;
+                }
+            }
+
+            int result = await _manageActivitiesService.SaveMultipleActivities(request);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record details saved sucessfully";
+
+                //Add / Update Remarks Details
+                if (result > 0)
+                {
+                    foreach (var item in request.MultipleActivitiesRemarks)
+                    {
+                        var vMultipleActivitiesRemarks_Request = new MultipleActivitiesRemarks_Request()
+                        {
+                            Id = item.Id,
+                            MultipleActivitiesId = result,
+                            Remarks = item.Remarks
+                        };
+
+                        int resultExpenseDetails = await _manageActivitiesService.SaveMultipleActivitiesRemarks(vMultipleActivitiesRemarks_Request);
+                    }
+                }
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetMultipleActivitiesList(MultipleActivities_Search request)
+        {
+            IEnumerable<MultipleActivities_Response> lstMultipleActivitiess = await _manageActivitiesService.GetMultipleActivitiesList(request);
+            _response.Data = lstMultipleActivitiess.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetMultipleActivitiesDetailsById(long id)
+        {
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                var vResultObj = await _manageActivitiesService.GetMultipleActivitiesDetailsById(id);
+                if (vResultObj != null)
+                {
+                    var serachObj = new MultipleActivitiesRemarks_Search();
+                    serachObj.MultipleActivitiesId = vResultObj.Id;
+                    serachObj.pagination = new PaginationParameters();
+
+                    var vMultipleActivitiesRemarksListObj = await _manageActivitiesService.GetMultipleActivitiesRemarksList(serachObj);
+                    vResultObj.MultipleActivitiesRemarks = vMultipleActivitiesRemarksListObj.ToList();
+                }
+                _response.Data = vResultObj;
+            }
+
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveMultipleActivitiesRemarks(MultipleActivitiesRemarks_Request request)
+        {
+            int result = await _manageActivitiesService.SaveMultipleActivitiesRemarks(request);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record details saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetMultipleActivitiesRemarksList(MultipleActivitiesRemarks_Search request)
+        {
+            IEnumerable<MultipleActivitiesRemarks_Response> lstMultipleActivitiess = await _manageActivitiesService.GetMultipleActivitiesRemarksList(request);
+            _response.Data = lstMultipleActivitiess.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+        #endregion
     }
 }
