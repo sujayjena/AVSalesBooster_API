@@ -184,6 +184,8 @@ namespace AVSalesBoosterAPI.Controllers
                 _response.IsSuccess = true;
                 _response.Message = "Record details saved sucessfully";
             }
+
+            _response.Id = result;
             return _response;
         }
 

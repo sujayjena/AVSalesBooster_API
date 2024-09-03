@@ -1,4 +1,5 @@
-﻿using Interfaces.Services;
+﻿using Helpers;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Constants;
@@ -14,13 +15,16 @@ namespace AVSalesBoosterAPI.Controllers
     {
         private ResponseModel _response;
         private IManageTerritoryService _manageTerritorService;
+        private readonly IFileManager _fileManager;
 
-        public ManageTerritoryController(IManageTerritoryService manageTerritorService)
+        public ManageTerritoryController(IManageTerritoryService manageTerritorService, IFileManager fileManager)
         {
             _manageTerritorService = manageTerritorService;
+            _fileManager = fileManager;
 
             _response = new ResponseModel();
             _response.IsSuccess = true;
+            
         }
 
         #region State API
@@ -81,6 +85,21 @@ namespace AVSalesBoosterAPI.Controllers
 
             return _response;
         }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DownloadStateTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_State.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
+            }
+
+            return _response;
+        }
+
         [Route("[action]")]
         [HttpPost]
         public async Task<ResponseModel> ImportStatesData([FromQuery] ImportRequest request)
@@ -149,6 +168,7 @@ namespace AVSalesBoosterAPI.Controllers
 
             return _response;
         }
+
         private byte[] GenerateInvalidStateDataFile(IEnumerable<StateDataValidationErrors> lstStatesFailedToImport)
         {
             byte[] result;
@@ -321,6 +341,20 @@ namespace AVSalesBoosterAPI.Controllers
                 region = await _manageTerritorService.GetRegionDetailsById(id);
                 _response.Data = region;
             }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DownloadRegionTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_Region.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
+            }
+
             return _response;
         }
 
@@ -575,6 +609,21 @@ namespace AVSalesBoosterAPI.Controllers
             }
             return _response;
         }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DownloadDistrictTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_District.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
+            }
+
+            return _response;
+        }
+
 
         [Route("[action]")]
         [HttpPost]
@@ -836,6 +885,22 @@ namespace AVSalesBoosterAPI.Controllers
             return _response;
         }
 
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DownloadAreaTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_Area.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
+            }
+
+            return _response;
+        }
+
+
         [Route("[action]")]
         [HttpPost]
         public async Task<ResponseModel> ImportAreasData([FromQuery] ImportRequest request)
@@ -864,10 +929,10 @@ namespace AVSalesBoosterAPI.Controllers
                 noOfCol = workSheet.Dimension.End.Column;
                 noOfRow = workSheet.Dimension.End.Row;
 
-                if (!string.Equals(workSheet.Cells[1, 1].Value.ToString(), "AreaName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 2].Value.ToString(), "DistrictName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 3].Value.ToString(), "RegionName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 4].Value.ToString(), "StateName", StringComparison.OrdinalIgnoreCase) ||
+                if (!string.Equals(workSheet.Cells[1, 1].Value.ToString(), "StateName", StringComparison.OrdinalIgnoreCase) ||
+                    !string.Equals(workSheet.Cells[1, 2].Value.ToString(), "RegionName", StringComparison.OrdinalIgnoreCase) ||
+                    !string.Equals(workSheet.Cells[1, 3].Value.ToString(), "DistrictName", StringComparison.OrdinalIgnoreCase) ||
+                    !string.Equals(workSheet.Cells[1, 4].Value.ToString(), "AreaName", StringComparison.OrdinalIgnoreCase) ||
                     !string.Equals(workSheet.Cells[1, 5].Value.ToString(), "IsActive", StringComparison.OrdinalIgnoreCase))
                 {
                     _response.IsSuccess = false;
@@ -879,10 +944,10 @@ namespace AVSalesBoosterAPI.Controllers
                 {
                     lstImportedAreaDetails.Add(new ImportedAreaDetails()
                     {
-                        AreaName = workSheet.Cells[rowIterator, 1].Value?.ToString(),
-                        DistrictName = workSheet.Cells[rowIterator, 2].Value?.ToString(),
-                        RegionName = workSheet.Cells[rowIterator, 3].Value?.ToString(),
-                        StateName = workSheet.Cells[rowIterator, 4].Value?.ToString(),
+                        StateName = workSheet.Cells[rowIterator, 1].Value?.ToString(),
+                        RegionName = workSheet.Cells[rowIterator, 2].Value?.ToString(),
+                        DistrictName = workSheet.Cells[rowIterator, 3].Value?.ToString(),
+                        AreaName = workSheet.Cells[rowIterator, 4].Value?.ToString(),
                         IsActive = workSheet.Cells[rowIterator, 5].Value?.ToString()
                     });
                 }
@@ -929,10 +994,10 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "AreaName";
-                    WorkSheet1.Cells[1, 2].Value = "DistrictName";
-                    WorkSheet1.Cells[1, 3].Value = "RegionName";
-                    WorkSheet1.Cells[1, 4].Value = "StateName";
+                    WorkSheet1.Cells[1, 1].Value = "StateName";
+                    WorkSheet1.Cells[1, 2].Value = "RegionName";
+                    WorkSheet1.Cells[1, 3].Value = "DistrictName";
+                    WorkSheet1.Cells[1, 4].Value = "AreaName";
                     WorkSheet1.Cells[1, 5].Value = "IsActive";
                     WorkSheet1.Cells[1, 6].Value = "ValidationMessage";
 
@@ -940,10 +1005,10 @@ namespace AVSalesBoosterAPI.Controllers
 
                     foreach (AreaDataValidationErrors record in lstAreasFailedToImport)
                     {
-                        WorkSheet1.Cells[recordIndex, 1].Value = record.AreaName;
-                        WorkSheet1.Cells[recordIndex, 2].Value = record.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 3].Value = record.RegionName;
-                        WorkSheet1.Cells[recordIndex, 4].Value = record.StateName;
+                        WorkSheet1.Cells[recordIndex, 1].Value = record.StateName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = record.RegionName;
+                        WorkSheet1.Cells[recordIndex, 3].Value = record.DistrictName;
+                        WorkSheet1.Cells[recordIndex, 4].Value = record.AreaName;
                         WorkSheet1.Cells[recordIndex, 5].Value = record.IsActive;
                         WorkSheet1.Cells[recordIndex, 6].Value = record.ValidationMessage;
 

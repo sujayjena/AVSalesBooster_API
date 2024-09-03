@@ -38,4 +38,20 @@ namespace Models
         public string? YoutubeLink { get; set; }
         public bool IsActive { get; set; }
     }
+
+    public class ImportedServiceDetails
+    {
+        public string? ServiceName { get; set; }
+        public string? ServiceDesc { get; set; }
+        public string? YoutubeLink { get; set; }
+        public string IsActive { get; set; }
+    }
+    public class ServiceDetailsDataValidationErrors
+    {
+        public string? ServiceName { get; set; }
+        public string? ServiceDesc { get; set; }
+        public string? YoutubeLink { get; set; }
+        public string IsActive { get; set; }
+        public string ValidationMessage { get; set; }
+    }
 }

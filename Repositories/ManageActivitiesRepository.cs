@@ -43,6 +43,8 @@ namespace Repositories
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@PageNo", parameters.pagination.PageNo);
             queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@ActivityStatusId", parameters.ActivityStatusId);
+            queryParameters.Add("@IsCreated_Or_Assigned", parameters.IsCreated_Or_Assigned);
             queryParameters.Add("@EmployeeId", parameters.EmployeeId);
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
@@ -155,6 +157,8 @@ namespace Repositories
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@PageNo", parameters.pagination.PageNo);
             queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@ActivityStatusId", parameters.ActivityStatusId);
+            queryParameters.Add("@IsCreated_Or_Assigned", parameters.IsCreated_Or_Assigned);
             queryParameters.Add("@EmployeeId", parameters.EmployeeId);
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());

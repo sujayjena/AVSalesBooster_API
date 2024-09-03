@@ -139,6 +139,7 @@ namespace Models
         public int Id { get; set; }
         public int? ExpenseId { get; set; }
         public string ExpenseNumber { get; set; }
+        public string VisitNo { get; set; }
         public DateTime? ExpenseDate { get; set; }
         public int? ExpenseTypeId { get; set; }
         public string ExpenseTypeName { get; set; }

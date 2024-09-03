@@ -56,10 +56,10 @@ namespace Services
             return objCustomerDetailsResponse;
         }
 
-        public async Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> request)
-        {
-            return await _customerRepository.ImportCustomersDetails(request);
-        }
+        //public async Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> request)
+        //{
+        //    return await _customerRepository.ImportCustomersDetails(request);
+        //}
 
 
         public async Task<IEnumerable<ContactDetail>> GetCustomerContactDetailsList(SearchContactAddressRequest request)
@@ -96,6 +96,21 @@ namespace Services
             AddressDetail? data = await _customerRepository.GetCustomerAddressDetailsById(id);
 
             return data;
+        }
+
+        public async Task<IEnumerable<Customer_ImportDataValidation>> ImportCustomer(List<Customer_ImportData> request)
+        {
+            return await _customerRepository.ImportCustomer(request);
+        }
+
+        public async Task<IEnumerable<Contact_ImportDataValidation>> ImportCustomerContact(List<Contact_ImportData> request)
+        {
+            return await _customerRepository.ImportCustomerContact(request);
+        }
+
+        public async Task<IEnumerable<Address_ImportDataValidation>> ImportCustomerAddress(List<Address_ImportData> request)
+        {
+            return await _customerRepository.ImportCustomerAddress(request);
         }
     }
 }

@@ -60,5 +60,14 @@ namespace Repositories
 
             return (await ListByStoredProcedure<ServiceDetailsResponse>("GetServiceDetailsById", queryParameters)).FirstOrDefault();
         }
+
+        public async Task<IEnumerable<ServiceDetailsDataValidationErrors>> ImportServiceDetails(List<ImportedServiceDetails> parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@xmlData", xmlData);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await ListByStoredProcedure<ServiceDetailsDataValidationErrors>("ImportServiceDetails", queryParameters);
+        }
     }
 }

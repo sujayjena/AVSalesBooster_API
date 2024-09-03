@@ -52,6 +52,7 @@ namespace Repositories
             queryParameters.Add("@EmployeeRoleId", parameters.EmployeeRoleId);
             queryParameters.Add("@EmployeeId", parameters.EmployeeId);
             queryParameters.Add("@RefPartyName", parameters.RefPartyName);
+            queryParameters.Add("@IndustryId", parameters.IndustryId);
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@GstFileName", parameters.GstFileName.SanitizeValue());
             queryParameters.Add("@GstSavedFileName", parameters.GstSavedFileName.SanitizeValue());
@@ -75,14 +76,14 @@ namespace Repositories
             queryParameters.Add("@Id", id);
             return (await ListByStoredProcedure<CustomerResponse>("GetCustomerDetailsById", queryParameters)).FirstOrDefault();
         }
-        public async Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> parameters)
-        {
-            DynamicParameters queryParameters = new DynamicParameters();
-            string xmlCustomerData = ConvertListToXml(parameters);
-            queryParameters.Add("@XmlCustomerData", xmlCustomerData);
-            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
-            return await ListByStoredProcedure<CustomerDataValidationErrors>("SaveImportCustomerDetails", queryParameters);
-        }
+        //public async Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> parameters)
+        //{
+        //    DynamicParameters queryParameters = new DynamicParameters();
+        //    string xmlCustomerData = ConvertListToXml(parameters);
+        //    queryParameters.Add("@XmlCustomerData", xmlCustomerData);
+        //    queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+        //    return await ListByStoredProcedure<CustomerDataValidationErrors>("SaveImportCustomerDetails", queryParameters);
+        //}
 
 
         public async Task<IEnumerable<ContactDetail>> GetCustomerContactDetailsList(SearchContactAddressRequest parameters)
@@ -178,6 +179,36 @@ namespace Repositories
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@Id", id);
             return (await ListByStoredProcedure<AddressDetail>("GetCustomerAddressDetailsById", queryParameters)).FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Customer_ImportDataValidation>> ImportCustomer(List<Customer_ImportData> parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            return await ListByStoredProcedure<Customer_ImportDataValidation>("ImportCustomer", queryParameters);
+        }
+
+        public async Task<IEnumerable<Contact_ImportDataValidation>> ImportCustomerContact(List<Contact_ImportData> parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            return await ListByStoredProcedure<Contact_ImportDataValidation>("ImportContact", queryParameters);
+        }
+
+        public async Task<IEnumerable<Address_ImportDataValidation>> ImportCustomerAddress(List<Address_ImportData> parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            return await ListByStoredProcedure<Address_ImportDataValidation>("ImportAddress", queryParameters);
         }
     }
 }

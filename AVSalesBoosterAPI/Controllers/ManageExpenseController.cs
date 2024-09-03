@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Enums;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
+using Services;
+using System.Globalization;
 
 namespace AVSalesBoosterAPI.Controllers
 {
@@ -166,6 +170,90 @@ namespace AVSalesBoosterAPI.Controllers
             return _response;
         }
 
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> ExportExpenseData()
+        {
+            _response.IsSuccess = false;
+            byte[] result;
+            int recordIndex;
+            ExcelWorksheet WorkSheet1;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            var request = new ExpenseDetails_Search();
+            request.pagination = new PaginationParameters();
+            request.ExpenseId = 0;
+            request.StatusId = 0;
+
+            IEnumerable<ExpenseDetails_Response> lstObj = await _manageExpenseService.GetExpenseDetailsList(request);
+
+            using (MemoryStream msExportDataFile = new MemoryStream())
+            {
+                using (ExcelPackage excelExportData = new ExcelPackage())
+                {
+                    WorkSheet1 = excelExportData.Workbook.Worksheets.Add("Expense");
+                    WorkSheet1.TabColor = System.Drawing.Color.Black;
+                    WorkSheet1.DefaultRowHeight = 12;
+
+                    //Header of table
+                    WorkSheet1.Row(1).Height = 20;
+                    WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    WorkSheet1.Row(1).Style.Font.Bold = true;
+
+                    WorkSheet1.Cells[1, 1].Value = "Expense Number";
+                    WorkSheet1.Cells[1, 2].Value = "Without Visit";
+                    WorkSheet1.Cells[1, 3].Value = "Expense Date";
+                    WorkSheet1.Cells[1, 4].Value = "Expense Type";
+                    WorkSheet1.Cells[1, 5].Value = "Description";
+                    WorkSheet1.Cells[1, 6].Value = "Amount(Rs)";
+
+                    WorkSheet1.Cells[1, 7].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 8].Value = "CreatedDate";
+
+                    recordIndex = 2;
+
+                    foreach (var items in lstObj.OrderByDescending(x=>x.ExpenseNumber))
+                    {
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.ExpenseNumber;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.VisitNo;
+                        WorkSheet1.Cells[recordIndex, 3].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.ExpenseDate;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.ExpenseTypeName;
+                        WorkSheet1.Cells[recordIndex, 5].Value = items.ExpenseDescription;
+                        WorkSheet1.Cells[recordIndex, 6].Value = items.ExpenseAmount;
+
+                        WorkSheet1.Cells[recordIndex, 7].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 8].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 8].Value = items.CreatedDate;
+
+                        recordIndex += 1;
+                    }
+
+                    WorkSheet1.Column(1).AutoFit();
+                    WorkSheet1.Column(2).AutoFit();
+                    WorkSheet1.Column(3).AutoFit();
+                    WorkSheet1.Column(4).AutoFit();
+                    WorkSheet1.Column(5).AutoFit();
+                    WorkSheet1.Column(6).AutoFit();
+                    WorkSheet1.Column(7).AutoFit();
+                    WorkSheet1.Column(8).AutoFit();
+
+                    excelExportData.SaveAs(msExportDataFile);
+                    msExportDataFile.Position = 0;
+                    result = msExportDataFile.ToArray();
+                }
+            }
+
+            if (result != null)
+            {
+                _response.Data = result;
+                _response.IsSuccess = true;
+                _response.Message = "Record Exported successfully";
+            }
+
+            return _response;
+        }
+
         #endregion
 
         #region Expense Details
@@ -277,7 +365,6 @@ namespace AVSalesBoosterAPI.Controllers
             _response.Total = parameters.pagination.Total;
             return _response;
         }
-
 
         #endregion
     }

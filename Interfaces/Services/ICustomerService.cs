@@ -7,7 +7,7 @@ namespace Interfaces.Services
         Task<IEnumerable<CustomerResponse>> GetCustomersList(SearchCustomerRequest request);
         Task<int> SaveCustomerDetails(CustomerRequest customerRequest);
         Task<CustomerDetailsResponse?> GetCustomerDetailsById(long id);
-        Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> request);
+        //Task<IEnumerable<CustomerDataValidationErrors>> ImportCustomersDetails(List<ImportedCustomerDetails> request);
 
         Task<IEnumerable<ContactDetail>> GetCustomerContactDetailsList(SearchContactAddressRequest request);
         Task<int> SaveContactDetails(ContactSaveRequestParameters parameter);
@@ -16,5 +16,9 @@ namespace Interfaces.Services
         Task<IEnumerable<AddressDetail>> GetCustomerAddressDetailsList(SearchContactAddressRequest request);
         Task<int> SaveAddressDetails(AddressSaveRequestParameters parameter);
         Task<AddressDetail?> GetCustomerAddressDetailsById(long id);
+
+        Task<IEnumerable<Customer_ImportDataValidation>> ImportCustomer(List<Customer_ImportData> parameters);
+        Task<IEnumerable<Contact_ImportDataValidation>> ImportCustomerContact(List<Contact_ImportData> parameters);
+        Task<IEnumerable<Address_ImportDataValidation>> ImportCustomerAddress(List<Address_ImportData> parameters);
     }
 }

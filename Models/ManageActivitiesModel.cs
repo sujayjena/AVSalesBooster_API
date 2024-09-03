@@ -12,6 +12,8 @@ namespace Models
 
     public class SingleActivities_Search
     {
+        public int? ActivityStatusId { get; set; }
+        public int? IsCreated_Or_Assigned { get; set; }
         public int? EmployeeId { get; set; }
 
         [DefaultValue("")]
@@ -169,6 +171,8 @@ namespace Models
 
     public class MultipleActivities_Search
     {
+        public int? ActivityStatusId { get; set; }
+        public int? IsCreated_Or_Assigned { get; set; }
         public int? EmployeeId { get; set; }
 
         [DefaultValue("")]

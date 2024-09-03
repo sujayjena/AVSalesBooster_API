@@ -34,7 +34,10 @@ namespace Services
             return await _serviceDetailsRepository.GetServiceDetailsById(id);
         }
 
-
+        public async Task<IEnumerable<ServiceDetailsDataValidationErrors>> ImportServiceDetails(List<ImportedServiceDetails> request)
+        {
+            return await _serviceDetailsRepository.ImportServiceDetails(request);
+        }
 
     }
 }

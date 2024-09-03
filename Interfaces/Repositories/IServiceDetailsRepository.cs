@@ -12,5 +12,6 @@ namespace Interfaces.Repositories
         Task<int> SaveServiceDetails(ServiceDetailsRequest request);
         Task<IEnumerable<ServiceDetailsResponse>> GetServiceDetailsList(SearchServiceDetailsRequest request);
         Task<ServiceDetailsResponse?> GetServiceDetailsById(long Id);
+        Task<IEnumerable<ServiceDetailsDataValidationErrors>> ImportServiceDetails(List<ImportedServiceDetails> parameters);
     }
 }

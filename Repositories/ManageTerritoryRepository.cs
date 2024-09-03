@@ -3,6 +3,7 @@ using Helpers;
 using Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Models;
+using System.Xml.Linq;
 
 namespace Repositories
 {
@@ -42,10 +43,10 @@ namespace Repositories
         public async Task<IEnumerable<StateDataValidationErrors>> ImportStatesDetails(List<ImportedStateDetails> parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
-            string xmlStateData = ConvertListToXml(parameters);
-            queryParameters.Add("@XmlStateData", xmlStateData);
+            string XmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", XmlData);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
-            return await ListByStoredProcedure<StateDataValidationErrors>("SaveImportStateDetails", queryParameters);
+            return await ListByStoredProcedure<StateDataValidationErrors>("ImportStatesDetails", queryParameters);
         }
         public async Task<StateResponse?> GetStateDetailsById(long id)
         {
@@ -90,10 +91,10 @@ namespace Repositories
         public async Task<IEnumerable<RegionDataValidationErrors>> ImportRegionsDetails(List<ImportedRegionDetails> parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
-            string xmlRegionData = ConvertListToXml(parameters);
-            queryParameters.Add("@XmlRegionData", xmlRegionData);
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
-            return await ListByStoredProcedure<RegionDataValidationErrors>("SaveImportRegionDetails", queryParameters);
+            return await ListByStoredProcedure<RegionDataValidationErrors>("ImportRegionsDetails", queryParameters);
         }
 
         public async Task<IEnumerable<DistrictResponse>> GetDistrictsList(SearchDistrictRequest parameters)
@@ -133,10 +134,10 @@ namespace Repositories
         public async Task<IEnumerable<DistrictDataValidationErrors>> ImportDistrictsDetails(List<ImportedDistrictDetails> parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
-            string xmlDistrictData = ConvertListToXml(parameters);
-            queryParameters.Add("@XmlDistrictData", xmlDistrictData);
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
-            return await ListByStoredProcedure<DistrictDataValidationErrors>("SaveImportDistrictDetails", queryParameters);
+            return await ListByStoredProcedure<DistrictDataValidationErrors>("ImportDistrictsDetails", queryParameters);
         }
 
         public async Task<IEnumerable<AreaResponse>> GetAreasList(SearchAreaRequest parameters)
@@ -175,10 +176,10 @@ namespace Repositories
         public async Task<IEnumerable<AreaDataValidationErrors>> ImportAreasDetails(List<ImportedAreaDetails> parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
-            string xmlAreaData = ConvertListToXml(parameters);
-            queryParameters.Add("@XmlAreaData", xmlAreaData);
+            string xmlData = ConvertListToXml(parameters);
+            queryParameters.Add("@XmlData", xmlData);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
-            return await ListByStoredProcedure<AreaDataValidationErrors>("SaveImportAreaDetails", queryParameters);
+            return await ListByStoredProcedure<AreaDataValidationErrors>("ImportAreasDetails", queryParameters);
         }
     }
 }

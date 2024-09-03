@@ -1,14 +1,17 @@
 ﻿using Helpers;
 using Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Models;
 using Models.Constants;
 using Models.Enums;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using Services;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
+using System.Data;
+using Newtonsoft.Json;
+using System;
 
 namespace AVSalesBoosterAPI.Controllers
 {
@@ -163,7 +166,7 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else if (result == (int)SaveEnums.NameExists)
             {
-                _response.Message = "Customer Name is already exists";
+                _response.Message = "Company Name is already exists";
             }
             else if (result == (int)SaveEnums.NoResult)
             {
@@ -200,16 +203,43 @@ namespace AVSalesBoosterAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
+        public async Task<ResponseModel> DownloadCustomerTemplate()
+        {
+            byte[]? formatFile = await Task.Run(() => _fileManager.GetFormatFileFromPath("Template_Customer.xlsx"));
+
+            if (formatFile != null)
+            {
+                _response.Data = formatFile;
+            }
+
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
         public async Task<ResponseModel> ImportCustomersData([FromQuery] ImportRequest request)
         {
+            byte[] result;
             _response.IsSuccess = false;
-            List<string[]> data = new List<string[]>();
+
+            int noOfColCustomer, noOfRowCustomer, noOfColCustomerContact, noOfRowCustomerContact, noOfColCustomerAddress, noOfRowCustomerAddress;
+            bool tableHasNullCustomer = false, tableHasNullCustomerContact = false, tableHasNullCustomerAddress = false;
+
+            List<Customer_ImportData> lstCustomerImportRequestModel = new List<Customer_ImportData>();
+            List<Contact_ImportData> lstCustomerContactImportRequestModel = new List<Contact_ImportData>();
+            List<Address_ImportData> lstCustomerAddressImportRequestModel = new List<Address_ImportData>();
+
+            DataTable dtCustomerTable;
+            DataTable dtCustomerContactTable;
+            DataTable dtCustomerAddressTable;
+
+            IEnumerable<Customer_ImportDataValidation> lstCustomer_ImportDataValidation_Result;
+            IEnumerable<Contact_ImportDataValidation> lstCustomerContact_ImportDataValidation_Result;
+            IEnumerable<Address_ImportDataValidation> lstCustomerAddress_ImportDataValidation_Result;
+
             ExcelWorksheets currentSheet;
             ExcelWorksheet workSheet;
-            List<ImportedCustomerDetails> lstImportedCustomerDetails = new List<ImportedCustomerDetails>();
-            IEnumerable<CustomerDataValidationErrors> lstCustomersFailedToImport;
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            int noOfCol, noOfRow;
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
             if (request.FileUpload == null || request.FileUpload.Length == 0)
             {
@@ -222,201 +252,277 @@ namespace AVSalesBoosterAPI.Controllers
                 request.FileUpload.CopyTo(stream);
                 using ExcelPackage package = new ExcelPackage(stream);
                 currentSheet = package.Workbook.Worksheets;
-                workSheet = currentSheet.First();
-                noOfCol = workSheet.Dimension.End.Column;
-                noOfRow = workSheet.Dimension.End.Row;
 
-                if (!string.Equals(workSheet.Cells[1, 1].Value.ToString(), "CompanyName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 2].Value.ToString(), "LandlineNo", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 3].Value.ToString(), "MobileNumber", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 4].Value.ToString(), "EmailId", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 5].Value.ToString(), "CustomerTypeName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 6].Value.ToString(), "SpecialRemarks", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 7].Value.ToString(), "EmployeeName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 8].Value.ToString(), "ContactName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 9].Value.ToString(), "MobileNo", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 10].Value.ToString(), "EmailAddress", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 11].Value.ToString(), "RefPartyName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 12].Value.ToString(), "Address", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 13].Value.ToString(), "StateName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 14].Value.ToString(), "RegionName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 15].Value.ToString(), "DistrictName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 16].Value.ToString(), "AreaName", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 17].Value.ToString(), "Pincode", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 18].Value.ToString(), "NameForAddress", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 19].Value.ToString(), "BuyerMobileNo", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 20].Value.ToString(), "BuyerEmailId", StringComparison.OrdinalIgnoreCase) ||
-                    !string.Equals(workSheet.Cells[1, 21].Value.ToString(), "AddressTypeName", StringComparison.OrdinalIgnoreCase) ||
-                   !string.Equals(workSheet.Cells[1, 22].Value.ToString(), "IsActive", StringComparison.OrdinalIgnoreCase)
-                   )
+                workSheet = currentSheet[0];
+                noOfColCustomer = workSheet.Dimension.End.Column;
+                noOfRowCustomer = workSheet.Dimension.End.Row;
+
+                for (int rowIterator = 2; rowIterator <= noOfRowCustomer; rowIterator++)
+                {
+                    if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()) && !string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 2].Value?.ToString()))
+                    {
+                        Customer_ImportData record = new Customer_ImportData();
+                        record.CompanyName = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : null;
+                        record.LandlineNo = workSheet.Cells[rowIterator, 2].Value != null ? workSheet.Cells[rowIterator, 2].Value.ToString() : null;
+                        record.MobileNumber = workSheet.Cells[rowIterator, 3].Value != null ? workSheet.Cells[rowIterator, 3].Value.ToString() : null;
+                        record.EmailId = workSheet.Cells[rowIterator, 4].Value != null ? workSheet.Cells[rowIterator, 4].Value.ToString() : null;
+                        record.CustomerTypeName = workSheet.Cells[rowIterator, 5].Value != null ? workSheet.Cells[rowIterator, 5].Value.ToString() : null;
+                        record.SpecialRemarks = workSheet.Cells[rowIterator, 6].Value != null ? workSheet.Cells[rowIterator, 6].Value.ToString() : null;
+                        record.EmployeeName = workSheet.Cells[rowIterator, 7].Value != null ? workSheet.Cells[rowIterator, 7].Value.ToString() : null;
+                        record.IsActive = workSheet.Cells[rowIterator, 8].Value != null ? workSheet.Cells[rowIterator, 8].Value.ToString() : null;
+
+                        lstCustomerImportRequestModel.Add(record);
+                    }
+                }
+
+                workSheet = currentSheet[1];
+                noOfColCustomerContact = workSheet.Dimension.End.Column;
+                noOfRowCustomerContact = workSheet.Dimension.End.Row;
+
+                for (int rowIterator = 2; rowIterator <= noOfRowCustomerContact; rowIterator++)
+                {
+                    if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()) && !string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 2].Value?.ToString()))
+                    {
+                        Contact_ImportData record = new Contact_ImportData();
+                        record.CompanyName = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : null;
+                        record.ContactName = workSheet.Cells[rowIterator, 2].Value != null ? workSheet.Cells[rowIterator, 2].Value.ToString() : null;
+                        record.MobileNumber = workSheet.Cells[rowIterator, 3].Value != null ? workSheet.Cells[rowIterator, 3].Value.ToString() : null;
+                        record.Email = workSheet.Cells[rowIterator, 4].Value != null ? workSheet.Cells[rowIterator, 4].Value.ToString() : null;
+                        record.IsActive = workSheet.Cells[rowIterator, 5].Value != null ? workSheet.Cells[rowIterator, 5].Value.ToString() : null;
+
+                        lstCustomerContactImportRequestModel.Add(record);
+                    }
+                }
+
+                workSheet = currentSheet[2];
+                noOfColCustomerAddress = workSheet.Dimension.End.Column;
+                noOfRowCustomerAddress = workSheet.Dimension.End.Row;
+
+                for (int rowIterator = 2; rowIterator <= noOfRowCustomerAddress; rowIterator++)
+                {
+                    if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()) && !string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 2].Value?.ToString()))
+                    {
+                        Address_ImportData record = new Address_ImportData();
+                        record.CompanyName = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : null;
+                        record.Address = workSheet.Cells[rowIterator, 2].Value != null ? workSheet.Cells[rowIterator, 2].Value.ToString() : null;
+                        record.State = workSheet.Cells[rowIterator, 3].Value != null ? workSheet.Cells[rowIterator, 4].Value.ToString() : null;
+                        record.Region = workSheet.Cells[rowIterator, 4].Value != null ? workSheet.Cells[rowIterator, 3].Value.ToString() : null;
+                        record.District = workSheet.Cells[rowIterator, 5].Value != null ? workSheet.Cells[rowIterator, 5].Value.ToString() : null;
+                        record.Area = workSheet.Cells[rowIterator, 6].Value != null ? workSheet.Cells[rowIterator, 6].Value.ToString() : null;
+                        record.PinCode = workSheet.Cells[rowIterator, 7].Value != null ? workSheet.Cells[rowIterator, 7].Value.ToString() : null;
+                        record.IsActive = workSheet.Cells[rowIterator, 8].Value != null ? workSheet.Cells[rowIterator, 8].Value.ToString() : null;
+
+
+                        lstCustomerAddressImportRequestModel.Add(record);
+                    }
+                }
+
+                if (lstCustomerImportRequestModel.Count == 0)
                 {
                     _response.IsSuccess = false;
-                    _response.Message = "Please upload a valid excel file. Please Download Format file for reference";
+                    _response.Message = "Uploaded customerfdata file does not contains any record";
                     return _response;
                 }
 
-                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                dtCustomerTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerImportRequestModel), typeof(DataTable));
+                dtCustomerContactTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerContactImportRequestModel), typeof(DataTable));
+                dtCustomerAddressTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerAddressImportRequestModel), typeof(DataTable));
+
+                //Excel Column Mismatch check. If column name has been changed then it's value will be null;
+                foreach (DataRow row in dtCustomerTable.Rows)
                 {
-
-                    lstImportedCustomerDetails.Add(new ImportedCustomerDetails()
+                    foreach (DataColumn col in dtCustomerTable.Columns)
                     {
-                        CompanyName = workSheet.Cells[rowIterator, 1].Value?.ToString(),
-                        LandlineNo = workSheet.Cells[rowIterator, 2].Value?.ToString(),
-                        MobileNumber = workSheet.Cells[rowIterator, 3].Value?.ToString(),
-                        EmailId = workSheet.Cells[rowIterator, 4].Value?.ToString(),
-                        CustomerTypeName = workSheet.Cells[rowIterator, 5].Value?.ToString(),
-                        SpecialRemarks = workSheet.Cells[rowIterator, 6].Value?.ToString(),
-                        EmployeeName = workSheet.Cells[rowIterator, 7].Value?.ToString(),
-                        ContactName = workSheet.Cells[rowIterator, 8].Value?.ToString(),
-                        MobileNo = workSheet.Cells[rowIterator, 9].Value?.ToString(),
-                        EmailAddress = workSheet.Cells[rowIterator, 10].Value?.ToString(),
-                        RefPartyName = workSheet.Cells[rowIterator, 11].Value?.ToString(),
-                        Address = workSheet.Cells[rowIterator, 12].Value?.ToString(),
-                        StateName = workSheet.Cells[rowIterator, 13].Value?.ToString(),
-                        RegionName = workSheet.Cells[rowIterator, 14].Value?.ToString(),
-                        DistrictName = workSheet.Cells[rowIterator, 15].Value?.ToString(),
-                        AreaName = workSheet.Cells[rowIterator, 16].Value?.ToString(),
-                        Pincode = workSheet.Cells[rowIterator, 17].Value?.ToString(),
-                        NameForAddress = workSheet.Cells[rowIterator, 18].Value?.ToString(),
-                        BuyerMobileNo = workSheet.Cells[rowIterator, 19].Value?.ToString(),
-                        BuyerEmailId = workSheet.Cells[rowIterator, 20].Value?.ToString(),
-                        AddressTypeName = workSheet.Cells[rowIterator, 21].Value?.ToString(),
-                        //contactDetails = importContactDetail,
-                        //addressDetails = importAddressDetail,
-                        IsActive = workSheet.Cells[rowIterator, 22].Value?.ToString()
-                    });
+                        if (row[col] == DBNull.Value)
+                        {
+                            tableHasNullCustomer = true;
+                            break;
+                        }
+                    }
                 }
-            }
 
-            if (lstImportedCustomerDetails.Count == 0)
-            {
-                _response.Message = "File does not contains any record(s)";
+                //Excel Column Mismatch check. If column name has been changed then it's value will be null;
+                foreach (DataRow row in dtCustomerContactTable.Rows)
+                {
+                    foreach (DataColumn col in dtCustomerContactTable.Columns)
+                    {
+                        if (row[col] == DBNull.Value)
+                        {
+                            tableHasNullCustomerContact = true;
+                            break;
+                        }
+                    }
+                }
+
+                //Excel Column Mismatch check. If column name has been changed then it's value will be null;
+                foreach (DataRow row in dtCustomerAddressTable.Rows)
+                {
+                    foreach (DataColumn col in dtCustomerAddressTable.Columns)
+                    {
+                        if (row[col] == DBNull.Value)
+                        {
+                            tableHasNullCustomerAddress = true;
+                            break;
+                        }
+                    }
+                }
+
+
+                //if (tableHasNullCustomer || tableHasNullCustomerContact || tableHasNullCustomerAddress)
+                //{
+                //    _response.IsSuccess = false;
+                //    _response.Message = "Please upload a valid excel file. Please Download Format file for reference.";
+                //    return _response;
+                //}
+
+                // Import Data
+                lstCustomer_ImportDataValidation_Result = await _customerService.ImportCustomer(lstCustomerImportRequestModel);
+                lstCustomerContact_ImportDataValidation_Result = await _customerService.ImportCustomerContact(lstCustomerContactImportRequestModel);
+                lstCustomerAddress_ImportDataValidation_Result = await _customerService.ImportCustomerAddress(lstCustomerAddressImportRequestModel);
+
+                _response.IsSuccess = true;
+                _response.Message = "Record imported successfully";
+
+                #region Generate Excel file for Invalid Data
+
+                if (lstCustomer_ImportDataValidation_Result.ToList().Count > 0 || lstCustomerContact_ImportDataValidation_Result.ToList().Count > 0 || lstCustomerAddress_ImportDataValidation_Result.ToList().Count > 0)
+                {
+                    _response.IsSuccess = false;
+
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        using (ExcelPackage excelInvalidData = new ExcelPackage())
+                        {
+                            if (lstCustomer_ImportDataValidation_Result.ToList().Count > 0)
+                            {
+                                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                                int recordIndex;
+                                ExcelWorksheet WorkSheet1 = excelInvalidData.Workbook.Worksheets.Add("Invalid_Customer_Records");
+                                WorkSheet1.TabColor = System.Drawing.Color.Black;
+                                WorkSheet1.DefaultRowHeight = 12;
+
+                                //Header of table
+                                WorkSheet1.Row(1).Height = 20;
+                                WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                WorkSheet1.Row(1).Style.Font.Bold = true;
+
+                                WorkSheet1.Cells[1, 1].Value = "CompanyName";
+                                WorkSheet1.Cells[1, 2].Value = "LandlineNo";
+                                WorkSheet1.Cells[1, 3].Value = "MobileNumber";
+                                WorkSheet1.Cells[1, 4].Value = "EmailId";
+                                WorkSheet1.Cells[1, 5].Value = "CustomerTypeName";
+                                WorkSheet1.Cells[1, 6].Value = "SpecialRemarks";
+                                WorkSheet1.Cells[1, 7].Value = "EmployeeName";
+                                WorkSheet1.Cells[1, 8].Value = "ErrorMessage";
+
+                                recordIndex = 2;
+
+                                foreach (Customer_ImportDataValidation record in lstCustomer_ImportDataValidation_Result)
+                                {
+                                    WorkSheet1.Cells[recordIndex, 1].Value = record.CompanyName;
+                                    WorkSheet1.Cells[recordIndex, 2].Value = record.LandlineNo;
+                                    WorkSheet1.Cells[recordIndex, 3].Value = record.MobileNumber;
+                                    WorkSheet1.Cells[recordIndex, 4].Value = record.EmailId;
+                                    WorkSheet1.Cells[recordIndex, 5].Value = record.CustomerTypeName;
+                                    WorkSheet1.Cells[recordIndex, 6].Value = record.SpecialRemarks;
+                                    WorkSheet1.Cells[recordIndex, 7].Value = record.EmployeeName;
+                                    WorkSheet1.Cells[recordIndex, 8].Value = record.ValidationMessage;
+
+                                    recordIndex += 1;
+                                }
+
+                                WorkSheet1.Columns.AutoFit();
+                            }
+
+                            if (lstCustomerContact_ImportDataValidation_Result.ToList().Count > 0)
+                            {
+                                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                                int recordIndex;
+                                ExcelWorksheet WorkSheet1 = excelInvalidData.Workbook.Worksheets.Add("Invalid_Contact_Records");
+                                WorkSheet1.TabColor = System.Drawing.Color.Black;
+                                WorkSheet1.DefaultRowHeight = 12;
+
+                                //Header of table
+                                WorkSheet1.Row(1).Height = 20;
+                                WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                WorkSheet1.Row(1).Style.Font.Bold = true;
+
+                                WorkSheet1.Cells[1, 1].Value = "CompanyName";
+                                WorkSheet1.Cells[1, 2].Value = "ContactName";
+                                WorkSheet1.Cells[1, 3].Value = "MobileNumber";
+                                WorkSheet1.Cells[1, 4].Value = "Email";
+                                WorkSheet1.Cells[1, 5].Value = "ErrorMessage";
+
+                                recordIndex = 2;
+
+                                foreach (Contact_ImportDataValidation record in lstCustomerContact_ImportDataValidation_Result)
+                                {
+                                    WorkSheet1.Cells[recordIndex, 1].Value = record.CompanyName;
+                                    WorkSheet1.Cells[recordIndex, 2].Value = record.ContactName;
+                                    WorkSheet1.Cells[recordIndex, 3].Value = record.MobileNumber;
+                                    WorkSheet1.Cells[recordIndex, 4].Value = record.Email;
+                                    WorkSheet1.Cells[recordIndex, 11].Value = record.ValidationMessage;
+
+                                    recordIndex += 1;
+                                }
+
+                                WorkSheet1.Columns.AutoFit();
+                            }
+
+                            if (lstCustomerAddress_ImportDataValidation_Result.ToList().Count > 0)
+                            {
+                                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                                int recordIndex;
+                                ExcelWorksheet WorkSheet1 = excelInvalidData.Workbook.Worksheets.Add("Invalid_Address_Records");
+                                WorkSheet1.TabColor = System.Drawing.Color.Black;
+                                WorkSheet1.DefaultRowHeight = 12;
+
+                                //Header of table
+                                WorkSheet1.Row(1).Height = 20;
+                                WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                WorkSheet1.Row(1).Style.Font.Bold = true;
+
+                                WorkSheet1.Cells[1, 1].Value = "CompanyName";
+                                WorkSheet1.Cells[1, 2].Value = "Address";
+                                WorkSheet1.Cells[1, 3].Value = "State";
+                                WorkSheet1.Cells[1, 4].Value = "Region";
+                                WorkSheet1.Cells[1, 5].Value = "District";
+                                WorkSheet1.Cells[1, 6].Value = "Area";
+                                WorkSheet1.Cells[1, 7].Value = "PinCode";
+                                WorkSheet1.Cells[1, 8].Value = "ErrorMessage";
+
+                                recordIndex = 2;
+
+                                foreach (Address_ImportDataValidation record in lstCustomerAddress_ImportDataValidation_Result)
+                                {
+                                    WorkSheet1.Cells[recordIndex, 1].Value = record.CompanyName;
+                                    WorkSheet1.Cells[recordIndex, 2].Value = record.Address;
+                                    WorkSheet1.Cells[recordIndex, 3].Value = record.State;
+                                    WorkSheet1.Cells[recordIndex, 4].Value = record.Region;
+                                    WorkSheet1.Cells[recordIndex, 5].Value = record.District;
+                                    WorkSheet1.Cells[recordIndex, 6].Value = record.Area;
+                                    WorkSheet1.Cells[recordIndex, 7].Value = record.PinCode;
+                                    WorkSheet1.Cells[recordIndex, 8].Value = record.ValidationMessage;
+
+                                    recordIndex += 1;
+                                }
+
+                                WorkSheet1.Columns.AutoFit();
+                            }
+
+                            excelInvalidData.SaveAs(memoryStream);
+                            memoryStream.Position = 0;
+                            result = memoryStream.ToArray();
+
+                            _response.Data = result;
+                        }
+                    }
+                }
+
+                #endregion
+
                 return _response;
             }
-
-            lstCustomersFailedToImport = await _customerService.ImportCustomersDetails(lstImportedCustomerDetails);
-
-            _response.IsSuccess = true;
-            _response.Message = "Customers list imported successfully";
-
-            #region Generate Excel file for Invalid Data
-            if (lstCustomersFailedToImport.ToList().Count > 0)
-            {
-                _response.Message = "Uploaded file contains invalid records, please check downloaded file for more details";
-                _response.Data = GenerateInvalidCustomerDataFile(lstCustomersFailedToImport);
-
-            }
-            #endregion
-
-            return _response;
-        }
-
-        private byte[] GenerateInvalidCustomerDataFile(IEnumerable<CustomerDataValidationErrors> lstCustomersFailedToImport)
-        {
-            byte[] result;
-            int recordIndex;
-            ExcelWorksheet WorkSheet1;
-
-            using (MemoryStream msInvalidDataFile = new MemoryStream())
-            {
-                using (ExcelPackage excelInvalidData = new ExcelPackage())
-                {
-                    WorkSheet1 = excelInvalidData.Workbook.Worksheets.Add("Invalid_Customer_Records");
-                    WorkSheet1.TabColor = System.Drawing.Color.Black;
-                    WorkSheet1.DefaultRowHeight = 12;
-
-                    //Header of table
-                    WorkSheet1.Row(1).Height = 20;
-                    WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    WorkSheet1.Row(1).Style.Font.Bold = true;
-
-
-                    WorkSheet1.Cells[1, 1].Value = "CompanyName";
-                    WorkSheet1.Cells[1, 2].Value = "LandlineNo";
-                    WorkSheet1.Cells[1, 3].Value = "MobileNumber";
-                    WorkSheet1.Cells[1, 4].Value = "EmailId";
-                    WorkSheet1.Cells[1, 5].Value = "CustomerTypeName";
-                    WorkSheet1.Cells[1, 6].Value = "SpecialRemarks";
-                    WorkSheet1.Cells[1, 7].Value = "EmployeeName";
-                    WorkSheet1.Cells[1, 8].Value = "ContactName";
-                    WorkSheet1.Cells[1, 9].Value = "MobileNo";
-                    WorkSheet1.Cells[1, 10].Value = "EmailAddress";
-                    WorkSheet1.Cells[1, 11].Value = "RefPartyName";
-                    WorkSheet1.Cells[1, 12].Value = "Address";
-                    WorkSheet1.Cells[1, 13].Value = "StateName";
-                    WorkSheet1.Cells[1, 14].Value = "RegionName";
-                    WorkSheet1.Cells[1, 15].Value = "DistrictName";
-                    WorkSheet1.Cells[1, 16].Value = "AreaName";
-                    WorkSheet1.Cells[1, 17].Value = "Pincode";
-                    WorkSheet1.Cells[1, 18].Value = "NameForAddress";
-                    WorkSheet1.Cells[1, 19].Value = "BuyerMobileNo";
-                    WorkSheet1.Cells[1, 20].Value = "BuyerEmailId";
-                    WorkSheet1.Cells[1, 21].Value = "AddressTypeName";
-                    WorkSheet1.Cells[1, 22].Value = "IsActive";
-                    WorkSheet1.Cells[1, 23].Value = "ValidationMessage";
-
-
-                    recordIndex = 2;
-
-                    foreach (CustomerDataValidationErrors record in lstCustomersFailedToImport)
-                    {
-                        WorkSheet1.Cells[recordIndex, 1].Value = record.CompanyName;
-                        WorkSheet1.Cells[recordIndex, 2].Value = record.LandlineNo;
-                        WorkSheet1.Cells[recordIndex, 3].Value = record.MobileNumber;
-                        WorkSheet1.Cells[recordIndex, 4].Value = record.EmailId;
-                        WorkSheet1.Cells[recordIndex, 5].Value = record.CustomerTypeName;
-                        WorkSheet1.Cells[recordIndex, 6].Value = record.SpecialRemarks;
-                        WorkSheet1.Cells[recordIndex, 7].Value = record.EmployeeName;
-                        WorkSheet1.Cells[recordIndex, 8].Value = record.ContactName;
-                        WorkSheet1.Cells[recordIndex, 9].Value = record.MobileNo;
-                        WorkSheet1.Cells[recordIndex, 10].Value = record.EmailAddress;
-                        WorkSheet1.Cells[recordIndex, 11].Value = record.RefPartyName;
-                        WorkSheet1.Cells[recordIndex, 12].Value = record.Address;
-                        WorkSheet1.Cells[recordIndex, 13].Value = record.StateName;
-                        WorkSheet1.Cells[recordIndex, 14].Value = record.RegionName;
-                        WorkSheet1.Cells[recordIndex, 15].Value = record.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 16].Value = record.AreaName;
-                        WorkSheet1.Cells[recordIndex, 17].Value = record.Pincode;
-                        WorkSheet1.Cells[recordIndex, 18].Value = record.NameForAddress;
-                        WorkSheet1.Cells[recordIndex, 19].Value = record.BuyerMobileNo;
-                        WorkSheet1.Cells[recordIndex, 20].Value = record.BuyerEmailId;
-                        WorkSheet1.Cells[recordIndex, 21].Value = record.AddressTypeName;
-                        WorkSheet1.Cells[recordIndex, 22].Value = record.IsActive;
-                        WorkSheet1.Cells[recordIndex, 23].Value = record.ValidationMessage;
-                        recordIndex += 1;
-                    }
-
-                    WorkSheet1.Column(1).AutoFit();
-                    WorkSheet1.Column(2).AutoFit();
-                    WorkSheet1.Column(3).AutoFit();
-                    WorkSheet1.Column(4).AutoFit();
-                    WorkSheet1.Column(5).AutoFit();
-                    WorkSheet1.Column(6).AutoFit();
-                    WorkSheet1.Column(7).AutoFit();
-                    WorkSheet1.Column(8).AutoFit();
-                    WorkSheet1.Column(9).AutoFit();
-                    WorkSheet1.Column(10).AutoFit();
-                    WorkSheet1.Column(11).AutoFit();
-                    WorkSheet1.Column(12).AutoFit();
-                    WorkSheet1.Column(13).AutoFit();
-                    WorkSheet1.Column(14).AutoFit();
-                    WorkSheet1.Column(15).AutoFit();
-                    WorkSheet1.Column(16).AutoFit();
-                    WorkSheet1.Column(17).AutoFit();
-                    WorkSheet1.Column(18).AutoFit();
-                    WorkSheet1.Column(19).AutoFit();
-                    WorkSheet1.Column(20).AutoFit();
-                    WorkSheet1.Column(21).AutoFit();
-                    WorkSheet1.Column(22).AutoFit();
-                    WorkSheet1.Column(23).AutoFit();
-
-                    excelInvalidData.SaveAs(msInvalidDataFile);
-                    msInvalidDataFile.Position = 0;
-                    result = msInvalidDataFile.ToArray();
-                }
-            }
-
-            return result;
         }
 
         [Route("[action]")]
@@ -686,6 +792,5 @@ namespace AVSalesBoosterAPI.Controllers
             return _response;
         }
         #endregion
-
     }
 }

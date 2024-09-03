@@ -7,6 +7,10 @@ using System.Xml.Serialization;
 
 namespace Models
 {
+    public class CustomerModel
+    {
+    }
+
     public class CustomerRequest
     {
         public long CustomerId { get; set; }
@@ -44,6 +48,8 @@ namespace Models
         public long EmployeeId { get; set; }
 
         public string RefPartyName { get; set; }
+
+        public long IndustryId { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -97,6 +103,8 @@ namespace Models
         public string DistrictName { get; set; }
         public string AreaName { get; set; }
         public string RefPartyName { get; set; }
+        public long IndustryId { get; set; }
+        public string IndustryName { get; set; }
 
         public string GstFileName { get; set; }
         public string GstSavedFileName { get; set; }
@@ -217,7 +225,78 @@ namespace Models
         public long? AddressTypeId { get; set; }
         public string AddressType { get; set; } 
     }
-    public class CustomerDataValidationErrors
+    //public class CustomerDataValidationErrors
+    //{
+    //    public string CompanyName { get; set; }
+    //    public string LandlineNo { get; set; }
+    //    public string MobileNumber { get; set; }
+    //    public string EmailId { get; set; }
+    //    public string CustomerTypeName { get; set; }
+    //    public string SpecialRemarks { get; set; }
+    //    public string EmployeeName { get; set; }
+    //    public string ContactName { get; set; }
+    //    public string MobileNo { get; set; }
+    //    public string EmailAddress { get; set; }
+    //    public string RefPartyName { get; set; }
+    //    public string Address { get; set; }
+    //    public string StateName { get; set; }
+    //    public string RegionName { get; set; }
+    //    public string DistrictName { get; set; }
+    //    public string AreaName { get; set; }
+    //    public string Pincode { get; set; }
+    //    public string NameForAddress { get; set; }
+    //    public string BuyerMobileNo { get; set; }
+    //    public string BuyerEmailId { get; set; }
+    //    public string AddressTypeName { get; set; }
+    //    public string IsActive { get; set; }
+    //    public string ValidationMessage { get; set; }
+    //}
+    //public class ImportedCustomerDetails
+    //{
+    //    public string CompanyName { get; set; }
+    //    public string LandlineNo { get; set; }
+    //    public string MobileNumber { get; set; }
+    //    public string EmailId { get; set; }
+    //    public string CustomerTypeName { get; set; }
+    //    public string SpecialRemarks { get; set; }
+    //    public string EmployeeName { get; set; }
+    //    public string ContactName { get; set; }
+    //    public string MobileNo { get; set; }
+    //    public string EmailAddress { get; set; }
+    //    public string RefPartyName { get; set; }
+    //    public string Address { get; set; }
+    //    public string StateName { get; set; }
+    //    public string RegionName { get; set; }
+    //    public string DistrictName { get; set; }
+    //    public string AreaName { get; set; }
+    //    public string Pincode { get; set; }
+    //    public string NameForAddress { get; set; }
+    //    public string BuyerMobileNo { get; set; }
+    //    public string BuyerEmailId { get; set; }
+    //    public string AddressTypeName { get; set; }
+    //    public string IsActive { get; set; }
+    //}
+
+    public class Customer_ImportData
+    {
+        public string CompanyName { get; set; }
+
+        public string LandlineNo { get; set; }
+
+        public string MobileNumber { get; set; }
+
+        public string EmailId { get; set; }
+
+        public string CustomerTypeName { get; set; }
+
+        public string SpecialRemarks { get; set; }
+
+        public string EmployeeName { get; set; }
+
+        public string IsActive { get; set; }
+    }
+
+    public class Customer_ImportDataValidation
     {
         public string CompanyName { get; set; }
         public string LandlineNo { get; set; }
@@ -226,47 +305,8 @@ namespace Models
         public string CustomerTypeName { get; set; }
         public string SpecialRemarks { get; set; }
         public string EmployeeName { get; set; }
-        public string ContactName { get; set; }
-        public string MobileNo { get; set; }
-        public string EmailAddress { get; set; }
-        public string RefPartyName { get; set; }
-        public string Address { get; set; }
-        public string StateName { get; set; }
-        public string RegionName { get; set; }
-        public string DistrictName { get; set; }
-        public string AreaName { get; set; }
-        public string Pincode { get; set; }
-        public string NameForAddress { get; set; }
-        public string BuyerMobileNo { get; set; }
-        public string BuyerEmailId { get; set; }
-        public string AddressTypeName { get; set; }
         public string IsActive { get; set; }
         public string ValidationMessage { get; set; }
-    }
-    public class ImportedCustomerDetails
-    {
-        public string CompanyName { get; set; }
-        public string LandlineNo { get; set; }
-        public string MobileNumber { get; set; }
-        public string EmailId { get; set; }
-        public string CustomerTypeName { get; set; }
-        public string SpecialRemarks { get; set; }
-        public string EmployeeName { get; set; }
-        public string ContactName { get; set; }
-        public string MobileNo { get; set; }
-        public string EmailAddress { get; set; }
-        public string RefPartyName { get; set; }
-        public string Address { get; set; }
-        public string StateName { get; set; }
-        public string RegionName { get; set; }
-        public string DistrictName { get; set; }
-        public string AreaName { get; set; }
-        public string Pincode { get; set; }
-        public string NameForAddress { get; set; }
-        public string BuyerMobileNo { get; set; }
-        public string BuyerEmailId { get; set; }
-        public string AddressTypeName { get; set; }
-        public string IsActive { get; set; }
     }
 
     public class ContactSaveRequestParameters
@@ -339,5 +379,47 @@ namespace Models
         [DefaultValue("")]
         public string SearchValue { get; set; }
         public Nullable<bool> IsActive { get; set; }
+    }
+
+    public class Contact_ImportData
+    {
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+        public string IsActive { get; set; }
+    }
+
+    public class Contact_ImportDataValidation
+    {
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+        public string ValidationMessage { get; set; }
+    }
+
+    public class Address_ImportData
+    {
+        public string CompanyName { get; set; }
+        public string Address { get; set; }
+        public string State { get; set; }
+        public string Region { get; set; }
+        public string District { get; set; }
+        public string Area { get; set; }
+        public string PinCode { get; set; }
+        public string IsActive { get; set; }
+    }
+
+    public class Address_ImportDataValidation
+    {
+        public string CompanyName { get; set; }
+        public string Address { get; set; }
+        public string State { get; set; }
+        public string Region { get; set; }
+        public string District { get; set; }
+        public string Area { get; set; }
+        public string PinCode { get; set; }
+        public string ValidationMessage { get; set; }
     }
 }
