@@ -9,6 +9,7 @@ using OfficeOpenXml.Style;
 using Services;
 using System.Globalization;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace AVSalesBoosterAPI.Controllers
@@ -683,6 +684,62 @@ namespace AVSalesBoosterAPI.Controllers
             {
                 _response.IsSuccess = true;
                 _response.Message = "Employee details saved sucessfully";
+
+                #region // Add/Update Employee State
+
+                // Delete state of employee
+
+                var vStateDELETEObj = new EmployeeState_Request()
+                {
+                    Action = "DELETE",
+                    EmployeeId = result,
+                    StateId = 0
+                };
+                int resultStateMappingDELETE = await _profileService.SaveEmployeeState(vStateDELETEObj);
+
+
+                // Add new mapping of employee
+                foreach (var vStateitem in parameter.StateList)
+                {
+                    var vStateMapObj = new EmployeeState_Request()
+                    {
+                        Action = "INSERT",
+                        EmployeeId = result,
+                        StateId = vStateitem.StateId
+                    };
+
+                    int resultBranchMapping = await _profileService.SaveEmployeeState(vStateMapObj);
+                }
+
+                #endregion
+
+                #region // Add/Update Employee Region
+
+                // Delete state of employee
+
+                var vRegionDELETEObj = new EmployeeRegion_Request()
+                {
+                    Action = "DELETE",
+                    EmployeeId = result,
+                    RegionId = 0
+                };
+                int resultRegionMappingDELETE = await _profileService.SaveEmployeeRegion(vRegionDELETEObj);
+
+
+                // Add new mapping of employee
+                foreach (var vRegionitem in parameter.RegionList)
+                {
+                    var vRegionMapObj = new EmployeeRegion_Request()
+                    {
+                        Action = "INSERT",
+                        EmployeeId = result,
+                        RegionId = vRegionitem.RegionId
+                    };
+
+                    int resultRegionMapping = await _profileService.SaveEmployeeRegion(vRegionMapObj);
+                }
+
+                #endregion
             }
 
             return _response;
@@ -730,6 +787,16 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 employee = await _profileService.GetEmployeeDetailsById(id);
+
+                if (employee != null)
+                {
+                    var statelistObj = await _profileService.GetEmployeeStateByEmployeeId(employee.EmployeeId, 0);
+                    var regionlistObj = await _profileService.GetEmployeeRegionByEmployeeId(employee.EmployeeId, 0);
+
+                    employee.StateList = statelistObj.ToList();
+                    employee.RegionList = regionlistObj.ToList();
+                }
+
                 _response.Data = employee;
             }
 

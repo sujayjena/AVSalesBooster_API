@@ -25,6 +25,13 @@ namespace Models
         public string SearchValue { get; set; }
         public DateTime? FromPunchInDate { get; set; }
         public DateTime? ToPunchInDate { get; set; }
+
+        [DefaultValue("")]
+        public string StateId { get; set; }
+
+        [DefaultValue("")]
+        public string RegionId { get; set; }
+
     }
 
     public class PunchInOutHistoryModel

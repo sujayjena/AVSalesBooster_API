@@ -117,6 +117,25 @@ namespace Services
             return response;
         }
 
+        public async Task<int> SaveEmployeeState(EmployeeState_Request request)
+        {
+            return await _profileRepository.SaveEmployeeState(request);
+        }
+
+        public async Task<IEnumerable<EmployeeState_Response>> GetEmployeeStateByEmployeeId(long EmployeeId, long StateId)
+        {
+            return await _profileRepository.GetEmployeeStateByEmployeeId(EmployeeId, StateId);
+        }
+
+        public async Task<int> SaveEmployeeRegion(EmployeeRegion_Request request)
+        {
+            return await _profileRepository.SaveEmployeeRegion(request);
+        }
+        public async Task<IEnumerable<EmployeeRegion_Response>> GetEmployeeRegionByEmployeeId(long EmployeeId, long RegionId)
+        {
+            return await _profileRepository.GetEmployeeRegionByEmployeeId(EmployeeId, RegionId);
+        }
+
         public async Task<IEnumerable<EmployeeDataValidationErrors>> ImportEmployeesDetails(List<ImportedEmployeeDetails> request)
         {
             return await _profileRepository.ImportEmployeesDetails(request);

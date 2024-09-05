@@ -28,6 +28,8 @@ namespace Repositories
             //queryParameters.Add("@LeaveReason", parameters.LeaveReason.SanitizeValue());
             queryParameters.Add("@SearchValue", parameters.SearchValue.SanitizeValue());
             queryParameters.Add("@LeaveStatusId", parameters.LeaveStatusId.SanitizeValue());
+            queryParameters.Add("@StateId", parameters.StateId.SanitizeValue());
+            queryParameters.Add("@RegionId", parameters.RegionId.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@FilterType", parameters.FilterType.SanitizeValue());
             queryParameters.Add("@EmployeeId", parameters.EmployeeId.SanitizeValue());

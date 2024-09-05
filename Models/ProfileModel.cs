@@ -96,6 +96,13 @@ namespace Models
         [DefaultValue("")]
         public string ValueForSearch { get; set; } = null;
 
+        [DefaultValue("")]
+        public string StateId { get; set; }
+
+        [DefaultValue("")]
+        public string RegionId { get; set; }
+
+
         [DefaultValue(null)]
         public bool? IsActive { get; set; }
 
@@ -197,6 +204,9 @@ namespace Models
         //[MaxLength(ValidationConstants.Pincode_MaxLength, ErrorMessage = ValidationConstants.Pincode_MaxLength_Msg)]
         //[MinLength(ValidationConstants.Pincode_MinLength, ErrorMessage = ValidationConstants.Pincode_MinLength_Msg)]
         public string Pincode { get; set; }
+
+        public List<EmployeeState_Request> StateList { get; set; }
+        public List<EmployeeRegion_Request> RegionList { get; set; }
     }
 
     public class EmployeeResponse : CreationDetails
@@ -251,6 +261,9 @@ namespace Models
         public string ProfilePictureUrl { get; set; }
         public string AdharCardPictureUrl { get; set; }
         public string PanCardPictureUrl { get; set; }
+
+        public List<EmployeeState_Response> StateList { get; set; }
+        public List<EmployeeRegion_Response> RegionList { get; set; }
     }
     public class EmployeeReportingToResponse
     {
@@ -475,5 +488,45 @@ namespace Models
         public bool View { get; set; }
         public bool Add { get; set; }
         public bool Edit { get; set; }
+    }
+
+    public class EmployeeState_Request
+    {
+        public int Id { get; set; }
+
+        [JsonIgnore]
+        public string Action { get; set; }
+
+        [JsonIgnore]
+        public int? EmployeeId { get; set; }
+        public int? StateId { get; set; }
+    }
+
+    public class EmployeeState_Response
+    {
+        public int Id { get; set; }
+        public int? EmployeeId { get; set; }
+        public int? StateId { get; set; }
+        public string StateName { get; set; }
+    }
+
+    public class EmployeeRegion_Request
+    {
+        public int Id { get; set; }
+
+        [JsonIgnore]
+        public string Action { get; set; }
+
+        [JsonIgnore]
+        public int? EmployeeId { get; set; }
+        public int? RegionId { get; set; }
+    }
+
+    public class EmployeeRegion_Response
+    {
+        public int Id { get; set; }
+        public int? EmployeeId { get; set; }
+        public int? RegionId { get; set; }
+        public string RegionName { get; set; }
     }
 }

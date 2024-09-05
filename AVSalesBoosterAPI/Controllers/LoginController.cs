@@ -68,8 +68,23 @@ namespace AVSalesBoosterAPI.Controllers
 
                     if (loginResponse.EmployeeId != null)
                     {
+                        string strStateIdList = string.Empty;
+                        string strRegionIdList = string.Empty;
+
                         var vRoleList = await _profileService.GetRoleMaster_Employee_PermissionById(Convert.ToInt64(loginResponse.EmployeeId));
                         var vUserNotificationList = await _notificationService.GetNotificationListById(Convert.ToInt64(loginResponse.EmployeeId));
+                       
+                        var vEmployeeStateDetail = await _profileService.GetEmployeeStateByEmployeeId(EmployeeId: Convert.ToInt32(loginResponse.EmployeeId), StateId: 0);
+                        if (vEmployeeStateDetail.ToList().Count > 0)
+                        {
+                            strStateIdList = string.Join(",", vEmployeeStateDetail.ToList().OrderBy(x => x.StateId).Select(x => x.StateId));
+                        }
+
+                        var vEmployeeRegionDetail = await _profileService.GetEmployeeRegionByEmployeeId(EmployeeId: Convert.ToInt32(loginResponse.EmployeeId), RegionId: 0);
+                        if (vEmployeeRegionDetail.ToList().Count > 0)
+                        {
+                            strRegionIdList = string.Join(",", vEmployeeRegionDetail.ToList().OrderBy(x => x.RegionId).Select(x => x.RegionId));
+                        }
 
                         employeeSessionData = new SessionDataEmployee
                         {
@@ -80,6 +95,8 @@ namespace AVSalesBoosterAPI.Controllers
                             EmailId = loginResponse.EmailId,
                             MobileNo = loginResponse.MobileNo,
                             RoleName = loginResponse.RoleName,
+                            StateId = strStateIdList,
+                            RegionId = strRegionIdList,
                             Token = tokenResponse.Item1,
                             UserRoleList = vRoleList.ToList(),
                             UserNotificationList = vUserNotificationList.ToList()

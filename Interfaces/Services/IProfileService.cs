@@ -20,6 +20,13 @@ namespace Interfaces.Services
         Task<int> UpdateEmpDetailsThroughApp(UpdateEmployeeDetailsRequest parameters);
 
         Task<EmployeeResponse?> GetEmployeeDetailsById(long id);
+
+        Task<int> SaveEmployeeState(EmployeeState_Request parameters);
+        Task<IEnumerable<EmployeeState_Response>> GetEmployeeStateByEmployeeId(long EmployeeId, long StateId);
+
+        Task<int> SaveEmployeeRegion(EmployeeRegion_Request parameters);
+        Task<IEnumerable<EmployeeRegion_Response>> GetEmployeeRegionByEmployeeId(long EmployeeId, long RegionId);
+
         Task<IEnumerable<EmployeeDataValidationErrors>> ImportEmployeesDetails(List<ImportedEmployeeDetails> request);
 
         Task<UsersLoginSessionData?> ValidateUserLoginByEmail(LoginByMobileNoRequestModel parameters);

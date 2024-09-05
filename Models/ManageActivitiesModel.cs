@@ -130,6 +130,8 @@ namespace Models
 
     public class ActivityTemplate_Search
     {
+        public int? ActivityStatusId { get; set; }
+
         [DefaultValue("")]
         public string ValueForSearch { get; set; } = null;
         public bool? IsActive { get; set; }
@@ -171,6 +173,7 @@ namespace Models
 
     public class MultipleActivities_Search
     {
+        public int? ActivityTemplateId { get; set; }
         public int? ActivityStatusId { get; set; }
         public int? IsCreated_Or_Assigned { get; set; }
         public int? EmployeeId { get; set; }

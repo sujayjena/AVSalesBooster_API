@@ -111,6 +111,8 @@ namespace Repositories
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
             queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
+            queryParameters.Add("@StateId", parameters.StateId.SanitizeValue());
+            queryParameters.Add("@RegionId", parameters.RegionId.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
 
             var result = await ListByStoredProcedure<EmployeeResponse>("GetEmployees", queryParameters);
@@ -194,6 +196,53 @@ namespace Repositories
             return (await ListByStoredProcedure<EmployeeResponse>("GetEmployeeDetailsById", queryParameters)).FirstOrDefault();
         }
 
+        public async Task<int> SaveEmployeeState(EmployeeState_Request parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Action", parameters.Action);
+            queryParameters.Add("@EmployeeId", parameters.EmployeeId);
+            queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            return await SaveByStoredProcedure<int>("SaveEmployeeState", queryParameters);
+        }
+
+        public async Task<IEnumerable<EmployeeState_Response>> GetEmployeeStateByEmployeeId(long EmployeeId, long StateId)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@EmployeeId", EmployeeId);
+            queryParameters.Add("@StateId", StateId);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            var result = await ListByStoredProcedure<EmployeeState_Response>("GetEmployeeStateByEmployeeId", queryParameters);
+
+            return result;
+        }
+
+        public async Task<int> SaveEmployeeRegion(EmployeeRegion_Request parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Action", parameters.Action);
+            queryParameters.Add("@EmployeeId", parameters.EmployeeId);
+            queryParameters.Add("@RegionId", parameters.RegionId);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            return await SaveByStoredProcedure<int>("SaveEmployeeRegion", queryParameters);
+        }
+
+        public async Task<IEnumerable<EmployeeRegion_Response>> GetEmployeeRegionByEmployeeId(long EmployeeId, long RegionId)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@EmployeeId", EmployeeId);
+            queryParameters.Add("@RegionId", RegionId);
+            queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+
+            var result = await ListByStoredProcedure<EmployeeRegion_Response>("GetEmployeeRegionByEmployeeId", queryParameters);
+
+            return result;
+        }
+
+
         public async Task<IEnumerable<EmployeeDataValidationErrors>> ImportEmployeesDetails(List<ImportedEmployeeDetails> parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
@@ -271,6 +320,8 @@ namespace Repositories
             queryParameters.Add("@SearchValue", parameters.SearchValue.SanitizeValue());
             queryParameters.Add("@FromPunchInTime", parameters.FromPunchInDate);
             queryParameters.Add("@ToPunchInTime", parameters.ToPunchInDate);
+            queryParameters.Add("@StateId", parameters.StateId.SanitizeValue());
+            queryParameters.Add("@RegionId", parameters.RegionId.SanitizeValue());
 
             lstResponse = await ListByStoredProcedure<PunchInOutHistoryModel>("GetPunchHistoryRecords", queryParameters);
             parameters.pagination.Total = queryParameters.Get<int>("Total");

@@ -72,6 +72,13 @@ namespace Models
         public PaginationParameters pagination { get; set; }
         public long? CustomerTypeId { get; set; }
         public long? EmployeeId { get; set; }
+
+        [DefaultValue("")]
+        public string StateId { get; set; }
+
+        [DefaultValue("")]
+        public string RegionId { get; set; }
+
         //public string CompanyName { get; set; }
         //public string EmployeeName { get; set; }
 

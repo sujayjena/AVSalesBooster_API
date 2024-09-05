@@ -108,6 +108,12 @@ namespace Models
         //public string LeaveReason { get; set; }
         public int? LeaveStatusId { get; set; }
 
+        [DefaultValue("")]
+        public string StateId { get; set; }
+
+        [DefaultValue("")]
+        public string RegionId { get; set; }
+
         [DefaultValue("All")]
         public string FilterType { get; set; }
 
