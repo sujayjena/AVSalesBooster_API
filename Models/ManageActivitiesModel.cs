@@ -131,6 +131,7 @@ namespace Models
     public class ActivityTemplate_Search
     {
         public int? ActivityStatusId { get; set; }
+        public int? IsCreated_Or_Assigned { get; set; }
 
         [DefaultValue("")]
         public string ValueForSearch { get; set; } = null;
