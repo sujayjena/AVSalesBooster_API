@@ -4,6 +4,10 @@ namespace Interfaces.Services
 {
     public interface IManageTerritoryService
     {
+        Task<IEnumerable<CountryResponse>> GetCountryList(SearchCountryRequest request);
+        Task<int> SaveCountry(CountryRequest request);
+        Task<CountryResponse?> GetCountryDetailsById(long id);
+
         Task<IEnumerable<StateResponse>> GetStatesList(SearchStateRequest request);
         Task<int> SaveState(StateRequest stateRequest);
         Task<IEnumerable<StateDataValidationErrors>> ImportStatesDetails(List<ImportedStateDetails> request);

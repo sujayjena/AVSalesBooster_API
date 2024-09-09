@@ -15,6 +15,43 @@ namespace Repositories
         {
             _configuration = configuration;
         }
+
+        #region Country
+
+        public async Task<IEnumerable<CountryResponse>> GetCountryList(SearchCountryRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@PageNo", parameters.pagination.PageNo);
+            queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
+            queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
+            queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@CountryName", parameters.CountryName.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+
+            var result = await ListByStoredProcedure<CountryResponse>("GetCountry", queryParameters);
+            parameters.pagination.Total = queryParameters.Get<int>("Total");
+
+            return result;
+        }
+        public async Task<int> SaveCountry(CountryRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@CountryId", parameters.CountryId);
+            queryParameters.Add("@CountryName", parameters.CountryName.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveCountryDetails", queryParameters);
+        }
+        public async Task<CountryResponse?> GetCountryDetailsById(long id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", id);
+            return (await ListByStoredProcedure<CountryResponse>("GetCountryDetailsById", queryParameters)).FirstOrDefault();
+        }
+
+        #endregion
+
         public async Task<IEnumerable<StateResponse>> GetStatesList(SearchStateRequest parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();

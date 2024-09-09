@@ -4,10 +4,19 @@ namespace Interfaces.Repositories
 {
     public interface IManageTerritoryRepository
     {
+        #region Country
+        Task<IEnumerable<CountryResponse>> GetCountryList(SearchCountryRequest request);
+        Task<int> SaveCountry(CountryRequest request);
+        Task<CountryResponse?> GetCountryDetailsById(long id);
+
+        #endregion
+
+        #region State
         Task<IEnumerable<StateResponse>> GetStatesList(SearchStateRequest request);
         Task<int> SaveState(StateRequest stateRequest);
         Task<IEnumerable<StateDataValidationErrors>> ImportStatesDetails(List<ImportedStateDetails> parameters);
         Task<StateResponse?> GetStateDetailsById(long id);
+        #endregion
 
         #region Region
         Task<IEnumerable<RegionResponse>> GetRegionsList(SearchRegionRequest request);

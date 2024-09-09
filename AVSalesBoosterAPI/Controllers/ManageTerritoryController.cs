@@ -27,6 +27,67 @@ namespace AVSalesBoosterAPI.Controllers
             
         }
 
+        #region Country API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetCountryList(SearchCountryRequest request)
+        {
+            IEnumerable<CountryResponse> lstCountry = await _manageTerritorService.GetCountryList(request);
+            _response.Data = lstCountry.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveCountry(CountryRequest request)
+        {
+            int result = await _manageTerritorService.SaveCountry(request);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Country Name is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Country details saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ResponseModel> GetCountryDetails(long id)
+        {
+            CountryResponse? country;
+
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                country = await _manageTerritorService.GetCountryDetailsById(id);
+                _response.Data = country;
+            }
+
+            return _response;
+        }
+
+        #endregion
+
         #region State API
 
         [Route("[action]")]

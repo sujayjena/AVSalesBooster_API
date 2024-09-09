@@ -17,6 +17,22 @@ namespace Services
         {
             _manageTerritorRepository = manageTerritorRepository;
         }
+
+        #region Country
+        public async Task<IEnumerable<CountryResponse>> GetCountryList(SearchCountryRequest request)
+        {
+            return await _manageTerritorRepository.GetCountryList(request);
+        }
+        public async Task<int> SaveCountry(CountryRequest request)
+        {
+            return await _manageTerritorRepository.SaveCountry(request);
+        }
+        public async Task<CountryResponse?> GetCountryDetailsById(long id)
+        {
+            return await _manageTerritorRepository.GetCountryDetailsById(id);
+        }
+        #endregion
+
         #region State
         public async Task<IEnumerable<StateResponse>> GetStatesList(SearchStateRequest request)
         {
