@@ -111,7 +111,7 @@ namespace Models
         public long EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeeRole { get; set; }
-        public DateTime VisitDate { get; set; }
+        public DateTime? VisitDate { get; set; }
         public long CustomerId { get; set; }
         public long CustomerTypeId { get; set; }
         public long StateId { get; set; }

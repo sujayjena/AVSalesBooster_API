@@ -353,66 +353,73 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "VisitNo";
-                    WorkSheet1.Cells[1, 2].Value = "VisitDate";
+                    WorkSheet1.Cells[1, 1].Value = "Visit No";
+                    WorkSheet1.Cells[1, 2].Value = "Visit Type";
+                    
 
                     WorkSheet1.Cells[1, 3].Value = "EmployeeName";
                     WorkSheet1.Cells[1, 4].Value = "EmployeeRole";
                     WorkSheet1.Cells[1, 5].Value = "CustomerName";
                     WorkSheet1.Cells[1, 6].Value = "CustomerType";
+                    WorkSheet1.Cells[1, 7].Value = "VisitDate";
 
-                    WorkSheet1.Cells[1, 7].Value = "NextActionDate";
-                    WorkSheet1.Cells[1, 8].Value = "Status";
-                    WorkSheet1.Cells[1, 9].Value = "CreatedBy";
-                    WorkSheet1.Cells[1, 10].Value = "CreatedDate";
+                    WorkSheet1.Cells[1, 8].Value = "NextActionDate";
+                    WorkSheet1.Cells[1, 9].Value = "Status";
+                    WorkSheet1.Cells[1, 10].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 11].Value = "CreatedDate";
 
-                    WorkSheet1.Cells[1, 11].Value = "ContactPerson";
-                    WorkSheet1.Cells[1, 12].Value = "ContactNumber";
-                    WorkSheet1.Cells[1, 13].Value = "Address";
+                    WorkSheet1.Cells[1, 12].Value = "ContactPerson";
+                    WorkSheet1.Cells[1, 13].Value = "ContactNumber";
+                    WorkSheet1.Cells[1, 14].Value = "Latitude";
+                    WorkSheet1.Cells[1, 15].Value = "Longitude";
+                    WorkSheet1.Cells[1, 16].Value = "Address";
 
-                    WorkSheet1.Cells[1, 14].Value = "State";
-                    WorkSheet1.Cells[1, 15].Value = "Reason";
-                    WorkSheet1.Cells[1, 16].Value = "District";
-                    WorkSheet1.Cells[1, 17].Value = "Area";
+                    WorkSheet1.Cells[1, 17].Value = "State";
+                    WorkSheet1.Cells[1, 18].Value = "Reason";
+                    WorkSheet1.Cells[1, 19].Value = "District";
+                    WorkSheet1.Cells[1, 20].Value = "Area";
 
-                    WorkSheet1.Cells[1, 18].Value = "Remarks";
+                    WorkSheet1.Cells[1, 21].Value = "Remarks";
 
                     recordIndex = 2;
 
                     foreach (var items in lstVisitsObj)
                     {
                         WorkSheet1.Cells[recordIndex, 1].Value = items.VisitNo;
-                        WorkSheet1.Cells[recordIndex, 2].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 2].Value = items.VisitDate;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.VisitTypeName;
+                        
 
                         WorkSheet1.Cells[recordIndex, 3].Value = items.EmployeeName;
                         WorkSheet1.Cells[recordIndex, 4].Value = items.EmployeeRole;
                         WorkSheet1.Cells[recordIndex, 5].Value = items.CustomerName;
                         WorkSheet1.Cells[recordIndex, 6].Value = items.CustomerTypeName;
+                        WorkSheet1.Cells[recordIndex, 7].Value = items.VisitDate.HasValue ? items.VisitDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt") : string.Empty;
 
-                        WorkSheet1.Cells[recordIndex, 7].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 7].Value = items.NextActionDate;
-                        WorkSheet1.Cells[recordIndex, 8].Value = items.StatusName;
-                        WorkSheet1.Cells[recordIndex, 9].Value = items.CreatorName;
-                        WorkSheet1.Cells[recordIndex, 10].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 10].Value = items.CreatedOn;
+                        //WorkSheet1.Cells[recordIndex, 8].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.FullDateTimePattern;
+                        WorkSheet1.Cells[recordIndex, 8].Value = items.NextActionDate.HasValue ? items.NextActionDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt") : string.Empty;
+                        WorkSheet1.Cells[recordIndex, 9].Value = items.StatusName;
+                        WorkSheet1.Cells[recordIndex, 10].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 11].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 11].Value = items.CreatedOn;
 
-                        WorkSheet1.Cells[recordIndex, 11].Value = items.ContactPerson;
-                        WorkSheet1.Cells[recordIndex, 12].Value = items.ContactNumber;
-                        WorkSheet1.Cells[recordIndex, 13].Value = items.Address;
+                        WorkSheet1.Cells[recordIndex, 12].Value = items.ContactPerson;
+                        WorkSheet1.Cells[recordIndex, 13].Value = items.ContactNumber;
+                        WorkSheet1.Cells[recordIndex, 14].Value = items.ContactNumber;
+                        WorkSheet1.Cells[recordIndex, 15].Value = items.ContactNumber;
+                        WorkSheet1.Cells[recordIndex, 16].Value = items.Address;
 
-                        WorkSheet1.Cells[recordIndex, 14].Value = items.StateName;
-                        WorkSheet1.Cells[recordIndex, 15].Value = items.RegionName;
-                        WorkSheet1.Cells[recordIndex, 16].Value = items.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 17].Value = items.AreaName;
+                        WorkSheet1.Cells[recordIndex, 17].Value = items.StateName;
+                        WorkSheet1.Cells[recordIndex, 18].Value = items.RegionName;
+                        WorkSheet1.Cells[recordIndex, 19].Value = items.DistrictName;
+                        WorkSheet1.Cells[recordIndex, 20].Value = items.AreaName;
 
                         if (items.Remarks.Count > 0)
                         {
-                                WorkSheet1.Cells[recordIndex, 18].Value = items.Remarks.OrderByDescending(x=>x.VisitRemarkId).FirstOrDefault().Remarks;
+                                WorkSheet1.Cells[recordIndex, 21].Value = items.Remarks.OrderByDescending(x=>x.VisitRemarkId).FirstOrDefault().Remarks;
                         }
                         else
                         {
-                            WorkSheet1.Cells[recordIndex, 18].Value = "";
+                            WorkSheet1.Cells[recordIndex, 21].Value = "";
                         }
 
                         recordIndex += 1;
@@ -436,6 +443,9 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Column(16).AutoFit();
                     WorkSheet1.Column(17).AutoFit();
                     WorkSheet1.Column(18).AutoFit();
+                    WorkSheet1.Column(19).AutoFit();
+                    WorkSheet1.Column(20).AutoFit();
+                    WorkSheet1.Column(21).AutoFit();
 
                     excelExportData.SaveAs(msExportDataFile);
                     msExportDataFile.Position = 0;
