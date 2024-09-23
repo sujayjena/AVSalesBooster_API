@@ -18,6 +18,8 @@ namespace Models
         public long TotalCustomerVisit_DataChart { get; set; }
         public long TotalNewVisitTillDateCount { get; set; }
         public long TotalClosedVisitCount { get; set; }
+        public long TotalOnCallVisitCount { get; set; }
+        public long TotalOnLocationVisitCount { get; set; }
     }
     public class SearchVisitCountListRequest
     {
