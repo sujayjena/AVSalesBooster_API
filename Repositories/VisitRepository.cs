@@ -62,7 +62,7 @@ namespace Repositories
 
             queryParameters.Add("@VisitId", parameters.VisitId);
             queryParameters.Add("@EmployeeId", parameters.EmployeeId);
-            queryParameters.Add("@VisitDate", parameters.VisitDate.SanitizeValue());
+            queryParameters.Add("@VisitDate", parameters.VisitDate);
             queryParameters.Add("@CustomerId", parameters.CustomerId);
             queryParameters.Add("@CustomerTypeId", parameters.CustomerTypeId);
             queryParameters.Add("@ContactId", parameters.ContactId);
