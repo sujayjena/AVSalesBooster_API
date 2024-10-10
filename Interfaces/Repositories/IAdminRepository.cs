@@ -134,5 +134,13 @@ namespace Interfaces.Repositories
         Task<ActivityStatusResponse?> GetActivityStatusDetailsById(long id);
 
         #endregion
+
+        #region Version Details
+
+        Task<int> SaveVersionDetails(VersionDetailsRequest parameters);
+        Task<IEnumerable<VersionDetailsResponse>> GetVersionDetailsList(SearchVersionDetailsRequest parameters);
+        Task<VersionDetailsResponse?> GetVersionDetailsById(long id);
+
+        #endregion
     }
 }

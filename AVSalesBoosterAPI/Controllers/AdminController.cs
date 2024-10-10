@@ -2744,5 +2744,64 @@ namespace AVSalesBoosterAPI.Controllers
         }
 
         #endregion
+
+        #region Version Details API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveVersionDetails(VersionDetailsRequest request)
+        {
+            int result = await _adminService.SaveVersionDetails(request);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record details saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetVersionDetailsList(SearchVersionDetailsRequest request)
+        {
+            IEnumerable<VersionDetailsResponse> lstVersionDetailss = await _adminService.GetVersionDetailsList(request);
+            _response.Data = lstVersionDetailss.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetVersionDetailsById(long id)
+        {
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                var list = await _adminService.GetVersionDetailsById(id);
+                _response.Data = list;
+            }
+
+            return _response;
+        }
+
+        #endregion
     }
 }

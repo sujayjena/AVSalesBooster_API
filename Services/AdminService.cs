@@ -375,5 +375,20 @@ namespace Services
             return await _adminRepository.GetActivityStatusDetailsById(id);
         }
         #endregion
+
+        #region Version Details
+        public async Task<int> SaveVersionDetails(VersionDetailsRequest request)
+        {
+            return await _adminRepository.SaveVersionDetails(request);
+        }
+        public async Task<IEnumerable<VersionDetailsResponse>> GetVersionDetailsList(SearchVersionDetailsRequest request)
+        {
+            return await _adminRepository.GetVersionDetailsList(request);
+        }
+        public async Task<VersionDetailsResponse?> GetVersionDetailsById(long id)
+        {
+            return await _adminRepository.GetVersionDetailsById(id);
+        }
+        #endregion
     }
 }

@@ -142,5 +142,13 @@ namespace Interfaces.Services
         Task<ActivityStatusResponse?> GetActivityStatusDetailsById(long id);
 
         #endregion
+
+        #region Version Details
+
+        Task<int> SaveVersionDetails(VersionDetailsRequest request);
+        Task<IEnumerable<VersionDetailsResponse>> GetVersionDetailsList(SearchVersionDetailsRequest request);
+        Task<VersionDetailsResponse?> GetVersionDetailsById(long id);
+
+        #endregion
     }
 }

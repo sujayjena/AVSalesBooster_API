@@ -748,5 +748,45 @@ namespace Repositories
             return (await ListByStoredProcedure<ActivityStatusResponse>("GetActivityStatusDetailsById", queryParameters)).FirstOrDefault();
         }
         #endregion
+
+        #region Version Details
+        public async Task<int> SaveVersionDetails(VersionDetailsRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", parameters.Id);
+            queryParameters.Add("@AppVersionNo", parameters.AppVersionNo.SanitizeValue());
+            queryParameters.Add("@AppVersionName", parameters.AppVersionName.SanitizeValue());
+            queryParameters.Add("@UpdateMsg", parameters.UpdateMsg.SanitizeValue());
+            queryParameters.Add("@PackageName", parameters.PackageName.SanitizeValue());
+            queryParameters.Add("@UpdateType", parameters.UpdateType.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveVersionDetails", queryParameters);
+        }
+        public async Task<IEnumerable<VersionDetailsResponse>> GetVersionDetailsList(SearchVersionDetailsRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@PageNo", parameters.pagination.PageNo);
+            queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
+            queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
+            queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+
+            var result = await ListByStoredProcedure<VersionDetailsResponse>("GetVersionDetailsList", queryParameters);
+            parameters.pagination.Total = queryParameters.Get<int>("Total");
+
+            return result;
+        }
+        public async Task<VersionDetailsResponse?> GetVersionDetailsById(long id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", id);
+
+            return (await ListByStoredProcedure<VersionDetailsResponse>("GetVersionDetailsById", queryParameters)).FirstOrDefault();
+        }
+        #endregion
     }
 }
