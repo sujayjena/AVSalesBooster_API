@@ -64,7 +64,7 @@ namespace Services
         {
             return await _visitsRepository.ImportVisitsDetails(request);
         }
-        public async Task<IEnumerable<VisitRemarks>> GetVisitRemarks(long visitId)
+        public async Task<IEnumerable<VisitRemarksResponse>> GetVisitRemarks(long visitId)
         {
             return await _visitsRepository.GetVisitRemarks(visitId);
         }

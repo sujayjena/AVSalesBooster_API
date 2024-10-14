@@ -141,7 +141,7 @@ namespace Models
         public DateTime CreatedOn { get; set; }
 
         [NotMapped]
-        public List<VisitRemarks> Remarks { get; set; }
+        public List<VisitRemarksResponse> Remarks { get; set; }
         [NotMapped]
         public List<VisitPhotosResponse> VisitPhotosList { get; set; }
     }
@@ -152,6 +152,15 @@ namespace Models
 
         //[MaxLength(ValidationConstants.Remark_MaxLength, ErrorMessage = ValidationConstants.Remark_MaxLength_Msg)]
         public string Remarks { get; set; }
+    }
+
+    public class VisitRemarksResponse
+    {
+        public long VisitRemarkId { get; set; }
+        public string Remarks { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public long CreatedBy { get; set; }
+        public string CreatorName { get; set; }
     }
 
     public class VisitDetailsResponse
@@ -192,7 +201,7 @@ namespace Models
 
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        public List<VisitRemarks> Remarks { get; set; }
+        public List<VisitRemarksResponse> Remarks { get; set; }
         public List<VisitPhotosResponse> VisitPhotosList { get; set; }
     }
 

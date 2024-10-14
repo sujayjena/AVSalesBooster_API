@@ -788,6 +788,27 @@ namespace AVSalesBoosterAPI.Controllers
 
             return _response;
         }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> DeleteBroadCastDetailsById(long Id)
+        {
+            int result = await _broadCastService.DeleteBroadCastDetailsById(Id);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record deleted sucessfully";
+            }
+
+            return _response;
+        }
+
         #endregion
     }
 }

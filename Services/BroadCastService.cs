@@ -144,6 +144,10 @@ namespace Services
 
             return data;
         }
+        public async Task<int> DeleteBroadCastDetailsById(long Id)
+        {
+            return await _broadCastRepository.DeleteBroadCastDetailsById(Id);
+        }
         #endregion
     }
 }

@@ -260,6 +260,14 @@ namespace Repositories
             queryParameters.Add("@Id", id);
             return (await ListByStoredProcedure<BroadCastResponse>("GetBroadCastDetailsById", queryParameters)).FirstOrDefault();
         }
+        public async Task<int> DeleteBroadCastDetailsById(long Id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", Id);
+
+            return await SaveByStoredProcedure<int>("DeleteBroadCastDetailsById", queryParameters);
+        }
+
         #endregion
     }
 }

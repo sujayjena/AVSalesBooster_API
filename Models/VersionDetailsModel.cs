@@ -42,6 +42,12 @@ namespace Models
         public PaginationParameters pagination { get; set; }
 
         [DefaultValue("")]
+        public string? PackageName { get; set; }
+
+        [DefaultValue("")]
+        public string? UpdateType { get; set; }
+
+        [DefaultValue("")]
         public string ValueForSearch { get; set; } = null;
         public bool? IsActive { get; set; }
     }

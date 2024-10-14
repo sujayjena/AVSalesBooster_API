@@ -771,6 +771,8 @@ namespace Repositories
             queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@PackageName", parameters.PackageName);
+            queryParameters.Add("@UpdateType", parameters.UpdateType);
             queryParameters.Add("@ValueForSearch", parameters.ValueForSearch.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);

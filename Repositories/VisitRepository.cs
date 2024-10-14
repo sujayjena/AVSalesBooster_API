@@ -116,12 +116,12 @@ namespace Repositories
             return result;
         }
 
-        public async Task<IEnumerable<VisitRemarks>> GetVisitRemarks(long visitId)
+        public async Task<IEnumerable<VisitRemarksResponse>> GetVisitRemarks(long visitId)
         {
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@VisitId", visitId);
 
-            return await ListByStoredProcedure<VisitRemarks>("GetVisitRemarksByVisitId", queryParameters);
+            return await ListByStoredProcedure<VisitRemarksResponse>("GetVisitRemarksByVisitId", queryParameters);
         }
 
         public async Task<IEnumerable<VisitPhotosResponse>> GetVisitPhotos(long visitId)

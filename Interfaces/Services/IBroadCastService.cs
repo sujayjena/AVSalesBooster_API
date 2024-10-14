@@ -42,6 +42,7 @@ namespace Interfaces.Services
         Task<IEnumerable<BroadCastResponse>> GetBroadCastList(SearchBroadCastRequest request);
         Task<int> SaveBroadCast(BroadCastRequest parameters);
         Task<BroadCastResponse?> GetBroadCastDetailsById(long id);
+        Task<int> DeleteBroadCastDetailsById(long Id);
         #endregion
     }
 }
