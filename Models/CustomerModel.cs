@@ -403,6 +403,7 @@ namespace Models
         public string ContactName { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }
+        public string IsActive { get; set; }
         public string ValidationMessage { get; set; }
     }
 
@@ -427,6 +428,7 @@ namespace Models
         public string District { get; set; }
         public string Area { get; set; }
         public string PinCode { get; set; }
+        public string IsActive { get; set; }
         public string ValidationMessage { get; set; }
     }
 }

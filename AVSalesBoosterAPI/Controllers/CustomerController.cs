@@ -380,8 +380,16 @@ namespace AVSalesBoosterAPI.Controllers
                 lstCustomerContact_ImportDataValidation_Result = await _customerService.ImportCustomerContact(lstCustomerContactImportRequestModel);
                 lstCustomerAddress_ImportDataValidation_Result = await _customerService.ImportCustomerAddress(lstCustomerAddressImportRequestModel);
 
-                _response.IsSuccess = true;
-                _response.Message = "Record imported successfully";
+                if (lstCustomer_ImportDataValidation_Result.ToList().Count == 0 && lstCustomerContact_ImportDataValidation_Result.ToList().Count == 0 && lstCustomerAddress_ImportDataValidation_Result.ToList().Count == 0)
+                {
+                    _response.IsSuccess = true;
+                    _response.Message = "Record imported successfully";
+                }
+                else
+                {
+                    _response.IsSuccess = true;
+                    _response.Message = "Invalid record exist.";
+                }
 
                 #region Generate Excel file for Invalid Data
 
@@ -413,7 +421,8 @@ namespace AVSalesBoosterAPI.Controllers
                                 WorkSheet1.Cells[1, 5].Value = "CustomerTypeName";
                                 WorkSheet1.Cells[1, 6].Value = "SpecialRemarks";
                                 WorkSheet1.Cells[1, 7].Value = "EmployeeName";
-                                WorkSheet1.Cells[1, 8].Value = "ErrorMessage";
+                                WorkSheet1.Cells[1, 8].Value = "IsActive";
+                                WorkSheet1.Cells[1, 9].Value = "ErrorMessage";
 
                                 recordIndex = 2;
 
@@ -426,7 +435,8 @@ namespace AVSalesBoosterAPI.Controllers
                                     WorkSheet1.Cells[recordIndex, 5].Value = record.CustomerTypeName;
                                     WorkSheet1.Cells[recordIndex, 6].Value = record.SpecialRemarks;
                                     WorkSheet1.Cells[recordIndex, 7].Value = record.EmployeeName;
-                                    WorkSheet1.Cells[recordIndex, 8].Value = record.ValidationMessage;
+                                    WorkSheet1.Cells[recordIndex, 8].Value = record.IsActive;
+                                    WorkSheet1.Cells[recordIndex, 9].Value = record.ValidationMessage;
 
                                     recordIndex += 1;
                                 }
@@ -451,7 +461,8 @@ namespace AVSalesBoosterAPI.Controllers
                                 WorkSheet1.Cells[1, 2].Value = "ContactName";
                                 WorkSheet1.Cells[1, 3].Value = "MobileNumber";
                                 WorkSheet1.Cells[1, 4].Value = "Email";
-                                WorkSheet1.Cells[1, 5].Value = "ErrorMessage";
+                                WorkSheet1.Cells[1, 5].Value = "IsActive";
+                                WorkSheet1.Cells[1, 6].Value = "ErrorMessage";
 
                                 recordIndex = 2;
 
@@ -461,7 +472,8 @@ namespace AVSalesBoosterAPI.Controllers
                                     WorkSheet1.Cells[recordIndex, 2].Value = record.ContactName;
                                     WorkSheet1.Cells[recordIndex, 3].Value = record.MobileNumber;
                                     WorkSheet1.Cells[recordIndex, 4].Value = record.Email;
-                                    WorkSheet1.Cells[recordIndex, 11].Value = record.ValidationMessage;
+                                    WorkSheet1.Cells[recordIndex, 5].Value = record.IsActive;
+                                    WorkSheet1.Cells[recordIndex, 6].Value = record.ValidationMessage;
 
                                     recordIndex += 1;
                                 }
@@ -489,7 +501,8 @@ namespace AVSalesBoosterAPI.Controllers
                                 WorkSheet1.Cells[1, 5].Value = "District";
                                 WorkSheet1.Cells[1, 6].Value = "Area";
                                 WorkSheet1.Cells[1, 7].Value = "PinCode";
-                                WorkSheet1.Cells[1, 8].Value = "ErrorMessage";
+                                WorkSheet1.Cells[1, 8].Value = "IsActive";
+                                WorkSheet1.Cells[1, 9].Value = "ErrorMessage";
 
                                 recordIndex = 2;
 
@@ -502,7 +515,8 @@ namespace AVSalesBoosterAPI.Controllers
                                     WorkSheet1.Cells[recordIndex, 5].Value = record.District;
                                     WorkSheet1.Cells[recordIndex, 6].Value = record.Area;
                                     WorkSheet1.Cells[recordIndex, 7].Value = record.PinCode;
-                                    WorkSheet1.Cells[recordIndex, 8].Value = record.ValidationMessage;
+                                    WorkSheet1.Cells[recordIndex, 8].Value = record.IsActive;
+                                    WorkSheet1.Cells[recordIndex, 9].Value = record.ValidationMessage;
 
                                     recordIndex += 1;
                                 }
