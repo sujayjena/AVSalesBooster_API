@@ -15,8 +15,8 @@ namespace Models
         public long StateId { get; set; }
 
         [Required(ErrorMessage = ValidationConstants.RegionNameRequied_Msg)]
-        [RegularExpression(ValidationConstants.RegionNameRegExp, ErrorMessage = ValidationConstants.RegionNameRegExp_Msg)]
-        [MaxLength(ValidationConstants.RegionName_MaxLength, ErrorMessage = ValidationConstants.RegionName_MaxLength_Msg)]
+        //[RegularExpression(ValidationConstants.RegionNameRegExp, ErrorMessage = ValidationConstants.RegionNameRegExp_Msg)]
+        //[MaxLength(ValidationConstants.RegionName_MaxLength, ErrorMessage = ValidationConstants.RegionName_MaxLength_Msg)]
         public string RegionName { get; set; }
         public bool IsActive { get; set; }
     }
