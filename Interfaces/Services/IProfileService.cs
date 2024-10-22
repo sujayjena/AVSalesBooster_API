@@ -31,6 +31,9 @@ namespace Interfaces.Services
 
         Task<UsersLoginSessionData?> ValidateUserLoginByEmail(LoginByMobileNoRequestModel parameters);
         Task SaveUserLoginHistory(UserLoginHistorySaveParameters parameters);
+
+        Task SaveExpirePreviousToken(long UserId);
+
         Task<UsersLoginSessionData?> GetProfileDetailsByToken(string token);
 
         Task<PunchInOutHistoryModel?> SubmitPunchInOut(PunchInOutRequestModel parameters);

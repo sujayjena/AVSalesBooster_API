@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -45,5 +46,8 @@ namespace Models
     {
         public long RoleId { get; set; }
         public long? RegionId { get; set; }
+
+        [DefaultValue(null)]
+        public bool? IsActive { get; set; }
     }
 }

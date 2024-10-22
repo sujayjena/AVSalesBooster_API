@@ -278,6 +278,14 @@ namespace Repositories
             await ExecuteNonQuery("SaveUserLoginHistory", queryParameters);
         }
 
+        public async Task SaveExpirePreviousToken(long UserId)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@UserId", UserId);
+
+            await ExecuteNonQuery("SaveExpirePreviousToken", queryParameters);
+        }
+
         public async Task<UsersLoginSessionData?> GetProfileDetailsByToken(string token)
         {
             IEnumerable<UsersLoginSessionData> lstResponse;

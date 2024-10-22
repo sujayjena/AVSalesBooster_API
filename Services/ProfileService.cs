@@ -151,6 +151,11 @@ namespace Services
             await _profileRepository.SaveUserLoginHistory(parameters);
         }
 
+        public async Task SaveExpirePreviousToken(long UserId)
+        {
+            await _profileRepository.SaveExpirePreviousToken(UserId);
+        }
+
         public async Task<UsersLoginSessionData?> GetProfileDetailsByToken(string token)
         {
             return await _profileRepository.GetProfileDetailsByToken(token);
