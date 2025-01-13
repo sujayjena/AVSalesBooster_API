@@ -259,7 +259,8 @@ namespace AVSalesBoosterAPI.Controllers
 
                 for (int rowIterator = 2; rowIterator <= noOfRowCustomer; rowIterator++)
                 {
-                    if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()) && !string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 2].Value?.ToString()))
+                    //if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()) && !string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 2].Value?.ToString()))
+                    if (!string.IsNullOrWhiteSpace(workSheet.Cells[rowIterator, 1].Value?.ToString()))
                     {
                         Customer_ImportData record = new Customer_ImportData();
                         record.CompanyName = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : null;
