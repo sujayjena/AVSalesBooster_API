@@ -325,6 +325,19 @@ namespace AVSalesBoosterAPI.Controllers
                     return _response;
                 }
 
+                foreach (var item in lstCustomerImportRequestModel)
+                {
+                    var hh = lstCustomerAddressImportRequestModel.Where(x => x.CompanyName.Contains(item.CompanyName)).ToList();
+                    if (hh.Count == 0)
+                    {
+                        lstCustomerAddressImportRequestModel.Add(new Address_ImportData
+                        {
+                            CompanyName = item.CompanyName, Address = "N/A",
+                            IsActive = "TRUE"
+                        });
+                    }
+                }
+
                 dtCustomerTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerImportRequestModel), typeof(DataTable));
                 dtCustomerContactTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerContactImportRequestModel), typeof(DataTable));
                 dtCustomerAddressTable = (DataTable)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(lstCustomerAddressImportRequestModel), typeof(DataTable));
