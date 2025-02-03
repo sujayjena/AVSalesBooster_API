@@ -306,8 +306,8 @@ namespace AVSalesBoosterAPI.Controllers
                         Address_ImportData record = new Address_ImportData();
                         record.CompanyName = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : null;
                         record.Address = workSheet.Cells[rowIterator, 2].Value != null ? workSheet.Cells[rowIterator, 2].Value.ToString() : null;
-                        record.State = workSheet.Cells[rowIterator, 3].Value != null ? workSheet.Cells[rowIterator, 4].Value.ToString() : null;
-                        record.Region = workSheet.Cells[rowIterator, 4].Value != null ? workSheet.Cells[rowIterator, 3].Value.ToString() : null;
+                        record.State = workSheet.Cells[rowIterator, 3].Value != null ? workSheet.Cells[rowIterator, 3].Value.ToString() : null;
+                        record.Region = workSheet.Cells[rowIterator, 4].Value != null ? workSheet.Cells[rowIterator, 4].Value.ToString() : null;
                         record.District = workSheet.Cells[rowIterator, 5].Value != null ? workSheet.Cells[rowIterator, 5].Value.ToString() : null;
                         record.Area = workSheet.Cells[rowIterator, 6].Value != null ? workSheet.Cells[rowIterator, 6].Value.ToString() : null;
                         record.PinCode = workSheet.Cells[rowIterator, 7].Value != null ? workSheet.Cells[rowIterator, 7].Value.ToString() : null;
