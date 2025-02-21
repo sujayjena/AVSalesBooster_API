@@ -41,5 +41,19 @@ namespace Interfaces.Repositories
 
 
         #endregion
+
+        #region Territory
+        Task<IEnumerable<TerritoryResponse>> GetTerritoryList(SearchTerritoryRequest request);
+        Task<int> SaveTerritory(TerritoryRequest territoryRequest);
+        Task<TerritoryResponse?> GetTerritoryById(long id);
+        Task<IEnumerable<Territories_Country_State_Dist_Area_Response>> GetTerritories_Country_State_Dist_Area_List_ById(Territories_Country_State_Dist_Area_Search parameters);
+
+        #endregion
+
+        #region Region Mapping
+        Task<IEnumerable<RegionMappingResponse>> GetRegionMappingList(SearchRegionMappingRequest request);
+        Task<int> SaveRegionMapping(RegionMappingRequest request);
+        Task<RegionMappingResponse?> GetRegionMappingById(long id);
+        #endregion
     }
 }

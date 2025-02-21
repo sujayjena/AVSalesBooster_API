@@ -112,7 +112,6 @@ namespace Repositories
         {
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@RegionId", parameters.RegionId);
-            queryParameters.Add("@StateId", parameters.StateId);
             queryParameters.Add("@RegionName", parameters.RegionName.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
@@ -155,7 +154,6 @@ namespace Repositories
         {
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@DistrictId", parameters.DistrictId);
-            queryParameters.Add("@RegionId", parameters.RegionId);
             queryParameters.Add("@DistrictName", parameters.DistrictName.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
@@ -197,7 +195,6 @@ namespace Repositories
         {
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@AreaId", parameters.AreaId);
-            queryParameters.Add("@DistrictId", parameters.DistrictId);
             queryParameters.Add("@AreaName", parameters.AreaName.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
@@ -218,5 +215,90 @@ namespace Repositories
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
             return await ListByStoredProcedure<AreaDataValidationErrors>("ImportAreasDetails", queryParameters);
         }
+
+        public async Task<IEnumerable<TerritoryResponse>> GetTerritoryList(SearchTerritoryRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@PageNo", parameters.pagination.PageNo);
+            queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
+            queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
+            queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
+            queryParameters.Add("@IsActive", parameters.IsActive);
+
+            var result = await ListByStoredProcedure<TerritoryResponse>("GetTerritory", queryParameters);
+            parameters.pagination.Total = queryParameters.Get<int>("Total");
+
+            return result;
+        }
+        public async Task<int> SaveTerritory(TerritoryRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@CountryId", parameters.CountryId);
+            queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@DistrictId", parameters.DistrictId);
+            queryParameters.Add("@AreaId", parameters.AreaId);
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveTerritory", queryParameters);
+        }
+
+        public async Task<TerritoryResponse?> GetTerritoryById(long id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", id);
+            return (await ListByStoredProcedure<TerritoryResponse>("GetTerritoryById", queryParameters)).FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Territories_Country_State_Dist_Area_Response>> GetTerritories_Country_State_Dist_Area_List_ById(Territories_Country_State_Dist_Area_Search parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@CountryId", parameters.CountryId);
+            queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@DistId", parameters.DistrictId);
+            queryParameters.Add("@VillageId", parameters.AreaId);
+
+            var result = await ListByStoredProcedure<Territories_Country_State_Dist_Area_Response>("GetTerritories_Country_State_Dist_Area_List_ById", queryParameters);
+
+            return result;
+        }
+
+        public async Task<IEnumerable<RegionMappingResponse>> GetRegionMappingList(SearchRegionMappingRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@PageNo", parameters.pagination.PageNo);
+            queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
+            queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
+            queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
+            queryParameters.Add("@RegionId", parameters.RegionId);
+            queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@IsActive", parameters.IsActive);
+
+            var result = await ListByStoredProcedure<RegionMappingResponse>("GetRegionMapping", queryParameters);
+            parameters.pagination.Total = queryParameters.Get<int>("Total");
+
+            return result;
+        }
+        public async Task<int> SaveRegionMapping(RegionMappingRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", parameters.Id);
+            queryParameters.Add("@RegionId", parameters.RegionId);
+            queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveRegionMapping", queryParameters);
+        }
+
+        public async Task<RegionMappingResponse?> GetRegionMappingById(long id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", id);
+            return (await ListByStoredProcedure<RegionMappingResponse>("GetRegionMappingById", queryParameters)).FirstOrDefault();
+        }
+
     }
 }

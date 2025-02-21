@@ -109,5 +109,39 @@ namespace Services
         }
         #endregion
 
+        #region Territory
+        public async Task<IEnumerable<TerritoryResponse>> GetTerritoryList(SearchTerritoryRequest request)
+        {
+            return await _manageTerritorRepository.GetTerritoryList(request);
+        }
+        public async Task<int> SaveTerritory(TerritoryRequest territoryRequest)
+        {
+            return await _manageTerritorRepository.SaveTerritory(territoryRequest);
+        }
+        public async Task<TerritoryResponse?> GetTerritoryById(long id)
+        {
+            return await _manageTerritorRepository.GetTerritoryById(id);
+        }
+        public async Task<IEnumerable<Territories_Country_State_Dist_Area_Response>> GetTerritories_Country_State_Dist_Area_List_ById(Territories_Country_State_Dist_Area_Search parameters)
+        {
+            return await _manageTerritorRepository.GetTerritories_Country_State_Dist_Area_List_ById(parameters);
+        }
+        #endregion
+
+        #region Region Mapping
+        public async Task<IEnumerable<RegionMappingResponse>> GetRegionMappingList(SearchRegionMappingRequest request)
+        {
+            return await _manageTerritorRepository.GetRegionMappingList(request);
+        }
+        public async Task<int> SaveRegionMapping(RegionMappingRequest request)
+        {
+            return await _manageTerritorRepository.SaveRegionMapping(request);
+        }
+        public async Task<RegionMappingResponse?> GetRegionMappingById(long id)
+        {
+            return await _manageTerritorRepository.GetRegionMappingById(id);
+        }
+       
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace Models
     public class AreaRequest
     {
         public long AreaId { get; set; }
-        public long DistrictId { get; set; }
+        //public long DistrictId { get; set; }
         
         [Required(ErrorMessage = ValidationConstants.AreaNameRequied_Msg)]
         //[RegularExpression(ValidationConstants.AreaNameRegExp, ErrorMessage = ValidationConstants.AreaNameRegExp_Msg)]
@@ -33,12 +33,12 @@ namespace Models
         public long AreaId { get; set; }
         public string AreaName { get; set; }
         public bool IsActive { get; set; }
-        public long StateId { get; set; }
-        public string StateName { get; set; }
-        public long RegionId { get; set; }
-        public string RegionName { get; set; }
-        public long DistrictId { get; set; }
-        public string DistrictName { get; set; }
+        //public long StateId { get; set; }
+        //public string StateName { get; set; }
+        //public long RegionId { get; set; }
+        //public string RegionName { get; set; }
+        //public long DistrictId { get; set; }
+        //public string DistrictName { get; set; }
     }
     public class ImportedAreaDetails
     {

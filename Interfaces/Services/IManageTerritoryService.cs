@@ -28,5 +28,20 @@ namespace Interfaces.Services
         Task<int> SaveArea(AreaRequest areaRequest);
         Task<AreaResponse?> GetAreaDetailsById(long id);
         Task<IEnumerable<AreaDataValidationErrors>> ImportAreasDetails(List<ImportedAreaDetails> request);
+
+        #region Territory
+        Task<IEnumerable<TerritoryResponse>> GetTerritoryList(SearchTerritoryRequest request);
+        Task<int> SaveTerritory(TerritoryRequest territoryRequest);
+        Task<TerritoryResponse?> GetTerritoryById(long id);
+        Task<IEnumerable<Territories_Country_State_Dist_Area_Response>> GetTerritories_Country_State_Dist_Area_List_ById(Territories_Country_State_Dist_Area_Search parameters);
+
+        #endregion
+
+        #region Region Mapping
+        Task<IEnumerable<RegionMappingResponse>> GetRegionMappingList(SearchRegionMappingRequest request);
+        Task<int> SaveRegionMapping(RegionMappingRequest request);
+        Task<RegionMappingResponse?> GetRegionMappingById(long id);
+
+        #endregion
     }
 }

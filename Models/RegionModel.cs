@@ -12,7 +12,7 @@ namespace Models
     public class RegionRequest
     {
         public long RegionId { get; set; }
-        public long StateId { get; set; }
+        //public long StateId { get; set; }
 
         [Required(ErrorMessage = ValidationConstants.RegionNameRequied_Msg)]
         //[RegularExpression(ValidationConstants.RegionNameRegExp, ErrorMessage = ValidationConstants.RegionNameRegExp_Msg)]
@@ -35,8 +35,8 @@ namespace Models
     public class RegionResponse : CreationDetails
     {
         public long RegionId { get; set; }
-        public long StateId { get; set; }
-        public string StateName { get; set; }
+        //public long StateId { get; set; }
+        //public string StateName { get; set; }
         public string RegionName { get; set; }
         public bool IsActive { get; set; }
     }

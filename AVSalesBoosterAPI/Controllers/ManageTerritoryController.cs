@@ -567,24 +567,22 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "StateName";
-                    WorkSheet1.Cells[1, 2].Value = "Region";
-                    WorkSheet1.Cells[1, 3].Value = "Status";
+                    WorkSheet1.Cells[1, 1].Value = "Region";
+                    WorkSheet1.Cells[1, 2].Value = "Status";
 
-                    WorkSheet1.Cells[1, 4].Value = "CreatedBy";
-                    WorkSheet1.Cells[1, 5].Value = "CreatedDate";
+                    WorkSheet1.Cells[1, 3].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 4].Value = "CreatedDate";
 
                     recordIndex = 2;
 
                     foreach (var items in lstRegionObj)
                     {
-                        WorkSheet1.Cells[recordIndex, 1].Value = items.StateName;
-                        WorkSheet1.Cells[recordIndex, 2].Value = items.RegionName;
-                        WorkSheet1.Cells[recordIndex, 3].Value = items.IsActive == true ? "Active" : "Inactive";
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.RegionName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.IsActive == true ? "Active" : "Inactive";
 
-                        WorkSheet1.Cells[recordIndex, 4].Value = items.CreatorName;
-                        WorkSheet1.Cells[recordIndex, 5].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 5].Value = items.CreatedOn;
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 4].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.CreatedOn;
 
                         recordIndex += 1;
                     }
@@ -593,7 +591,6 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Column(2).AutoFit();
                     WorkSheet1.Column(3).AutoFit();
                     WorkSheet1.Column(4).AutoFit();
-                    WorkSheet1.Column(5).AutoFit();
 
                     excelExportData.SaveAs(msExportDataFile);
                     msExportDataFile.Position = 0;
@@ -839,26 +836,26 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "StateName";
-                    WorkSheet1.Cells[1, 2].Value = "Region";
-                    WorkSheet1.Cells[1, 3].Value = "District";
-                    WorkSheet1.Cells[1, 4].Value = "Status";
+                    //WorkSheet1.Cells[1, 1].Value = "StateName";
+                    //WorkSheet1.Cells[1, 2].Value = "Region";
+                    WorkSheet1.Cells[1, 1].Value = "District";
+                    WorkSheet1.Cells[1, 2].Value = "Status";
 
-                    WorkSheet1.Cells[1, 5].Value = "CreatedBy";
-                    WorkSheet1.Cells[1, 6].Value = "CreatedDate";
+                    WorkSheet1.Cells[1, 3].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 4].Value = "CreatedDate";
 
                     recordIndex = 2;
 
                     foreach (var items in lstDistrictObj)
                     {
-                        WorkSheet1.Cells[recordIndex, 1].Value = items.StateName;
-                        WorkSheet1.Cells[recordIndex, 2].Value = items.RegionName;
-                        WorkSheet1.Cells[recordIndex, 3].Value = items.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 4].Value = items.IsActive == true ? "Active" : "Inactive";
+                        //WorkSheet1.Cells[recordIndex, 1].Value = items.StateName;
+                        //WorkSheet1.Cells[recordIndex, 2].Value = items.RegionName;
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.DistrictName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.IsActive == true ? "Active" : "Inactive";
 
-                        WorkSheet1.Cells[recordIndex, 5].Value = items.CreatorName;
-                        WorkSheet1.Cells[recordIndex, 6].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 6].Value = items.CreatedOn;
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 4].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.CreatedOn;
 
                         recordIndex += 1;
                     }
@@ -867,8 +864,6 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Column(2).AutoFit();
                     WorkSheet1.Column(3).AutoFit();
                     WorkSheet1.Column(4).AutoFit();
-                    WorkSheet1.Column(5).AutoFit();
-                    WorkSheet1.Column(6).AutoFit();
 
                     excelExportData.SaveAs(msExportDataFile);
                     msExportDataFile.Position = 0;
@@ -1121,28 +1116,22 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "StateName";
-                    WorkSheet1.Cells[1, 2].Value = "Region";
-                    WorkSheet1.Cells[1, 3].Value = "District";
-                    WorkSheet1.Cells[1, 4].Value = "Area";
-                    WorkSheet1.Cells[1, 5].Value = "Status";
+                    WorkSheet1.Cells[1, 1].Value = "Area";
+                    WorkSheet1.Cells[1, 2].Value = "Status";
 
-                    WorkSheet1.Cells[1, 6].Value = "CreatedBy";
-                    WorkSheet1.Cells[1, 7].Value = "CreatedDate";
+                    WorkSheet1.Cells[1, 3].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 4].Value = "CreatedDate";
 
                     recordIndex = 2;
 
                     foreach (var items in lstAreaObj)
                     {
-                        WorkSheet1.Cells[recordIndex, 1].Value = items.StateName;
-                        WorkSheet1.Cells[recordIndex, 2].Value = items.RegionName;
-                        WorkSheet1.Cells[recordIndex, 3].Value = items.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 4].Value = items.AreaName;
-                        WorkSheet1.Cells[recordIndex, 5].Value = items.IsActive == true ? "Active" : "Inactive";
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.AreaName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.IsActive == true ? "Active" : "Inactive";
 
-                        WorkSheet1.Cells[recordIndex, 6].Value = items.CreatorName;
-                        WorkSheet1.Cells[recordIndex, 7].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 7].Value = items.CreatedOn;
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 4].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.CreatedOn;
 
                         recordIndex += 1;
                     }
@@ -1151,9 +1140,6 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Column(2).AutoFit();
                     WorkSheet1.Column(3).AutoFit();
                     WorkSheet1.Column(4).AutoFit();
-                    WorkSheet1.Column(5).AutoFit();
-                    WorkSheet1.Column(6).AutoFit();
-                    WorkSheet1.Column(7).AutoFit();
 
                     excelExportData.SaveAs(msExportDataFile);
                     msExportDataFile.Position = 0;
@@ -1168,6 +1154,140 @@ namespace AVSalesBoosterAPI.Controllers
                 _response.Message = "Area list Exported successfully";
             }
 
+            return _response;
+        }
+
+        #endregion
+
+        #region Territory API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetTerritoryList(SearchTerritoryRequest request)
+        {
+            IEnumerable<TerritoryResponse> lstAreas = await _manageTerritorService.GetTerritoryList(request);
+            _response.Data = lstAreas.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveTerritory(TerritoryRequest areaRequest)
+        {
+            int result = await _manageTerritorService.SaveTerritory(areaRequest);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ResponseModel> GetTerritoryById(long id)
+        {
+            TerritoryResponse? area;
+
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                area = await _manageTerritorService.GetTerritoryById(id);
+                _response.Data = area;
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetTerritories_Country_State_Dist_Area_List_ById(Territories_Country_State_Dist_Area_Search parameters)
+        {
+            var vResultObj = await _manageTerritorService.GetTerritories_Country_State_Dist_Area_List_ById(parameters);
+            _response.Data = vResultObj;
+
+            return _response;
+        }
+
+        #endregion
+
+        #region Region Mapping API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetRegionMappingList(SearchRegionMappingRequest request)
+        {
+            IEnumerable<RegionMappingResponse> lstAreas = await _manageTerritorService.GetRegionMappingList(request);
+            _response.Data = lstAreas.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveRegionMapping(RegionMapping request)
+        {
+            int result = 0;
+            foreach (var itm in request.RegionMappingList)
+            {
+                result = await _manageTerritorService.SaveRegionMapping(itm);
+                _response.IsSuccess = false;
+            }
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Record is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Record saved sucessfully";
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ResponseModel> GetRegionMappingById(long id)
+        {
+            RegionMappingResponse? area;
+
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                area = await _manageTerritorService.GetRegionMappingById(id);
+                _response.Data = area;
+            }
             return _response;
         }
 
