@@ -235,6 +235,7 @@ namespace Repositories
         public async Task<int> SaveTerritory(TerritoryRequest parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", parameters.Id);
             queryParameters.Add("@CountryId", parameters.CountryId);
             queryParameters.Add("@StateId", parameters.StateId);
             queryParameters.Add("@DistrictId", parameters.DistrictId);
