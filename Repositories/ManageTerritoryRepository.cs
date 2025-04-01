@@ -257,8 +257,8 @@ namespace Repositories
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@CountryId", parameters.CountryId);
             queryParameters.Add("@StateId", parameters.StateId);
-            queryParameters.Add("@DistId", parameters.DistrictId);
-            queryParameters.Add("@VillageId", parameters.AreaId);
+            queryParameters.Add("@DistrictId", parameters.DistrictId);
+            queryParameters.Add("@AreaId", parameters.AreaId);
 
             var result = await ListByStoredProcedure<Territories_Country_State_Dist_Area_Response>("GetTerritories_Country_State_Dist_Area_List_ById", queryParameters);
 
