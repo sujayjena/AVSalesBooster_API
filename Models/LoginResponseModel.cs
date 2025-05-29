@@ -40,6 +40,7 @@
         public string StateId { get; set; }
         public string RegionId { get; set; }
         public string Token { get; set; }
+
         public List<RoleMasterEmployeePermissionList> UserRoleList { get; set; }
         public List<NotificationResponse> UserNotificationList { get; set; }
     }

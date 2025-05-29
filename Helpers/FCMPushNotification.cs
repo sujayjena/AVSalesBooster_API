@@ -52,6 +52,12 @@ namespace Helpers
                 }
             }
 
+            // No FCM Token available
+            if (string.IsNullOrWhiteSpace(vFCMTokenId))
+            {
+                return isNotificationSent = false;
+            }
+
             try
             {
                 //----------Generating Bearer token for FCM---------------
@@ -132,9 +138,8 @@ namespace Helpers
             catch (Exception e)
             {
                 isNotificationSent = false;
-                Console.WriteLine($"Error sending message: {e.Message}");
+                vResponseJson = "Error message:" + e.Message;
             }
-
 
             #region // Save notification details to the database 
 
@@ -150,7 +155,6 @@ namespace Helpers
             await _profileService.SaveFCMPushNotification(fCMPushNotificationModel);
 
             #endregion
-
 
             return isNotificationSent;
         }
