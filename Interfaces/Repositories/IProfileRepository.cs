@@ -48,5 +48,11 @@ namespace Interfaces.Repositories
         Task<IEnumerable<RoleMaster_Employee_Permission_Response>> GetRoleMaster_Employee_PermissionList(SearchRoleMaster_Employee_PermissionRequest request);
         Task<IEnumerable<RoleMasterEmployeePermissionList>> GetRoleMaster_Employee_PermissionById(long employeeId);
         Task<int> SaveRoleMaster_Employee_PermissionDetails(RoleMaster_Employee_Permission_Request parameters);
+
+        Task<int> SaveFCMToken(FCMTokenModel parameters);
+        Task<int> SaveFCMPushNotification(FCMPushNotificationModel parameters);
+
+        Task<tblUserModel?> GetUserDetails(int userId);
+
     }
 }

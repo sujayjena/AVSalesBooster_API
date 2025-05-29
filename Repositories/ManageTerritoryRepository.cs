@@ -258,6 +258,7 @@ namespace Repositories
             DynamicParameters queryParameters = new DynamicParameters();
             queryParameters.Add("@CountryId", parameters.CountryId);
             queryParameters.Add("@StateId", parameters.StateId);
+            queryParameters.Add("@RegionId", parameters.RegionId);
             queryParameters.Add("@DistrictId", parameters.DistrictId);
             queryParameters.Add("@AreaId", parameters.AreaId);
 

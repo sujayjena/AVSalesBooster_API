@@ -201,5 +201,19 @@ namespace Services
         {
             return await _profileRepository.SaveRoleMaster_Employee_PermissionDetails(parameters);
         }
+
+        public async Task<int> SaveFCMToken(FCMTokenModel parameters)
+        {
+            return await _profileRepository.SaveFCMToken(parameters);
+        }
+        public async Task<int> SaveFCMPushNotification(FCMPushNotificationModel parameters)
+        {
+            return await _profileRepository.SaveFCMPushNotification(parameters);
+        }
+
+        public async Task<tblUserModel?> GetUserDetails(int userId)
+        {
+            return await _profileRepository.GetUserDetails(userId);
+        }
     }
 }

@@ -59,4 +59,16 @@ namespace Models
         [MaxLength(ValidationConstants.OTP_MaxLength, ErrorMessage = ValidationConstants.OTP_Range_Msg)]
         public string OTP { get; set; }
     }
+
+    public class FCMTokenModel
+    {
+        public int UserId { get; set; }
+        public string FCMTokenId { get; set; }
+    }
+    public class FCMNotificationModel
+    {
+        public int UserId { get; set; }
+        public string title { get; set; }
+        public string body { get; set; }
+    }
 }

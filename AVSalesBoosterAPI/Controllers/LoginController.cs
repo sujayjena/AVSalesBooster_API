@@ -16,12 +16,16 @@ namespace AVSalesBoosterAPI.Controllers
         private IProfileService _profileService;
         private IJwtUtilsService _jwt;
         private INotificationService _notificationService;
+        private IFCMPushNotification _fcmPushNotification;
 
-        public LoginController(IProfileService profileService, IJwtUtilsService jwt, INotificationService notificationService)
+        FCMPushNotification _fCMPushNotification;
+
+        public LoginController(IProfileService profileService, IJwtUtilsService jwt, INotificationService notificationService, IFCMPushNotification fcmPushNotification)
         {
             _profileService = profileService;
             _jwt = jwt;
             _notificationService = notificationService;
+            _fcmPushNotification = fcmPushNotification;
 
             _response = new ResponseModel();
             _response.IsSuccess = true;
@@ -62,7 +66,7 @@ namespace AVSalesBoosterAPI.Controllers
 
             if (loginResponse != null)
             {
-                if (loginResponse.IsActive == true && (loginResponse.IsWebUser == true && parameters.IsWebOrMobileUser=="W" || loginResponse.IsMobileUser == true && parameters.IsWebOrMobileUser == "M"))
+                if (loginResponse.IsActive == true && (loginResponse.IsWebUser == true && parameters.IsWebOrMobileUser == "W" || loginResponse.IsMobileUser == true && parameters.IsWebOrMobileUser == "M"))
                 {
                     await _profileService.SaveExpirePreviousToken(loginResponse.UserId);
 
@@ -75,7 +79,7 @@ namespace AVSalesBoosterAPI.Controllers
 
                         var vRoleList = await _profileService.GetRoleMaster_Employee_PermissionById(Convert.ToInt64(loginResponse.EmployeeId));
                         var vUserNotificationList = await _notificationService.GetNotificationListById(Convert.ToInt64(loginResponse.EmployeeId));
-                       
+
                         var vEmployeeStateDetail = await _profileService.GetEmployeeStateByEmployeeId(EmployeeId: Convert.ToInt32(loginResponse.EmployeeId), StateId: 0);
                         if (vEmployeeStateDetail.ToList().Count > 0)
                         {
@@ -177,13 +181,42 @@ namespace AVSalesBoosterAPI.Controllers
             return _response;
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ResponseModel> SaveFCMToken(FCMTokenModel parameters)
+        {
+            var fcmParameters = new FCMTokenModel()
+            {
+                UserId = parameters.UserId,
+                FCMTokenId = parameters.FCMTokenId
+            };
 
+            await _profileService.SaveFCMToken(fcmParameters);
 
+            _response.Message = "Update sucessfully";
 
+            return _response;
+        }
 
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ResponseModel> SendFCMNotification(FCMNotificationModel parameters)
+        {
+            bool result;
+            result = await _fcmPushNotification.SendNotification(parameters);
+            if (result)
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Notification sent sucessfully";
+            }
+            else
+            {
+                _response.IsSuccess = false;
+                _response.Message = "Failed to send notification";
+            }
 
-
-
+            return _response;
+        }
 
         //[HttpPost]
         //[Route("[action]")]

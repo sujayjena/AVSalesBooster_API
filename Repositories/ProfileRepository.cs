@@ -3,6 +3,7 @@ using Helpers;
 using Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Models;
+using Newtonsoft.Json.Linq;
 
 namespace Repositories
 {
@@ -440,6 +441,38 @@ namespace Repositories
                 result = await SaveByStoredProcedure<int>("SaveRoleMaster_PermissionDetails", queryParameters);
             }
             return result;
+        }
+
+        public async Task<int> SaveFCMToken(FCMTokenModel parameters)
+        {
+            int result = 0;
+
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@UserId", parameters.UserId);
+            queryParameters.Add("@FCMTokenId", parameters.FCMTokenId);
+
+            await ExecuteNonQuery("SaveFCMToken", queryParameters);
+
+            return result;
+        }
+
+        public async Task<tblUserModel?> GetUserDetails(int userId)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@UserId", userId);
+            return (await ListByStoredProcedure<tblUserModel>("GetUserDetail", queryParameters)).FirstOrDefault();
+        }
+
+        public async Task<int> SaveFCMPushNotification(FCMPushNotificationModel parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@UserId", parameters.UserId);
+            queryParameters.Add("@RequestJson", parameters.RequestJson.SanitizeValue());
+            queryParameters.Add("@BaseAddress", parameters.BaseAddress);
+            queryParameters.Add("@ResponseJson", parameters.ResponseJson.SanitizeValue());
+            queryParameters.Add("@IsSent", parameters.IsSent);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveFCMPushNotification", queryParameters);
         }
     }
 }

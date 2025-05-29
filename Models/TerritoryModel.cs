@@ -12,9 +12,9 @@ namespace Models
     public class TerritoryRequest
     {
         public long Id { get; set; }
-        public long RegionId { get; set; }
         public long CountryId { get; set; }
         public long StateId { get; set; }
+        public long RegionId { get; set; }
         public long DistrictId { get; set; }
         public long AreaId { get; set; }
         public bool IsActive { get; set; }
@@ -34,12 +34,12 @@ namespace Models
     public class TerritoryResponse : CreationDetails
     {
         public long Id { get; set; }
-        public long RegionId { get; set; }
-        public string RegionName { get; set; }
         public long CountryId { get; set; }
         public string CountryName { get; set; }
         public long StateId { get; set; }
         public string StateName { get; set; }
+        public long RegionId { get; set; }
+        public string RegionName { get; set; }
         public long DistrictId { get; set; }
         public string DistrictName { get; set; }
         public long AreaId { get; set; }
@@ -51,6 +51,7 @@ namespace Models
     {
         public int? CountryId { get; set; }
         public int? StateId { get; set; }
+        public int? RegionId { get; set; }
         public int? DistrictId { get; set; }
         public int? AreaId { get; set; }
     }
