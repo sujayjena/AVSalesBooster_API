@@ -62,7 +62,7 @@ namespace Helpers
             {
                 //----------Generating Bearer token for FCM---------------
 
-                string fileName = Path.Combine(_environment.ContentRootPath, "av-sales-booster-ef658-firebase-adminsdk-fbsvc-3df3104f40.json"); // Adjust the path as needed
+                string fileName = Path.Combine(_environment.ContentRootPath, "av-sales-booster-ef658-firebase-adminsdk-fbsvc-cbdb080fc2.json"); // Adjust the path as needed
                 vFileName = fileName;
 
                 string scopes = "https://www.googleapis.com/auth/firebase.messaging";
