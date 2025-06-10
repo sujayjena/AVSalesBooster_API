@@ -21,6 +21,9 @@ namespace Models
         public PaginationParameters pagination { get; set; }
         //public string EmployeeName { get; set; }
 
+        [DefaultValue(0)]
+        public long EmployeeId { get; set; }
+
         [DefaultValue("")]
         public string SearchValue { get; set; }
         public DateTime? FromPunchInDate { get; set; }

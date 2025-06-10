@@ -62,7 +62,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record details saved sucessfully";
+                _response.Message = "Record details saved successfully";
 
                 //Add / Update Remarks Details
                 if (result > 0)

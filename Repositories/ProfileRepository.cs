@@ -333,6 +333,7 @@ namespace Repositories
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
             queryParameters.Add("@UserId", SessionManager.LoggedInUserId);
+            queryParameters.Add("@EmployeeId", parameters.EmployeeId);
             //queryParameters.Add("@EmplyeeName", parameters.EmplyeeName.SanitizeValue());
             queryParameters.Add("@SearchValue", parameters.SearchValue.SanitizeValue());
             queryParameters.Add("@FromPunchInTime", parameters.FromPunchInDate);
