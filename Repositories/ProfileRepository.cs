@@ -129,6 +129,14 @@ namespace Repositories
             return await ListByStoredProcedure<EmployeeReportingToResponse>("GetEmployeesListByReportingTo", queryParameters);
         }
 
+        public async Task<IEnumerable<ReportingToListReponse>> GetReportingToListByEmployeeId(long employeeId)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@employeeId", employeeId);
+
+            return await ListByStoredProcedure<ReportingToListReponse>("GetReportingTo_Hierarchy_ByEmployeeId", queryParameters);
+        }
+
         public async Task<int> SaveEmployeeDetails(EmployeeRequest parameters)
         {
             DynamicParameters queryParameters = new DynamicParameters();
@@ -471,6 +479,8 @@ namespace Repositories
             queryParameters.Add("@BaseAddress", parameters.BaseAddress);
             queryParameters.Add("@ResponseJson", parameters.ResponseJson.SanitizeValue());
             queryParameters.Add("@IsSent", parameters.IsSent);
+            queryParameters.Add("@Ref1", parameters.ActivityId.SanitizeValue());
+            queryParameters.Add("@Ref2", string.Empty);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
             return await SaveByStoredProcedure<int>("SaveFCMPushNotification", queryParameters);
         }

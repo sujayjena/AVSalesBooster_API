@@ -65,6 +65,11 @@ namespace Models
         public string ReportingToName { get; set; }
     }
 
+    public class ReportingToListReponse
+    {
+        public long EmployeeId { get; set; }
+    }
+
     public class SearchReportingToRequest
     {
         //public long ReportingTo { get; set; }

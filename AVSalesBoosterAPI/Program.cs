@@ -92,6 +92,9 @@ var services = builder.Services;
     services.AddScoped<IManageActivitiesService, ManageActivitiesService>();
     services.AddScoped<IManageActivitiesRepository, ManageActivitiesRepository>();
     services.AddScoped<IFCMPushNotification, FCMPushNotification>();
+    services.AddScoped<IEmailConfigService, EmailConfigService>();
+    services.AddScoped<IEmailConfigRepository, EmailConfigRepository>();
+    services.AddScoped<IEmailHelper, EmailHelper>();
 
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 

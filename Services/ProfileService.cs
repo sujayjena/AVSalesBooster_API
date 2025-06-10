@@ -67,6 +67,12 @@ namespace Services
             return await _profileRepository.GetEmployeesListByReportingTo(employeeId);
         }
 
+        public async Task<IEnumerable<ReportingToListReponse>> GetReportingToListByEmployeeId(long employeeId)
+        {
+            return await _profileRepository.GetReportingToListByEmployeeId(employeeId);
+        }
+        
+
         public async Task<int> SaveEmployeeDetails(EmployeeRequest employeeRequest)
         {
             if (employeeRequest.ProfilePicture != null)

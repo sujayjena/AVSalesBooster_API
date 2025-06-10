@@ -52,9 +52,57 @@ namespace Helpers
                 }
             }
 
+            //---------------Assigning Of data To Model --------------
+
+            Root rootObj = new Root()
+            {
+                message = new Message()
+                {
+                    token = vFCMTokenId, //FCM Token id
+
+                    data = new Data()
+                    {
+                        body = "This is a sample data body",
+                        title = "Sample Data Title",
+                        key_1 = "Sample Key 1",
+                        key_2 = "Sample Key 2"
+                    },
+
+                    notification = new Notification()
+                    {
+                        title = notification.title,
+                        body = notification.body
+                    }
+                }
+            };
+
+            //-------------Convert Model To JSON ----------------------
+
+            var jsonObj = new JavaScriptSerializer().Serialize(rootObj);
+            vRequestJson = jsonObj;
+
+
             // No FCM Token available
             if (string.IsNullOrWhiteSpace(vFCMTokenId))
             {
+                #region // Save notification details to the database 
+
+                vResponseJson = "FCM Token not available";
+
+                FCMPushNotificationModel fCMPushNotificationModel1 = new FCMPushNotificationModel
+                {
+                    UserId = notification.UserId,
+                    ActivityId = notification.ActivityId,
+                    RequestJson = vRequestJson,
+                    BaseAddress = vBaseAddress,
+                    ResponseJson = vResponseJson,
+                    IsSent = isNotificationSent,
+                };
+
+                var results1 = await _profileService.SaveFCMPushNotification(fCMPushNotificationModel1);
+
+                #endregion
+
                 return isNotificationSent = false;
             }
 
@@ -92,35 +140,6 @@ namespace Helpers
 
                 vBaseAddress = client.BaseAddress.ToString();
 
-                //---------------Assigning Of data To Model --------------
-
-                Root rootObj = new Root()
-                {
-                    message = new Message()
-                    {
-                        token = vFCMTokenId, //FCM Token id
-
-                        data = new Data()
-                        {
-                            body = "This is a sample data body",
-                            title = "Sample Data Title",
-                            key_1 = "Sample Key 1",
-                            key_2 = "Sample Key 2"
-                        },
-
-                        notification = new Notification()
-                        {
-                            title = notification.title,
-                            body = notification.body
-                        }
-                    }
-                };
-
-                //-------------Convert Model To JSON ----------------------
-
-                var jsonObj = new JavaScriptSerializer().Serialize(rootObj);
-                vRequestJson = jsonObj;
-
                 //------------------------Calling Of FCM Notify API-------------------
 
                 var data = new StringContent(jsonObj, Encoding.UTF8, "application/json");
@@ -146,13 +165,14 @@ namespace Helpers
             FCMPushNotificationModel fCMPushNotificationModel = new FCMPushNotificationModel
             {
                 UserId = notification.UserId,
+                ActivityId = notification.ActivityId,
                 RequestJson = vRequestJson,
                 BaseAddress = vBaseAddress,
                 ResponseJson = vResponseJson,
                 IsSent = isNotificationSent,
             };
 
-            await _profileService.SaveFCMPushNotification(fCMPushNotificationModel);
+            var results = await _profileService.SaveFCMPushNotification(fCMPushNotificationModel);
 
             #endregion
 

@@ -17,6 +17,8 @@ namespace Interfaces.Repositories
 
         Task<IEnumerable<EmployeeResponse>> GetEmployeesList(SearchEmployeeRequest request);
         Task<IEnumerable<EmployeeReportingToResponse>> GetEmployeesListByReportingTo(long employeeId);
+        Task<IEnumerable<ReportingToListReponse>> GetReportingToListByEmployeeId(long employeeId);
+
         Task<int> SaveEmployeeDetails(EmployeeRequest parameters);
         Task<int> UpdateEmpDetailsThroughApp(UpdateEmployeeDetailsRequest parameters);
 

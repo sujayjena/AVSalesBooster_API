@@ -344,6 +344,15 @@ namespace AVSalesBoosterAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
+        public async Task<ResponseModel> GetReportingToListByEmployeeId(long employeeId)
+        {
+            IEnumerable<ReportingToListReponse> lstReportingToes = await _profileService.GetReportingToListByEmployeeId(employeeId);
+            _response.Data = lstReportingToes.ToList();
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
         public async Task<ResponseModel> ImportReportingTosData([FromQuery] ImportRequest request)
         {
             _response.IsSuccess = false;
@@ -477,7 +486,7 @@ namespace AVSalesBoosterAPI.Controllers
             request.pagination = new PaginationParameters();
 
             IEnumerable<ReportingToResponse> lstReportingToObj = await _profileService.GetReportingTosList(request);
-            
+
             using (MemoryStream msExportDataFile = new MemoryStream())
             {
                 using (ExcelPackage excelExportData = new ExcelPackage())

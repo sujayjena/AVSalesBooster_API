@@ -16,8 +16,11 @@ namespace Interfaces.Services
         Task<IEnumerable<ReportingToDataValidationErrors>> ImportReportingTosDetails(List<ImportedReportingToDetails> request);
         Task<IEnumerable<EmployeeResponse>> GetEmployeesList(SearchEmployeeRequest request);
         Task<IEnumerable<EmployeeReportingToResponse>> GetEmployeesListByReportingTo(long employeeId);
+        Task<IEnumerable<ReportingToListReponse>> GetReportingToListByEmployeeId(long employeeId);
+
         Task<int> SaveEmployeeDetails(EmployeeRequest employeeRequest);
         Task<int> UpdateEmpDetailsThroughApp(UpdateEmployeeDetailsRequest parameters);
+
 
         Task<EmployeeResponse?> GetEmployeeDetailsById(long id);
 

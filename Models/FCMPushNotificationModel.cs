@@ -9,6 +9,7 @@ namespace Models
     public class FCMPushNotificationModel
     {
         public int? UserId { get; set; }
+        public int? ActivityId { get; set; }
         public string RequestJson { get; set; }
         public string BaseAddress { get; set; }
         public string ResponseJson { get; set; }

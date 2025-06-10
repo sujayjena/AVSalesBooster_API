@@ -65,9 +65,11 @@ namespace Models
         public int UserId { get; set; }
         public string FCMTokenId { get; set; }
     }
+  
     public class FCMNotificationModel
     {
         public int UserId { get; set; }
+        public int? ActivityId { get; set; }
         public string title { get; set; }
         public string body { get; set; }
     }

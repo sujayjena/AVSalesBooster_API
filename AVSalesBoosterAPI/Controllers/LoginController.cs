@@ -200,10 +200,23 @@ namespace AVSalesBoosterAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ResponseModel> SendFCMNotification(FCMNotificationModel parameters)
+        [AllowAnonymous]
+        public async Task<ResponseModel> SendFCMNotification(List<FCMNotificationModel> parameters)
         {
-            bool result;
-            result = await _fcmPushNotification.SendNotification(parameters);
+            bool result = false;
+            foreach (var item in parameters)
+            {
+                var fCMNotificationModel = new FCMNotificationModel()
+                {
+                    UserId = item.UserId,
+                    ActivityId=item.ActivityId,
+                    title = item.title,
+                    body = item.body,
+                };
+
+                result = await _fcmPushNotification.SendNotification(fCMNotificationModel);
+            }
+
             if (result)
             {
                 _response.IsSuccess = true;

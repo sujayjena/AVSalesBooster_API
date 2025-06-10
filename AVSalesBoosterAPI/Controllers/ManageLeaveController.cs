@@ -1,4 +1,5 @@
-﻿using Interfaces.Services;
+﻿using Helpers;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Constants;
@@ -16,10 +17,16 @@ namespace AVSalesBoosterAPI.Controllers
     {
         private ResponseModel _response;
         private ILeaveService _leaveService;
+        private IEmailHelper _emailHelper;
+        private IProfileService _profileService;
+        private readonly IWebHostEnvironment _environment;
 
-        public ManageLeaveController(ILeaveService leaveService)
+        public ManageLeaveController(ILeaveService leaveService, IEmailHelper EmailHelper, IProfileService profileService, IWebHostEnvironment environment)
         {
             _leaveService = leaveService;
+            _emailHelper = EmailHelper;
+            _profileService = profileService;
+            _environment = environment;
 
             _response = new ResponseModel();
             _response.IsSuccess = true;
@@ -63,6 +70,57 @@ namespace AVSalesBoosterAPI.Controllers
                 _response.IsSuccess = true;
                 _response.Message = "Leave details saved sucessfully";
             }
+
+            // Sent Email
+            if (_response.IsSuccess && parameter.LeaveId == 0)
+            {
+                string templateFilePath = "", emailTemplateContent = "", sSubjectDynamicContent = "", listContent = "";
+
+                var vLeaveDetailsObj = await _leaveService.GetLeaveDetailsById(result);
+                var vUserDetailsObj = _profileService.GetEmployeeDetailsById(vLeaveDetailsObj.EmployeeId).Result;
+
+                IEnumerable<ReportingToListReponse> lstReportingToes = await _profileService.GetReportingToListByEmployeeId(parameter.EmployeeId);
+                if (lstReportingToes.Count() > 0)
+                {
+                    foreach (var item in lstReportingToes)
+                    {
+
+                        templateFilePath = _environment.ContentRootPath + "\\EmailTemplates\\LeaveTemplate.html";
+                        emailTemplateContent = System.IO.File.ReadAllText(templateFilePath);
+
+                        if (emailTemplateContent.IndexOf("[Reason]", StringComparison.OrdinalIgnoreCase) > 0)
+                        {
+                            emailTemplateContent = emailTemplateContent.Replace("[Reason]", vLeaveDetailsObj.Remark);
+                        }
+                        if (emailTemplateContent.IndexOf("[StartDate]", StringComparison.OrdinalIgnoreCase) > 0)
+                        {
+                            emailTemplateContent = emailTemplateContent.Replace("[StartDate]", vLeaveDetailsObj.StartDate.ToString("MM/dd/yyyy"));
+                        }
+                        if (emailTemplateContent.IndexOf("[EndDate]", StringComparison.OrdinalIgnoreCase) > 0)
+                        {
+                            emailTemplateContent = emailTemplateContent.Replace("[EndDate]", vLeaveDetailsObj.EndDate.ToString("MM/dd/yyyy"));
+                        }
+                        if (emailTemplateContent.IndexOf("[SenderName]", StringComparison.OrdinalIgnoreCase) > 0)
+                        {
+                            emailTemplateContent = emailTemplateContent.Replace("[SenderName]", vLeaveDetailsObj.EmployeeName);
+                        }
+                        if (emailTemplateContent.IndexOf("[MobileNo]", StringComparison.OrdinalIgnoreCase) > 0)
+                        {
+                            emailTemplateContent = emailTemplateContent.Replace("[MobileNo]", vUserDetailsObj.MobileNumber);
+                        }
+
+                        var vEmployeeDetails = _profileService.GetEmployeeDetailsById(item.EmployeeId).Result;
+                        if (vEmployeeDetails != null && !string.IsNullOrWhiteSpace(vEmployeeDetails.EmailId))
+                        {
+                            sSubjectDynamicContent = string.Format("Application for {0} : {1}", vLeaveDetailsObj.LeaveTypeName, vEmployeeDetails.EmployeeName);
+
+                            _emailHelper.SendEmail(module: "Leave", subject: sSubjectDynamicContent, sendTo: vEmployeeDetails.EmailId, content: emailTemplateContent, recipientEmail: vEmployeeDetails.EmailId);
+                        }
+                    }
+                }
+            }
+
+
             return _response;
         }
 
@@ -82,7 +140,7 @@ namespace AVSalesBoosterAPI.Controllers
                 _response.IsSuccess = true;
                 _response.Message = "Leave status updated sucessfully";
             }
-            
+
             return _response;
         }
 
@@ -198,5 +256,7 @@ namespace AVSalesBoosterAPI.Controllers
             _response.Total = parameters.pagination.Total;
             return _response;
         }
+
+
     }
 }
