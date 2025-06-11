@@ -94,11 +94,11 @@ namespace AVSalesBoosterAPI.Controllers
                         }
                         if (emailTemplateContent.IndexOf("[StartDate]", StringComparison.OrdinalIgnoreCase) > 0)
                         {
-                            emailTemplateContent = emailTemplateContent.Replace("[StartDate]", vLeaveDetailsObj.StartDate.ToString("MM/dd/yyyy"));
+                            emailTemplateContent = emailTemplateContent.Replace("[StartDate]", vLeaveDetailsObj.StartDate.ToString("dd/MM/yyyy"));
                         }
                         if (emailTemplateContent.IndexOf("[EndDate]", StringComparison.OrdinalIgnoreCase) > 0)
                         {
-                            emailTemplateContent = emailTemplateContent.Replace("[EndDate]", vLeaveDetailsObj.EndDate.ToString("MM/dd/yyyy"));
+                            emailTemplateContent = emailTemplateContent.Replace("[EndDate]", vLeaveDetailsObj.EndDate.ToString("dd/MM/yyyy"));
                         }
                         if (emailTemplateContent.IndexOf("[SenderName]", StringComparison.OrdinalIgnoreCase) > 0)
                         {
