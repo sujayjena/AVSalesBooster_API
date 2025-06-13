@@ -57,6 +57,7 @@ namespace AVSalesBoosterAPI.Controllers
             _response.Total = request.pagination.Total;
             return _response;
         }
+
         [Route("[action]")]
         [HttpPost]
         public async Task<ResponseModel> ImportProductsData([FromQuery] ImportRequest request)

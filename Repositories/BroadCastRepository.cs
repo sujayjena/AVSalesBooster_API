@@ -132,6 +132,7 @@ namespace Repositories
             queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
             queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
             queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@ValueForSearch", parameters.ValueForSearch);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
 
             var result = await ListByStoredProcedure<ProjectResponse>("GetProjectList", queryParameters);

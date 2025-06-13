@@ -52,14 +52,17 @@ namespace AVSalesBoosterAPI.Controllers
 
             if (result == (int)SaveEnums.NoRecordExists)
             {
+                _response.IsSuccess = false;
                 _response.Message = "No record exists";
             }
             else if (result == (int)SaveEnums.NameExists)
             {
+                _response.IsSuccess = false;
                 _response.Message = "Role Name is already exists";
             }
             else if (result == (int)SaveEnums.NoResult)
             {
+                _response.IsSuccess = false;
                 _response.Message = "Something went wrong, please try again";
             }
             else

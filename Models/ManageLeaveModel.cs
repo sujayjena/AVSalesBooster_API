@@ -118,6 +118,12 @@ namespace Models
         public string FilterType { get; set; }
 
         public long? EmployeeId { get; set; }
+
+        [DefaultValue(null)]
+        public DateTime? FromDate { get; set; }
+
+        [DefaultValue(null)]
+        public DateTime? ToDate { get; set; }
     }
 
     //public bool ValidateDates()

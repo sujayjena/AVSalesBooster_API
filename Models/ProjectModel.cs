@@ -46,6 +46,9 @@ namespace Models
     public class SearchProjectRequest
     {
         public PaginationParameters pagination { get; set; }
+
+        [DefaultValue("")]
+        public string ValueForSearch { get; set; } = null;
         public Nullable<bool> IsActive { get; set; }
     }
     public class ProjectResponse : CreationDetails

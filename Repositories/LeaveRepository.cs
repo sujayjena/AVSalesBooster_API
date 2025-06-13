@@ -33,6 +33,8 @@ namespace Repositories
             queryParameters.Add("@IsActive", parameters.IsActive);
             queryParameters.Add("@FilterType", parameters.FilterType.SanitizeValue());
             queryParameters.Add("@EmployeeId", parameters.EmployeeId.SanitizeValue());
+            queryParameters.Add("@FromDate", parameters.FromDate);
+            queryParameters.Add("@ToDate", parameters.ToDate);
             queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
 
             var result = await ListByStoredProcedure<LeaveResponse>("GetLeaves", queryParameters);
