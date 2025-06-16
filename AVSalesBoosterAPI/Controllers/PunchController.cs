@@ -39,6 +39,11 @@ namespace AVSalesBoosterAPI.Controllers
                     PunchInOut = punchInOut.PunchInOut
                 };
             }
+            else
+            {
+                _response.IsSuccess = false;
+               _response.Message = "Your Punch-in is not allowed";
+            }
 
             return _response;
         }
@@ -57,6 +62,11 @@ namespace AVSalesBoosterAPI.Controllers
                 {
                     PunchInOut = punchInOut.PunchInOut,
                 };
+            }
+            else
+            {
+                _response.IsSuccess = false;
+                _response.Message = "Your Punch-in is not allowed";
             }
 
             return _response;

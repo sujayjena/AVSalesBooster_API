@@ -48,26 +48,26 @@ namespace AVSalesBoosterAPI.Controllers
         [HttpPost]
         public async Task<ResponseModel> SaveRoleDetails(RoleRequest parameter)
         {
+            _response.IsSuccess = false;
+
             int result = await _profileService.SaveRoleDetails(parameter);
 
             if (result == (int)SaveEnums.NoRecordExists)
             {
-                _response.IsSuccess = false;
                 _response.Message = "No record exists";
             }
             else if (result == (int)SaveEnums.NameExists)
             {
-                _response.IsSuccess = false;
                 _response.Message = "Role Name is already exists";
             }
             else if (result == (int)SaveEnums.NoResult)
             {
-                _response.IsSuccess = false;
                 _response.Message = "Something went wrong, please try again";
             }
             else
             {
-                _response.Message = "Role details saved sucessfully";
+                _response.IsSuccess = true;
+                _response.Message = "Role details saved successfully";
             }
             return _response;
         }
@@ -320,7 +320,7 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Reporting To details saved sucessfully";
+                _response.Message = "Reporting To details saved successfully";
             }
             return _response;
         }
@@ -695,7 +695,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Employee details saved sucessfully";
+                _response.Message = "Employee details saved successfully";
 
                 #region // Add/Update Employee State
 
@@ -779,7 +779,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Employee details updated sucessfully";
+                _response.Message = "Employee details updated successfully";
             }
 
             return _response;
@@ -1137,7 +1137,7 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Role Master Permission details saved sucessfully";
+                _response.Message = "Role Master Permission details saved successfully";
             }
             return _response;
         }
@@ -1197,7 +1197,7 @@ namespace AVSalesBoosterAPI.Controllers
                 }
                 else
                 {
-                    _response.Message = "Employee Role Master Permission details saved sucessfully";
+                    _response.Message = "Employee Role Master Permission details saved successfully";
                 }
             }
             return _response;

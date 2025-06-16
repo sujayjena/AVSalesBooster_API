@@ -57,7 +57,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Reference details saved sucessfully";
+                _response.Message = "Reference details saved successfully";
             }
 
             return _response;

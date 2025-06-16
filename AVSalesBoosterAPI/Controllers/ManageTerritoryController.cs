@@ -61,7 +61,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Country details saved sucessfully";
+                _response.Message = "Country details saved successfully";
             }
             return _response;
         }
@@ -122,7 +122,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "State details saved sucessfully";
+                _response.Message = "State details saved successfully";
             }
             return _response;
         }
@@ -382,7 +382,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Region details saved sucessfully";
+                _response.Message = "Region details saved successfully";
             }
             return _response;
         }
@@ -644,7 +644,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "District details saved sucessfully";
+                _response.Message = "District details saved successfully";
             }
             return _response;
         }
@@ -917,7 +917,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Area details saved sucessfully";
+                _response.Message = "Area details saved successfully";
             }
             return _response;
         }
@@ -1193,7 +1193,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
             return _response;
         }
@@ -1267,7 +1267,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
             return _response;
         }

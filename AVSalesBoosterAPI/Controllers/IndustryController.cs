@@ -54,7 +54,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
 
                 // Add data into Solution details
                 //foreach (var items in parameter.solutionList)
@@ -201,7 +201,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
 
                 // Add data into Solution Fetaure details
                 foreach (var items in parameter.solutionFeatureList)
@@ -336,7 +336,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
 
             return _response;
@@ -397,7 +397,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
 
             return _response;
@@ -447,7 +447,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
 
             return _response;

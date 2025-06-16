@@ -148,6 +148,7 @@ namespace Repositories
             queryParameters.Add("@RoleId", parameters.RoleId);
             queryParameters.Add("@ReportingTo", parameters.ReportingTo);
             queryParameters.Add("@Address", parameters.Address.SanitizeValue());
+            queryParameters.Add("@CountryId", parameters.CountryId);
             queryParameters.Add("@StateId", parameters.StateId);
             queryParameters.Add("@RegionId", parameters.RegionId);
             queryParameters.Add("@DistrictId", parameters.DistrictId);
@@ -189,6 +190,7 @@ namespace Repositories
             queryParameters.Add("@MobileNumber", parameters.MobileNumber.SanitizeValue());
             queryParameters.Add("@AddressId", parameters.AddressId);
             queryParameters.Add("@Address", parameters.Address.SanitizeValue());
+            queryParameters.Add("@CountryId", parameters.CountryId);
             queryParameters.Add("@StateId", parameters.StateId);
             queryParameters.Add("@RegionId", parameters.RegionId);
             queryParameters.Add("@DistrictId", parameters.DistrictId);

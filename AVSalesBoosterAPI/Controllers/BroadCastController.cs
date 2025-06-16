@@ -139,7 +139,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Catalog details saved sucessfully";
+                _response.Message = "Catalog details saved successfully";
             }
 
             return _response;
@@ -328,7 +328,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Catalog Related details saved sucessfully";
+                _response.Message = "Catalog Related details saved successfully";
             }
 
             return _response;
@@ -441,7 +441,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Project saved sucessfully";
+                _response.Message = "Project saved successfully";
 
                 // Add data into case study details
                 foreach (var items in parameter.caseStudyList)
@@ -681,7 +681,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved sucessfully";
+                _response.Message = "Record saved successfully";
             }
 
             return _response;
@@ -803,7 +803,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record deleted sucessfully";
+                _response.Message = "Record deleted successfully";
             }
 
             return _response;

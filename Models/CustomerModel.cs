@@ -105,6 +105,7 @@ namespace Models
         public long RoleId { get; set; }
         public string EmployeeRole { get; set; }
         public string Address { get; set; }
+        public string CountryName { get; set; }
         public string StateName { get; set; }
         public string RegionName { get; set; }
         public string DistrictName { get; set; }
@@ -193,6 +194,8 @@ namespace Models
         public string Address { get; set; }
 
         //[Range(1, long.MaxValue, ErrorMessage = ValidationConstants.StateRequied_Dropdown_Msg)]
+        public long CountryId { get; set; }
+        public string CountryName { get; set; }
         public long StateId { get; set; }
         public string StateName { get; set; }
 
@@ -370,6 +373,7 @@ namespace Models
         public string? MobileNo { get; set; }
         public string? EmailId { get; set; }
         public long? AddressTypeId { get; set; }
+        public long? CountryId { get; set; }
         public long? StateId { get; set; }
         public long? RegionId { get; set; }
         public long? DistrictId { get; set; }
@@ -411,6 +415,7 @@ namespace Models
     {
         public string CompanyName { get; set; }
         public string Address { get; set; }
+        public string Country { get; set; }
         public string State { get; set; }
         public string Region { get; set; }
         public string District { get; set; }
@@ -423,6 +428,7 @@ namespace Models
     {
         public string CompanyName { get; set; }
         public string Address { get; set; }
+        public string Country { get; set; }
         public string State { get; set; }
         public string Region { get; set; }
         public string District { get; set; }

@@ -68,7 +68,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Leave details saved sucessfully";
+                _response.Message = "Leave details saved successfully";
             }
 
             // Sent Email
@@ -138,7 +138,7 @@ namespace AVSalesBoosterAPI.Controllers
             else if (result > 0)
             {
                 _response.IsSuccess = true;
-                _response.Message = "Leave status updated sucessfully";
+                _response.Message = "Leave status updated successfully";
             }
 
             return _response;

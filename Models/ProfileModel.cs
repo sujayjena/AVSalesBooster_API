@@ -192,6 +192,8 @@ namespace Models
         [MaxLength(ValidationConstants.Address_MaxLength, ErrorMessage = ValidationConstants.Address_MaxLength_Msg)]
         public string Address { get; set; }
 
+        public long CountryId { get; set; }
+
         //[Range(1, long.MaxValue, ErrorMessage = ValidationConstants.StateRequied_Dropdown_Msg)]
         public long StateId { get; set; }
 
@@ -229,6 +231,8 @@ namespace Models
         public string ManagerMobileNo { get; set; }
         public long AddressId { get; set; }
         public string Address { get; set; }
+        public long CountryId { get; set; }
+        public string CountryName { get; set; }
         public long StateId { get; set; }
         public string StateName { get; set; }
         public long RegionId { get; set; }
@@ -324,6 +328,9 @@ namespace Models
         [Required(ErrorMessage = ValidationConstants.AddressRequied_Msg)]
         [MaxLength(ValidationConstants.Address_MaxLength, ErrorMessage = ValidationConstants.Address_MaxLength_Msg)]
         public string Address { get; set; }
+
+        [Range(1, long.MaxValue, ErrorMessage = ValidationConstants.StateRequied_Dropdown_Msg)]
+        public long CountryId { get; set; }
 
         [Range(1, long.MaxValue, ErrorMessage = ValidationConstants.StateRequied_Dropdown_Msg)]
         public long StateId { get; set; }

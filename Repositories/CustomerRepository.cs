@@ -163,6 +163,7 @@ namespace Repositories
             queryParameters.Add("@MobileNo", parameter.MobileNo);
             queryParameters.Add("@EmailId", parameter.EmailId);
             queryParameters.Add("@AddressTypeId", parameter.AddressTypeId);
+            queryParameters.Add("@CountryId", parameter.CountryId);
             queryParameters.Add("@StateId", parameter.StateId);
             queryParameters.Add("@RegionId", parameter.RegionId);
             queryParameters.Add("@DistrictId", parameter.DistrictId);

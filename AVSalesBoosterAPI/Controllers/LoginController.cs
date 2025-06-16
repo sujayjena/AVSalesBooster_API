@@ -193,7 +193,7 @@ namespace AVSalesBoosterAPI.Controllers
 
             await _profileService.SaveFCMToken(fcmParameters);
 
-            _response.Message = "Update sucessfully";
+            _response.Message = "Update successfully";
 
             return _response;
         }
@@ -220,7 +220,7 @@ namespace AVSalesBoosterAPI.Controllers
             if (result)
             {
                 _response.IsSuccess = true;
-                _response.Message = "Notification sent sucessfully";
+                _response.Message = "Notification sent successfully";
             }
             else
             {

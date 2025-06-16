@@ -168,7 +168,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Visit details saved sucessfully";
+                _response.Message = "Visit details saved successfully";
             }
 
             return _response;

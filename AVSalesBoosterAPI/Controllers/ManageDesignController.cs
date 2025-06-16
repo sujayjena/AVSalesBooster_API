@@ -80,7 +80,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Design details saved sucessfully";
+                _response.Message = "Design details saved successfully";
             }
 
             return _response;

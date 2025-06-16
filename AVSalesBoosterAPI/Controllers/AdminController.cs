@@ -148,7 +148,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Product details saved sucessfully";
+                _response.Message = "Product details saved successfully";
             }
             return _response;
         }
@@ -253,7 +253,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Brand details saved sucessfully";
+                if (brandRequest.BrandId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Brand details saved successfully";
+                }
             }
             return _response;
         }
@@ -430,7 +437,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Category details saved sucessfully";
+                if (categoryRequest.CategoryId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Category details saved successfully";
+                }
             }
             return _response;
         }
@@ -676,7 +690,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Size details saved sucessfully";
+                if (sizeRequest.SizeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Size details saved successfully";
+                }
             }
             return _response;
         }
@@ -921,7 +942,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Design Type details saved sucessfully";
+                if (designTypeRequest.DesignTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Design Type details saved successfully";
+                }
             }
             return _response;
         }
@@ -1098,7 +1126,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Series details saved sucessfully";
+                if (seriesRequest.SeriesId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Series details saved successfully";
+                }
             }
             return _response;
         }
@@ -1344,7 +1379,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Base Design details saved sucessfully";
+                if (baseDesignRequest.BaseDesignId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Base Design details saved successfully";
+                }
             }
             return _response;
         }
@@ -1589,7 +1631,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Customer Type details saved sucessfully";
+                if (customerTypeRequest.CustomerTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Customer Type details saved successfully";
+                }
             }
             return _response;
         }
@@ -1835,7 +1884,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Leave Type details saved sucessfully";
+                if (leaveTypeRequest.LeaveTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Leave Type details saved successfully";
+                }
             }
             return _response;
         }
@@ -2071,7 +2127,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Blood Group details saved sucessfully";
+                if (parameters.BloodGroupId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Blood Group details saved successfully";
+                }
             }
 
             return _response;
@@ -2206,7 +2269,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Collection details saved sucessfully";
+                if (parameters.CollectionId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Collection details saved successfully";
+                }
             }
 
             return _response;
@@ -2481,7 +2551,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Visit Type details saved sucessfully";
+                if (VisitTypeRequest.VisitTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Visit Type details saved successfully";
+                }
             }
             return _response;
         }
@@ -2532,7 +2609,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Expense Type details saved sucessfully";
+                if (expenseTypeRequest.ExpenseTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Expense Type details saved successfully";
+                }
             }
             return _response;
         }
@@ -2593,7 +2677,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record details saved sucessfully";
+                if (request.PriorityId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
             return _response;
         }
@@ -2652,7 +2743,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record details saved sucessfully";
+                if (request.ActivityTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
             return _response;
         }
@@ -2711,7 +2809,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record details saved sucessfully";
+                if (request.ActivityStatusId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
             return _response;
         }
@@ -2770,7 +2875,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record details saved sucessfully";
+                if (request.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
             return _response;
         }

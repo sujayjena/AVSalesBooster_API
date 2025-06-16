@@ -175,7 +175,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Customer details saved sucessfully";
+                _response.Message = "Customer details saved successfully";
             }
 
             return _response;
@@ -590,14 +590,15 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Cells[1, 7].Value = "EmployeeRole";
                     WorkSheet1.Cells[1, 8].Value = "EmployeeName";
                     WorkSheet1.Cells[1, 9].Value = "CompanyAddress";
-                    WorkSheet1.Cells[1, 10].Value = "State";
-                    WorkSheet1.Cells[1, 11].Value = "Region";
-                    WorkSheet1.Cells[1, 12].Value = "District";
-                    WorkSheet1.Cells[1, 13].Value = "Area";
-                    WorkSheet1.Cells[1, 14].Value = "Status";
+                    WorkSheet1.Cells[1, 10].Value = "Country";
+                    WorkSheet1.Cells[1, 11].Value = "State";
+                    WorkSheet1.Cells[1, 12].Value = "Region";
+                    WorkSheet1.Cells[1, 13].Value = "District";
+                    WorkSheet1.Cells[1, 14].Value = "Area";
+                    WorkSheet1.Cells[1, 15].Value = "Status";
 
-                    WorkSheet1.Cells[1, 15].Value = "CreatedBy";
-                    WorkSheet1.Cells[1, 16].Value = "CreatedDate";
+                    WorkSheet1.Cells[1, 16].Value = "CreatedBy";
+                    WorkSheet1.Cells[1, 17].Value = "CreatedDate";
 
                     recordIndex = 2;
 
@@ -612,15 +613,16 @@ namespace AVSalesBoosterAPI.Controllers
                         WorkSheet1.Cells[recordIndex, 7].Value = items.EmployeeRole;
                         WorkSheet1.Cells[recordIndex, 8].Value = items.EmployeeName;
                         WorkSheet1.Cells[recordIndex, 9].Value = items.Address;
-                        WorkSheet1.Cells[recordIndex, 10].Value = items.StateName;
-                        WorkSheet1.Cells[recordIndex, 11].Value = items.RegionName;
-                        WorkSheet1.Cells[recordIndex, 12].Value = items.DistrictName;
-                        WorkSheet1.Cells[recordIndex, 13].Value = items.AreaName;
-                        WorkSheet1.Cells[recordIndex, 14].Value = items.IsActive == true ? "Active" : "Inactive";
+                        WorkSheet1.Cells[recordIndex, 10].Value = items.CountryName;
+                        WorkSheet1.Cells[recordIndex, 11].Value = items.StateName;
+                        WorkSheet1.Cells[recordIndex, 12].Value = items.RegionName;
+                        WorkSheet1.Cells[recordIndex, 13].Value = items.DistrictName;
+                        WorkSheet1.Cells[recordIndex, 14].Value = items.AreaName;
+                        WorkSheet1.Cells[recordIndex, 15].Value = items.IsActive == true ? "Active" : "Inactive";
 
-                        WorkSheet1.Cells[recordIndex, 15].Value = items.CreatorName;
-                        WorkSheet1.Cells[recordIndex, 16].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 16].Value = items.CreatedOn;
+                        WorkSheet1.Cells[recordIndex, 16].Value = items.CreatorName;
+                        WorkSheet1.Cells[recordIndex, 17].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 17].Value = items.CreatedOn;
 
                         recordIndex += 1;
                     }
@@ -641,6 +643,7 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Column(14).AutoFit();
                     WorkSheet1.Column(15).AutoFit();
                     WorkSheet1.Column(16).AutoFit();
+                    WorkSheet1.Column(17).AutoFit();
 
                     excelExportData.SaveAs(msExportDataFile);
                     msExportDataFile.Position = 0;
@@ -726,7 +729,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Contact details saved sucessfully";
+                _response.Message = "Contact details saved successfully";
             }
 
             return _response;
@@ -796,7 +799,7 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Address details saved sucessfully";
+                _response.Message = "Address details saved successfully";
             }
 
             return _response;
