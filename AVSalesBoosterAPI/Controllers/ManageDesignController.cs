@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Constants;
 using Models.Enums;
+using Nancy;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services;
@@ -80,7 +81,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Design details saved successfully";
+                if (parameter.DesignId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Design details saved successfully";
+                }
             }
 
             return _response;

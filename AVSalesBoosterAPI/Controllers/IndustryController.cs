@@ -54,7 +54,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved successfully";
+                if (parameter.IndustryId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record saved successfully";
+                }
 
                 // Add data into Solution details
                 //foreach (var items in parameter.solutionList)

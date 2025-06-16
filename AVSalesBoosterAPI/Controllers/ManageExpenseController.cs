@@ -8,6 +8,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using Services;
 using System.Globalization;
+using Nancy;
 
 namespace AVSalesBoosterAPI.Controllers
 {
@@ -53,7 +54,14 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Record details saved successfully";
+                if (parameters.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
 
             //Add / Update Expense Details
@@ -290,7 +298,14 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Record details saved successfully";
+                if (parameters.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record details saved successfully";
+                }
             }
 
             return _response;

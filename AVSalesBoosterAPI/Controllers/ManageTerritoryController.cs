@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Constants;
 using Models.Enums;
+using Nancy;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services;
@@ -61,7 +62,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Country details saved successfully";
+                if (request.CountryId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Country details saved successfully";
+                }
             }
             return _response;
         }
@@ -122,7 +130,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "State details saved successfully";
+                if (stateRequest.StateId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "State details saved successfully";
+                }
             }
             return _response;
         }
@@ -382,7 +397,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Region details saved successfully";
+                if (regionRequest.RegionId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Region details saved successfully";
+                }
             }
             return _response;
         }
@@ -644,7 +666,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "District details saved successfully";
+                if (districtRequest.DistrictId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "District details saved successfully";
+                }
             }
             return _response;
         }
@@ -917,7 +946,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Area details saved successfully";
+                if (areaRequest.AreaId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Area details saved successfully";
+                }
             }
             return _response;
         }
@@ -1193,7 +1229,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved successfully";
+                if (areaRequest.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record saved successfully";
+                }
             }
             return _response;
         }

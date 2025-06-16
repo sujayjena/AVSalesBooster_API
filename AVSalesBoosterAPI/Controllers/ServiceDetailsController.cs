@@ -9,6 +9,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using Services;
 using System.Globalization;
+using Nancy;
 
 namespace AVSalesBoosterAPI.Controllers
 {
@@ -51,7 +52,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved successfully";
+                if (parameter.ServiceId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record saved successfully";
+                }
             }
 
             return _response;

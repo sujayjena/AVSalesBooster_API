@@ -139,7 +139,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Catalog details saved successfully";
+                if (parameter.CatalogId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Catalog details saved successfully";
+                }
             }
 
             return _response;
@@ -328,7 +335,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Catalog Related details saved successfully";
+                if (parameter.CatalogRelatedId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Catalog Related details saved successfully";
+                }
             }
 
             return _response;
@@ -441,7 +455,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Project saved successfully";
+                if (parameter.ProjectId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Project saved successfully";
+                }
 
                 // Add data into case study details
                 foreach (var items in parameter.caseStudyList)
@@ -681,7 +702,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Record saved successfully";
+                if (parameter.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Record saved successfully";
+                }
             }
 
             return _response;

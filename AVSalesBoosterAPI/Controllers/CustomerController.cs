@@ -175,7 +175,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Customer details saved successfully";
+                if (parameter.CustomerId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Customer details saved successfully";
+                }
             }
 
             return _response;
@@ -799,7 +806,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Address details saved successfully";
+                if (parameter.AddressId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Address details saved successfully";
+                }
             }
 
             return _response;

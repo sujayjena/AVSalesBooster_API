@@ -67,7 +67,14 @@ namespace AVSalesBoosterAPI.Controllers
             else
             {
                 _response.IsSuccess = true;
-                _response.Message = "Role details saved successfully";
+                if (parameter.RoleId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Role details saved successfully";
+                }
             }
             return _response;
         }
@@ -304,6 +311,8 @@ namespace AVSalesBoosterAPI.Controllers
         [HttpPost]
         public async Task<ResponseModel> SaveReportingToDetails(ReportingToRequest parameter)
         {
+            _response.IsSuccess = false;
+
             int result = await _profileService.SaveReportingToDetails(parameter);
 
             if (result == (int)SaveEnums.NoRecordExists)
@@ -320,7 +329,15 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Reporting To details saved successfully";
+                _response.IsSuccess = true;
+                if (parameter.Id > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Reporting To details saved successfully";
+                }
             }
             return _response;
         }
@@ -1125,6 +1142,7 @@ namespace AVSalesBoosterAPI.Controllers
         [HttpPost]
         public async Task<ResponseModel> SaveRoleMaster_PermissionDetails(RoleMaster_Permission_Request parameter)
         {
+            _response.IsSuccess = false;
             int result = await _profileService.SaveRoleMaster_PermissionDetails(parameter);
 
             if (result == (int)SaveEnums.NoRecordExists)
@@ -1137,7 +1155,15 @@ namespace AVSalesBoosterAPI.Controllers
             }
             else
             {
-                _response.Message = "Role Master Permission details saved successfully";
+                _response.IsSuccess = true;
+                if (parameter.RolePermissionId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Role Master Permission details saved successfully";
+                }
             }
             return _response;
         }
@@ -1179,6 +1205,7 @@ namespace AVSalesBoosterAPI.Controllers
         [HttpPost]
         public async Task<ResponseModel> SaveRoleMaster_Employee_PermissionDetails(RoleMaster_Employee_Permission_Request parameter)
         {
+            _response.IsSuccess = false;
             if (parameter.EmployeeId <= 0)
             {
                 _response.Message = "EmployeeId is required";
@@ -1197,7 +1224,15 @@ namespace AVSalesBoosterAPI.Controllers
                 }
                 else
                 {
-                    _response.Message = "Employee Role Master Permission details saved successfully";
+                    _response.IsSuccess = true;
+                    if (parameter.RolePermissionId > 0)
+                    {
+                        _response.Message = "Record updated successfully";
+                    }
+                    else
+                    {
+                        _response.Message = "Employee Role Master Permission details saved successfully";
+                    }
                 }
             }
             return _response;
