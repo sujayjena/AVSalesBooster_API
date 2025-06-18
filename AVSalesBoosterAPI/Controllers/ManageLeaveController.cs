@@ -200,13 +200,13 @@ namespace AVSalesBoosterAPI.Controllers
                     WorkSheet1.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     WorkSheet1.Row(1).Style.Font.Bold = true;
 
-                    WorkSheet1.Cells[1, 1].Value = "StartDate";
-                    WorkSheet1.Cells[1, 2].Value = "EndDate";
-                    WorkSheet1.Cells[1, 3].Value = "LeaveType";
-                    WorkSheet1.Cells[1, 4].Value = "Remark";
-                    WorkSheet1.Cells[1, 5].Value = "Status";
-                    WorkSheet1.Cells[1, 6].Value = "EmployeeName";
-
+                    WorkSheet1.Cells[1, 1].Value = "EmployeeName";
+                    WorkSheet1.Cells[1, 2].Value = "StartDate";
+                    WorkSheet1.Cells[1, 3].Value = "EndDate";
+                    WorkSheet1.Cells[1, 4].Value = "LeaveType";
+                    WorkSheet1.Cells[1, 5].Value = "Remark";
+                    WorkSheet1.Cells[1, 6].Value = "Status";
+                    
                     WorkSheet1.Cells[1, 7].Value = "CreatedBy";
                     WorkSheet1.Cells[1, 8].Value = "CreatedDate";
 
@@ -214,14 +214,14 @@ namespace AVSalesBoosterAPI.Controllers
 
                     foreach (var items in lstLeaveObj)
                     {
-                        WorkSheet1.Cells[recordIndex, 1].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 1].Value = items.StartDate;
+                        WorkSheet1.Cells[recordIndex, 1].Value = items.EmployeeName;
                         WorkSheet1.Cells[recordIndex, 2].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
-                        WorkSheet1.Cells[recordIndex, 2].Value = items.EndDate;
-                        WorkSheet1.Cells[recordIndex, 3].Value = items.LeaveTypeName;
-                        WorkSheet1.Cells[recordIndex, 4].Value = items.Remark;
-                        WorkSheet1.Cells[recordIndex, 5].Value = items.IsActive == true ? "Active" : "Inactive";
-                        WorkSheet1.Cells[recordIndex, 6].Value = items.EmployeeName;
+                        WorkSheet1.Cells[recordIndex, 2].Value = items.StartDate;
+                        WorkSheet1.Cells[recordIndex, 3].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                        WorkSheet1.Cells[recordIndex, 3].Value = items.EndDate;
+                        WorkSheet1.Cells[recordIndex, 4].Value = items.LeaveTypeName;
+                        WorkSheet1.Cells[recordIndex, 5].Value = items.Remark;
+                        WorkSheet1.Cells[recordIndex, 6].Value = items.StatusName;
 
                         WorkSheet1.Cells[recordIndex, 7].Value = items.CreatorName;
                         WorkSheet1.Cells[recordIndex, 8].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
