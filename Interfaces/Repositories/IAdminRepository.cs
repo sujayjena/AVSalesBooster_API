@@ -83,6 +83,7 @@ namespace Interfaces.Repositories
         Task<IEnumerable<SelectListResponse>> GetStatusMasterForSelectList(string StatusCode);
         Task<IEnumerable<SelectListResponse>> GetReportingToEmployeeForSelectList(ReportingToEmpListParameters parameters);
         Task<IEnumerable<CustomerContactsListForFields>> GetCustomerContactsListForFields(CustomerContactsListRequest parameters);
+        Task<IEnumerable<SelectListResponse>> GetAttendanceEmployeeForSelectList();
         #endregion
 
         #region Blood Group Master
@@ -142,5 +143,12 @@ namespace Interfaces.Repositories
         Task<VersionDetailsResponse?> GetVersionDetailsById(long id);
 
         #endregion
+
+        #region Renewal Type Repository Interface
+        Task<IEnumerable<RenewalTypeResponse>> GetRenewalTypeList(SearchRenewalTypeRequest request);
+        Task<int> SaveRenewalType(RenewalTypeRequest RenewalTypeRequest);
+        Task<RenewalTypeResponse?> GetRenewalTypeById(long id);
+
+        #endregion Renewal Type Repository Interface
     }
 }

@@ -486,6 +486,15 @@ namespace Repositories
 
             return await ListByStoredProcedure<CustomerContactsListForFields>("GetCustomerContactsList", queryParameters);
         }
+
+        public async Task<IEnumerable<SelectListResponse>> GetAttendanceEmployeeForSelectList()
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+
+            return await ListByStoredProcedure<SelectListResponse>("GetAttendanceEmployeeForSelectList", queryParameters);
+        }
+
         #endregion
 
         #region Blood Group Master
@@ -791,5 +800,40 @@ namespace Repositories
             return (await ListByStoredProcedure<VersionDetailsResponse>("GetVersionDetailsById", queryParameters)).FirstOrDefault();
         }
         #endregion
+
+        #region Renewal Type API Repository
+        public async Task<IEnumerable<RenewalTypeResponse>> GetRenewalTypeList(SearchRenewalTypeRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@PageNo", parameters.pagination.PageNo);
+            queryParameters.Add("@PageSize", parameters.pagination.PageSize);
+            queryParameters.Add("@Total", parameters.pagination.Total, null, System.Data.ParameterDirection.Output);
+            queryParameters.Add("@SortBy", parameters.pagination.SortBy.SanitizeValue());
+            queryParameters.Add("@OrderBy", parameters.pagination.OrderBy.SanitizeValue());
+            queryParameters.Add("@RenewalTypeName", parameters.RenewalTypeName.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+
+            var result = await ListByStoredProcedure<RenewalTypeResponse>("GetRenewalTypeList", queryParameters);
+            parameters.pagination.Total = queryParameters.Get<int>("Total");
+
+            return result;
+        }
+        public async Task<int> SaveRenewalType(RenewalTypeRequest parameters)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@RenewalTypeId", parameters.RenewalTypeId);
+            queryParameters.Add("@RenewalTypeName", parameters.RenewalTypeName.SanitizeValue());
+            queryParameters.Add("@IsActive", parameters.IsActive);
+            queryParameters.Add("@LoggedInUserId", SessionManager.LoggedInUserId);
+            return await SaveByStoredProcedure<int>("SaveRenewalType", queryParameters);
+        }
+        public async Task<RenewalTypeResponse?> GetRenewalTypeById(long id)
+        {
+            DynamicParameters queryParameters = new DynamicParameters();
+            queryParameters.Add("@Id", id);
+            return (await ListByStoredProcedure<RenewalTypeResponse>("GetRenewalTypeById", queryParameters)).FirstOrDefault();
+        }
+       
+        #endregion Renewal Type API Repository
     }
 }

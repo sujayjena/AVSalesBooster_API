@@ -2916,5 +2916,73 @@ namespace AVSalesBoosterAPI.Controllers
         }
 
         #endregion
+
+        #region Renewal Type API
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetRenewalTypeList(SearchRenewalTypeRequest request)
+        {
+            IEnumerable<RenewalTypeResponse> lstRenewalTypes = await _adminService.GetRenewalTypeList(request);
+            _response.Data = lstRenewalTypes.ToList();
+            _response.Total = request.pagination.Total;
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> SaveRenewalType(RenewalTypeRequest RenewalTypeRequest)
+        {
+            int result = await _adminService.SaveRenewalType(RenewalTypeRequest);
+            _response.IsSuccess = false;
+
+            if (result == (int)SaveEnums.NoRecordExists)
+            {
+                _response.Message = "No record exists";
+            }
+            else if (result == (int)SaveEnums.NameExists)
+            {
+                _response.Message = "Renewal Type Name is already exists";
+            }
+            else if (result == (int)SaveEnums.NoResult)
+            {
+                _response.Message = "Something went wrong, please try again";
+            }
+            else
+            {
+                _response.IsSuccess = true;
+                if (RenewalTypeRequest.RenewalTypeId > 0)
+                {
+                    _response.Message = "Record updated successfully";
+                }
+                else
+                {
+                    _response.Message = "Renewal Type details saved successfully";
+                }
+            }
+            return _response;
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<ResponseModel> GetRenewalTypeById(long id)
+        {
+            RenewalTypeResponse? renewalType;
+
+            if (id <= 0)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ValidationConstants.Id_Required_Msg;
+            }
+            else
+            {
+                renewalType = await _adminService.GetRenewalTypeById(id);
+                _response.Data = renewalType;
+            }
+
+            return _response;
+        }
+
+        #endregion Renewal Type 
     }
 }

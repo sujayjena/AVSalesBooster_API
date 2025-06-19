@@ -257,6 +257,11 @@ namespace Services
         {
             return await _adminRepository.GetCustomerContactsListForFields(parameters);
         }
+
+        public async Task<IEnumerable<SelectListResponse>> GetAttendanceEmployeeForSelectList()
+        {
+            return await _adminRepository.GetAttendanceEmployeeForSelectList();
+        }
         #endregion
 
         #region Blood Group Master
@@ -390,5 +395,22 @@ namespace Services
             return await _adminRepository.GetVersionDetailsById(id);
         }
         #endregion
+
+        #region Renewal Type API Service
+        public async Task<IEnumerable<RenewalTypeResponse>> GetRenewalTypeList(SearchRenewalTypeRequest request)
+        {
+            return await _adminRepository.GetRenewalTypeList(request);
+        }
+
+        public async Task<int> SaveRenewalType(RenewalTypeRequest RenewalTypeRequest)
+        {
+            return await _adminRepository.SaveRenewalType(RenewalTypeRequest);
+
+        }
+        public async Task<RenewalTypeResponse?> GetRenewalTypeById(long id)
+        {
+            return await _adminRepository.GetRenewalTypeById(id);
+        }
+        #endregion Renewal Type API Service
     }
 }

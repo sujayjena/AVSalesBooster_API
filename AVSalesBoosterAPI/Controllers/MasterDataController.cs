@@ -107,5 +107,14 @@ namespace AVSalesBoosterAPI.Controllers
             _response.Data = lstResponse.ToList();
             return _response;
         }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<ResponseModel> GetAttendanceEmployeeForSelectList()
+        {
+            IEnumerable<SelectListResponse> lstResponse = await _adminService.GetAttendanceEmployeeForSelectList();
+            _response.Data = lstResponse.ToList();
+            return _response;
+        }
     }
 }
