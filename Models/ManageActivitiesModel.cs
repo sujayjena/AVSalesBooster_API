@@ -81,12 +81,12 @@ namespace Models
         public long? ActivityTypeId { get; set; }
         public string? ActivityTypeName { get; set; }
         public bool? IsActive { get; set; }
-        public string CreatorName { get; set; }
-        public long CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string ModifierName { get; set; }
-        public long ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public string? CreatorName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifierName { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public List<SingleActivitiesRemarks_Response> SingleActivitiesRemarks { get; set; }
     }
@@ -116,13 +116,13 @@ namespace Models
     {
         public int Id { get; set; }
         public int? SingleActivitiesId { get; set; }
-        public string Remarks { get; set; }
-        public string CreatorName { get; set; }
-        public long CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string ModifierName { get; set; }
-        public long ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public string? Remarks { get; set; }
+        public string? CreatorName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifierName { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
     #endregion
 
@@ -164,12 +164,12 @@ namespace Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool? IsActive { get; set; }
-        public string CreatorName { get; set; }
-        public long CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string ModifierName { get; set; }
-        public long ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public string? CreatorName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifierName { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 
     public class MultipleActivities_Search
@@ -247,12 +247,12 @@ namespace Models
         public long? ActivityTypeId { get; set; }
         public string? ActivityTypeName { get; set; }
         public bool? IsActive { get; set; }
-        public string CreatorName { get; set; }
-        public long CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string ModifierName { get; set; }
-        public long ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public string? CreatorName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifierName { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public List<MultipleActivitiesRemarks_Response> MultipleActivitiesRemarks { get; set; }
     }
@@ -282,13 +282,13 @@ namespace Models
     {
         public int Id { get; set; }
         public int? MultipleActivitiesId { get; set; }
-        public string Remarks { get; set; }
-        public string CreatorName { get; set; }
-        public long CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string ModifierName { get; set; }
-        public long ModifiedBy { get; set; }
-        public DateTime ModifiedOn { get; set; }
+        public string? Remarks { get; set; }
+        public string? CreatorName { get; set; }
+        public long? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string? ModifierName { get; set; }
+        public long? ModifiedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
     }
 
     #endregion
